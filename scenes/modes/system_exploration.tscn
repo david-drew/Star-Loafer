@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpm32trvl04gs"]
+
+[ext_resource type="Script" uid="uid://daijc6tylqmod" path="res://scripts/world/system_exploration.gd" id="1_qxc1t"]
+[ext_resource type="PackedScene" uid="uid://hyy5genoy8it" path="res://scenes/actors/player_ship.tscn" id="2_qxc1t"]
+[ext_resource type="Script" uid="uid://mcm14d5orpa4" path="res://scripts/world/star_layer_2d.gd" id="3_u3h7k"]
+
+[node name="SystemExploration" type="Node2D"]
+script = ExtResource("1_qxc1t")
+
+[node name="PlayerShip" parent="." instance=ExtResource("2_qxc1t")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 0.2
+
+[node name="Background" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
+
+[node name="TheVoid" type="ColorRect" parent="Background"]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="StarfieldFar" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.15, 0.15)
+motion_mirroring = Vector2(3440, 1440)
+
+[node name="StarLayer2D" type="Node2D" parent="Background/StarfieldFar"]
+script = ExtResource("3_u3h7k")
+role = "Far"
+
+[node name="StarfieldMid" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.35, 0.35)
+motion_mirroring = Vector2(3440, 1440)
+
+[node name="StarLayer2D" type="Node2D" parent="Background/StarfieldMid"]
+script = ExtResource("3_u3h7k")
+
+[node name="StarfieldNear" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.6, 0.6)
+motion_mirroring = Vector2(3440, 1440)
+
+[node name="StarLayer2D" type="Node2D" parent="Background/StarfieldNear"]
+script = ExtResource("3_u3h7k")
+role = "Near"

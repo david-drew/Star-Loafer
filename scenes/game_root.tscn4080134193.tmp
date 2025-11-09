@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://cljapp8pda8g7"]
+
+[ext_resource type="Script" uid="uid://bfixq1sigteri" path="res://scripts/game_root.gd" id="1_78s5d"]
+[ext_resource type="Script" uid="uid://cnjqsjdc6fsi5" path="res://scripts/world/galaxy_generator.gd" id="2_uebra"]
+[ext_resource type="Script" uid="uid://lejg5m6kfyrm" path="res://scripts/world/system_generator.gd" id="3_jb3nc"]
+[ext_resource type="Script" uid="uid://2seovgr8rd12" path="res://scripts/ui/hud.gd" id="4_jb3nc"]
+
+[node name="GameRoot" type="Node2D"]
+script = ExtResource("1_78s5d")
+
+[node name="WorldRoot" type="Node2D" parent="."]
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="GalaxyGenerator" type="Node" parent="Systems"]
+script = ExtResource("2_uebra")
+
+[node name="SystemGenerator" type="Node" parent="Systems"]
+script = ExtResource("3_jb3nc")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_jb3nc")
+
+[node name="LoadingOverlay" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="LoadingOverlay"]
+custom_minimum_size = Vector2(250, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LoadingOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 15.0
+offset_right = 79.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Generating Universe"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="LoadingOverlay/Panel"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = 5.0
+offset_right = 90.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,102 @@
+{
+  "schema": "star_loafer.sector_profiles.v1",
+  "profiles": [
+	{
+	  "id": "empty_void",
+	  "description": "Deep space with minimal activity",
+	  "biome": "deep_space",
+	  "asteroid_density": [0, 5],
+	  "asteroid_scale_range": [0.25, 5.0],
+	  "mining_node_chance": 0.05,
+	  "poi_chance": 0.01,
+	  "npc_spawn_table": [
+		{ "id": "nothing", "weight": 95 },
+		{ "id": "lone_trader", "weight": 3 },
+		{ "id": "patrol_scout", "weight": 2 }
+	  ],
+	  "phenomena_chance": 0.02,
+	  "tags": ["sparse", "safe", "boring"]
+	},
+	{
+	  "id": "trade_corridor",
+	  "description": "Active shipping lanes near planets",
+	  "biome": "inner_lane",
+	  "asteroid_density": [10, 30],
+	  "asteroid_scale_range": [0.5, 3.0],
+	  "mining_node_chance": 0.1,
+	  "poi_chance": 0.05,
+	  "npc_spawn_table": [
+		{ "id": "nothing", "weight": 60 },
+		{ "id": "merchant_convoy", "weight": 20 },
+		{ "id": "patrol_frigate", "weight": 15 },
+		{ "id": "pirate_scout", "weight": 5 }
+	  ],
+	  "phenomena_chance": 0.03,
+	  "tags": ["moderate_traffic", "patrolled", "safe"]
+	},
+	{
+	  "id": "dense_belt",
+	  "description": "Asteroid-rich mining regions",
+	  "biome": "belt_field",
+	  "asteroid_density": [300, 600],
+	  "asteroid_scale_range": [0.25, 5.0],
+	  "mining_node_chance": 0.3,
+	  "poi_chance": 0.08,
+	  "npc_spawn_table": [
+		{ "id": "nothing", "weight": 50 },
+		{ "id": "mining_barge", "weight": 25 },
+		{ "id": "pirate_ambush", "weight": 15 },
+		{ "id": "claim_jumper", "weight": 10 }
+	  ],
+	  "phenomena_chance": 0.05,
+	  "tags": ["high_density", "dangerous", "lucrative", "mining"]
+	},
+	{
+	  "id": "lawless_zone",
+	  "description": "Unpoliced space with high pirate activity",
+	  "biome": "deep_space",
+	  "asteroid_density": [50, 150],
+	  "asteroid_scale_range": [0.5, 4.0],
+	  "mining_node_chance": 0.15,
+	  "poi_chance": 0.12,
+	  "npc_spawn_table": [
+		{ "id": "nothing", "weight": 40 },
+		{ "id": "pirate_wing", "weight": 30 },
+		{ "id": "smuggler_fast", "weight": 20 },
+		{ "id": "derelict_wreck", "weight": 10 }
+	  ],
+	  "phenomena_chance": 0.06,
+	  "tags": ["no_law", "pvp_zone", "salvage", "dangerous"]
+	},
+	{
+	  "id": "phenomena_region",
+	  "description": "Strange space with anomalies",
+	  "biome": "deep_space",
+	  "asteroid_density": [20, 80],
+	  "asteroid_scale_range": [0.25, 5.0],
+	  "mining_node_chance": 0.08,
+	  "poi_chance": 0.15,
+	  "npc_spawn_table": [
+		{ "id": "nothing", "weight": 70 },
+		{ "id": "research_vessel", "weight": 20 },
+		{ "id": "anomaly_guardian", "weight": 10 }
+	  ],
+	  "phenomena_chance": 0.4,
+	  "phenomena_types": ["ion_storm", "nebula_drift", "radiation_belt", "aurora_minor"],
+	  "tags": ["strange", "exotic_loot", "unpredictable", "research"]
+	}
+  ],
+  "selection_rules": {
+	"description": "How to assign profiles to sectors",
+	"by_distance_from_star": [
+	  { "range": [0.0, 2.0], "profiles": ["trade_corridor"], "weight": 0.7 },
+	  { "range": [2.0, 5.0], "profiles": ["dense_belt"], "weight": 0.8 },
+	  { "range": [5.0, 999.0], "profiles": ["empty_void", "lawless_zone"], "weight": 0.5 }
+	],
+	"by_system_archetype": [
+	  { "archetype": "industrial_hub", "boost_profiles": ["dense_belt"], "boost_factor": 1.5 },
+	  { "archetype": "dead_system", "boost_profiles": ["lawless_zone"], "boost_factor": 2.0 },
+	  { "archetype": "research_colony", "boost_profiles": ["phenomena_region"], "boost_factor": 3.0 }
+	]
+  }
+}

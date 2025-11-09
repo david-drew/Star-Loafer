@@ -1,0 +1,17 @@
+{
+  "schema": "star_loafer.planet_types.v1",
+  "types": [
+	{ "id": "barren", "variants": 3, "pop_bias": "any" },
+	{ "id": "desert", "variants": 3, "pop_bias": "low" },
+	{ "id": "gas", "variants": 3, "pop_bias": "none" },
+	{ "id": "ice", "variants": 3, "pop_bias": "low" },
+	{ "id": "ocean", "variants": 3, "pop_bias": "high" },
+	{ "id": "primordial", "variants": 3, "pop_bias": "very_high" },
+	{ "id": "rocky", "variants": 3, "pop_bias": "any" },
+	{ "id": "terran", "variants": 3, "pop_bias": "very_high" },
+	{ "id": "thick_atmo", "variants": 3, "pop_bias": "medium" },
+	{ "id": "toxic", "variants": 3, "pop_bias": "none" },
+	{ "id": "volcanic", "variants": 3, "pop_bias": "low" }
+  ],
+  "asset_pattern": "res://assets/images/stellar_bodies/planets/{type}_{variant}.png"
+}	

@@ -1,0 +1,31 @@
+{
+  "schema": "star_loafer.star_types.v1",
+  "spectral_classes": ["O", "B", "A", "F", "G", "K", "M"],
+  "class_to_color": {
+	"O": "blue", "B": "blue", "A": "white",
+	"F": "white", "G": "yellow", "K": "orange", "M": "red"
+  },
+  "colors": ["blue", "orange", "red", "white", "yellow"],
+  "variants_per_color": 4,
+  "sprite_resolver": {
+	"pattern": "res://assets/images/stellar_bodies/stars/{color}_{variant}.png",
+	"fallback": "res://assets/images/stellar_bodies/stars/white_1.png"
+  },
+  "special": {
+	"brown_dwarf": {
+	  "chance": 0.02,
+	  "sprite": "res://assets/images/stellar_bodies/stars/star_dwarf_brown.png",
+	  "effects": ["low_luminosity", "reduced_solar_power"]
+	},
+	"white_dwarf": {
+	  "chance": 0.02,
+	  "sprite": "res://assets/images/stellar_bodies/stars/star_dwarf.png",
+	  "effects": ["dense_gravity", "navigation_penalty"]
+	},
+	"hypergiant": {
+	  "chance": 0.003,
+	  "sprite": "res://assets/images/stellar_bodies/stars/star_hypergiant.png",
+	  "effects": ["radiation_zones", "exotic_ores"]
+	}
+  }
+}

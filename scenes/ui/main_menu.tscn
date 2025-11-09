@@ -1,0 +1,160 @@
+[gd_scene load_steps=3 format=3 uid="uid://btsixg3ejxtav"]
+
+[ext_resource type="Script" uid="uid://dvuvt8aws6n3x" path="res://scripts/ui/main_menu.gd" id="1_sl1te"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sl1te"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_sl1te")
+
+[node name="LaunchUI" type="CanvasLayer" parent="."]
+
+[node name="BgColor" type="ColorRect" parent="LaunchUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = 2.0
+offset_right = -11.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.056291588, 0.056291603, 0.056291595, 1)
+
+[node name="Title" type="Label" parent="LaunchUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -810.0
+offset_top = 50.0
+offset_right = -130.0
+offset_bottom = 403.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 128
+text = "Star Loafer
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="LaunchUI"]
+custom_minimum_size = Vector2(300, 350)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -240.0
+offset_right = 350.0
+offset_bottom = 110.0
+grow_vertical = 2
+
+[node name="MenuVbox" type="VBoxContainer" parent="LaunchUI/Panel"]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -125.0
+offset_right = 100.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="NewGame" type="Button" parent="LaunchUI/Panel/MenuVbox"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "New Game"
+
+[node name="LoadGame" type="Button" parent="LaunchUI/Panel/MenuVbox"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Load Game"
+
+[node name="Settings" type="Button" parent="LaunchUI/Panel/MenuVbox"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+
+[node name="Quit" type="Button" parent="LaunchUI/Panel/MenuVbox"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[node name="NewGameDialog" type="VBoxContainer" parent="LaunchUI/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -33.5
+offset_right = 34.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LaunchUI/Panel/NewGameDialog"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="LaunchUI/Panel/NewGameDialog/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Seed"
+
+[node name="SeedInput" type="LineEdit" parent="LaunchUI/Panel/NewGameDialog/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="LaunchUI/Panel/NewGameDialog"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LaunchUI/Panel/NewGameDialog/HBoxContainer2"]
+layout_mode = 2
+text = "Galaxy Size"
+
+[node name="SizeOption" type="OptionButton" parent="LaunchUI/Panel/NewGameDialog/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+selected = 1
+item_count = 4
+popup/item_0/text = "Small"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Large"
+popup/item_2/id = 2
+popup/item_3/text = "Huge"
+popup/item_3/id = 3
+
+[node name="VSeparator" type="VSeparator" parent="LaunchUI/Panel/NewGameDialog"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_sl1te")
+
+[node name="Start" type="Button" parent="LaunchUI/Panel/NewGameDialog"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Start"

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfshjmykcrbiu"]
+
+[ext_resource type="Script" uid="uid://c2o142111j7dh" path="res://scripts/world/asteroid.gd" id="1_gwsj5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m84yt"]
+radius = 16.0
+
+[node name="Asteroid" type="StaticBody2D"]
+script = ExtResource("1_gwsj5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m84yt")

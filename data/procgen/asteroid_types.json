@@ -1,0 +1,7 @@
+{
+  "schema": "star_loafer.asteroid_types.v1",
+  "variants": 6,
+  "asset_pattern": "res://assets/images/stellar_bodies/asteroids/asteroid_{nn}.png",
+  "scale_range": [0.25, 5.0],
+  "notes": "Visual only - no gameplay effect on ore type"
+}

@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://hyy5genoy8it"]
+
+[ext_resource type="Script" uid="uid://boe730ego6w0i" path="res://scripts/actors/player_ship.gd" id="1_ugr4l"]
+[ext_resource type="Texture2D" uid="uid://b7il265stc3kd" path="res://assets/images/actors/ships/scout.png" id="2_nlthx"]
+[ext_resource type="Script" uid="uid://4bla2s7nr0qx" path="res://scripts/ui/camera2d.gd" id="3_nlthx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oro8t"]
+size = Vector2(58, 96)
+
+[node name="PlayerShip" type="CharacterBody2D" groups=["player", "player_ship"]]
+script = ExtResource("1_ugr4l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_nlthx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = ExtResource("3_nlthx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-9, 0)
+shape = SubResource("RectangleShape2D_oro8t")
+
+[node name="HitBoxArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxArea"]
+position = Vector2(-9, 0)
+shape = SubResource("RectangleShape2D_oro8t")

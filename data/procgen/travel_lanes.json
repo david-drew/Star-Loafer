@@ -1,0 +1,106 @@
+{
+  "schema": "star_loafer.travel_lanes.v1",
+  "lanes": [
+	{
+	  "id": "quiet_void",
+	  "description": "Safe, well-patrolled routes",
+	  "encounter_table": [
+		{ "id": "nothing", "weight": 18, "interrupt": false },
+		{ "id": "debris_field", "weight": 1, "interrupt": false },
+		{ "id": "distress_beacon", "weight": 0.5, "interrupt": true }
+	  ],
+	  "lambda_base_per_min": 0.15,
+	  "autopilot_safe": true,
+	  "autopilot_warning": null,
+	  "encounter_modifiers": {
+		"time_compression_multiplier": {
+		  "1x": 1.0,
+		  "2x": 1.35,
+		  "4x": 1.7
+		}
+	  },
+	  "tags": ["peaceful", "low_risk", "boring"]
+	},
+	{
+	  "id": "contested_route",
+	  "description": "Mixed traffic with occasional threats",
+	  "encounter_table": [
+		{ "id": "nothing", "weight": 12, "interrupt": false },
+		{ "id": "merchant_convoy", "weight": 3, "interrupt": false },
+		{ "id": "patrol_encounter", "weight": 2, "interrupt": false },
+		{ "id": "pirate_interdiction", "weight": 2, "interrupt": true },
+		{ "id": "smuggler_hail", "weight": 1, "interrupt": true }
+	  ],
+	  "lambda_base_per_min": 0.25,
+	  "autopilot_safe": true,
+	  "autopilot_warning": "Moderate pirate activity detected in this region.",
+	  "encounter_modifiers": {
+		"time_compression_multiplier": {
+		  "1x": 1.0,
+		  "2x": 1.35,
+		  "4x": 1.7
+		}
+	  },
+	  "tags": ["mixed", "medium_risk", "interesting"]
+	},
+	{
+	  "id": "dangerous_passage",
+	  "description": "High-risk routes through hostile territory",
+	  "encounter_table": [
+		{ "id": "nothing", "weight": 8, "interrupt": false },
+		{ "id": "pirate_ambush", "weight": 5, "interrupt": true },
+		{ "id": "minefield", "weight": 3, "interrupt": true },
+		{ "id": "hostile_intercept", "weight": 2, "interrupt": true },
+		{ "id": "phenomena_hazard", "weight": 2, "interrupt": false }
+	  ],
+	  "lambda_base_per_min": 0.4,
+	  "autopilot_safe": false,
+	  "autopilot_warning": "WARNING: High pirate activity detected. Manual piloting strongly recommended.",
+	  "encounter_modifiers": {
+		"time_compression_multiplier": {
+		  "1x": 1.0,
+		  "2x": 1.5,
+		  "4x": 2.0
+		}
+	  },
+	  "tags": ["hostile", "high_risk", "avoid", "lucrative"]
+	}
+  ],
+  "selection_rules": {
+	"description": "How to assign lane profiles to routes",
+	"by_region_types": [
+	  {
+		"from_region": "core_space",
+		"to_region": "core_space",
+		"lane": "quiet_void",
+		"chance": 0.9
+	  },
+	  {
+		"from_region": "core_space",
+		"to_region": "outer_rim",
+		"lane": "contested_route",
+		"chance": 0.7
+	  },
+	  {
+		"from_region": "outer_rim",
+		"to_region": "outer_rim",
+		"lane": "dangerous_passage",
+		"chance": 0.6
+	  }
+	],
+	"by_system_archetypes": [
+	  {
+		"from_archetype": "core_world",
+		"to_archetype": "core_world",
+		"lane": "quiet_void",
+		"chance": 0.95
+	  },
+	  {
+		"from_archetype": "dead_system",
+		"to_archetype": "any",
+		"lane": "dangerous_passage",
+		"chance": 0.8
+	  }
+	]
+  }
+}

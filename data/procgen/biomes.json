@@ -1,0 +1,26 @@
+{
+  "schema": "star_loafer.biomes.v1",
+  "biomes": [
+	{
+	  "id": "deep_space",
+	  "scope": "space",
+	  "distance_from_star": [5.0, 999.0],
+	  "weights": { "encounters": 1, "mining": 1 },
+	  "tags": ["low_density", "long_range"]
+	},
+	{
+	  "id": "inner_lane",
+	  "scope": "space",
+	  "distance_from_star": [0.5, 2.0],
+	  "weights": { "encounters": 2, "mining": 1 },
+	  "tags": ["trade_routes", "patrol_zones"]
+	},
+	{
+	  "id": "belt_field",
+	  "scope": "space",
+	  "distance_from_star": [2.0, 5.0],
+	  "weights": { "encounters": 1, "mining": 3 },
+	  "tags": ["asteroids", "mining_ops"]
+	}
+  ]
+}

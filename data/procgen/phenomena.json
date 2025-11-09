@@ -1,0 +1,32 @@
+{
+  "schema": "star_loafer.phenomena.v1",
+  "phenomena": [
+	{
+	  "id": "aurora_minor",
+	  "where": ["planet:terran", "planet:ice_world"],
+	  "effects": ["visual_only"],
+	  "rarity": 0.15
+	},
+	{
+	  "id": "ion_storm",
+	  "where": ["space:inner_lane", "space:deep_space"],
+	  "effects": ["sensor_range_-50%", "shield_regen_-25%"],
+	  "rarity": 0.05,
+	  "visual": "particle_field_blue"
+	},
+	{
+	  "id": "nebula_drift",
+	  "where": ["space:deep_space"],
+	  "effects": ["speed_-30%", "sensor_range_-70%"],
+	  "rarity": 0.08,
+	  "visual": "fog_overlay_purple"
+	},
+	{
+	  "id": "radiation_belt",
+	  "where": ["space:near_star", "special:hypergiant"],
+	  "effects": ["hull_damage_over_time", "exotic_ore_boost"],
+	  "rarity": 0.03,
+	  "visual": "shimmer_overlay_yellow"
+	}
+  ]
+}
