@@ -9,6 +9,7 @@ class_name SystemExploration
 var planet_scene = preload("res://scenes/world/planet.tscn")
 var star_scene = preload("res://scenes/world/star.tscn")
 var station_scene = preload("res://scenes/world/station.tscn")
+var npc_ship_scene = preload("res://scenes/actors/npc_ship.tscn")  # Add this if missing
 
 # Node references
 @onready var player_ship = $PlayerShip
@@ -17,7 +18,7 @@ var station_scene = preload("res://scenes/world/station.tscn")
 # Dynamically created
 var sectors: Node2D = null
 var stellar_bodies: Node2D = null  # Container for stars and planets
-var npc_ships: Node2D = null  		# Container for NPC ships
+var npc_ships: Node2D = null  # NEW: Container for NPC ships
 
 # Service references (from GameRoot/Systems)
 var streamer: SectorStreamer = null
@@ -34,13 +35,13 @@ const STAR_BASE_SCALE = 1.5
 const PLANET_BASE_SCALE = 0.15
 
 # Distance-based scaling (LOD effect)
-const DISTANCE_SCALE_MIN = 0.5
-const DISTANCE_SCALE_MAX = 2.0
-const DISTANCE_SCALE_NEAR = 2200.0
-const DISTANCE_SCALE_FAR = 12000.0			# 15000.0
+const DISTANCE_SCALE_MIN = 0.5   # Minimum size when FAR (50%)
+const DISTANCE_SCALE_MAX = 2.0   # Maximum size when NEAR (200%)
+const DISTANCE_SCALE_NEAR = 3000.0  # Distance for full size
+const DISTANCE_SCALE_FAR = 20000.0  # Distance for minimum size
 
 # Performance optimization
-const SCALE_UPDATE_INTERVAL = 0.05
+const SCALE_UPDATE_INTERVAL = 0.05  # Update 20 times per second (smoother)
 var scale_update_timer: float = 0.0
 
 # Asteroid belt generation
@@ -59,41 +60,12 @@ func _ready() -> void:
 	_setup_background()
 	_generate_current_system()
 	_spawn_stellar_bodies()
-	_spawn_npcs()  
-	_debug_force_spawn_test_npcs()			# TODO Debug
+	_spawn_stations()  # NEW: Spawn stations
+	_spawn_npcs()
 	_enable_streaming()
 	
 	is_initialized = true
 	print("SystemExploration: Ready")
-	
-
-func _debug_force_spawn_test_npcs() -> void:
-	"""Temporary debug function to force spawn visible NPCs"""
-	if npc_spawner == null or npc_ships == null:
-		print("DEBUG: Can't spawn - npc_spawner or npc_ships is null")
-		return
-	
-	print("DEBUG: Force spawning 5 test NPCs...")
-	
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	
-	for i in range(5):
-		var ship_data = {
-			"id": "debug_npc_%d" % i,
-			"type": "patrol_corvette",
-			"faction_id": "imperial_meridian",
-			"name": "DEBUG Ship %d" % i,
-			"spawn_position": player_ship.global_position + Vector2(rng.randf_range(-2000, 2000), rng.randf_range(-2000, 2000)),
-			"patrol_route": [],
-			"ai_behavior": "patrol"
-		}
-		
-		var npc_ship_scene = load("res://scenes/actors/npc_ship.tscn")
-		var npc = npc_ship_scene.instantiate()
-		npc_ships.add_child(npc)
-		npc.initialize(ship_data)
-		print("  Spawned debug NPC at: ", ship_data["spawn_position"])
 
 func _process(delta: float) -> void:
 	if !is_initialized or player_ship == null or stellar_bodies == null:
@@ -233,11 +205,9 @@ func _spawn_stellar_bodies() -> void:
 	for child in stellar_bodies.get_children():
 		child.queue_free()
 	
-	# Spawn stars at origin (0,0)
+	# Spawn stars with proper positioning
 	var stars = current_system_data.get("stars", [])
-	for i in range(stars.size()):
-		var star = stars[i]
-		_spawn_star(star, i)
+	_spawn_stars_with_formation(stars)
 	
 	# Spawn planets at their orbital distances
 	var bodies = current_system_data.get("bodies", [])
@@ -251,6 +221,45 @@ func _spawn_stellar_bodies() -> void:
 			_spawn_asteroid_belt(body)
 	
 	print("SystemExploration: Spawned %d stars and %d bodies" % [stars.size(), bodies.size()])
+
+func _spawn_stations() -> void:
+	"""Spawn stations in the system"""
+	if stellar_bodies == null:
+		push_error("SystemExploration: Cannot spawn stations, StellarBodies node is null")
+		return
+	
+	if current_system_data.is_empty():
+		push_warning("SystemExploration: No system data to spawn stations from")
+		return
+	
+	var stations = current_system_data.get("stations", [])
+	if stations.is_empty():
+		print("SystemExploration: No stations in this system")
+		return
+	
+	for station_data in stations:
+		_spawn_station(station_data)
+	
+	print("SystemExploration: Spawned %d stations" % stations.size())
+
+func _spawn_station(station_data: Dictionary) -> void:
+	"""Spawn a single station"""
+	var station = station_scene.instantiate()
+	
+	# Convert position array to Vector2
+	var pos_array = station_data.get("position", [0, 0])
+	var position = Vector2(pos_array[0], pos_array[1])
+	
+	# Add faction_id from system if not in station data
+	if !station_data.has("faction_id"):
+		station_data["faction_id"] = current_system_data.get("faction_id", "")
+	
+	# Update position in data
+	station_data["position"] = position
+	
+	# Initialize and add to scene
+	stellar_bodies.add_child(station)
+	station.initialize(station_data)
 
 func _spawn_npcs() -> void:
 	"""NEW: Spawn NPC ships for this system"""
@@ -283,25 +292,92 @@ func _update_stellar_body_scales() -> void:
 			var distance = player_pos.distance_to(child.global_position)
 			_apply_distance_scale(child, distance)
 
+
 func _apply_distance_scale(node: Node2D, distance: float) -> void:
-	var scale_factor = DISTANCE_SCALE_MAX
-	if distance > DISTANCE_SCALE_NEAR:
+	# Get camera zoom factor to adjust LOD thresholds
+	var camera_zoom = 1.0
+	if player_ship and player_ship.has_node("Camera2D"):
+		var cam = player_ship.get_node("Camera2D")
+		camera_zoom = cam.zoom.x  # Lower value = zoomed in closer
+	
+	# Adjust distance thresholds by camera zoom
+	# When zoomed in (0.6), multiply thresholds to make them larger
+	# When zoomed out (1.5), divide thresholds to make them smaller
+	var adjusted_near = DISTANCE_SCALE_NEAR * camera_zoom
+	var adjusted_far = DISTANCE_SCALE_FAR * camera_zoom
+	
+	# Calculate target scale based on adjusted distance
+	var target_scale_factor = DISTANCE_SCALE_MAX  # Start at MAX (close = big)
+	
+	if distance > adjusted_near:
+		# Interpolate from MAX (close) to MIN (far)
 		var t = clamp(
-			(distance - DISTANCE_SCALE_NEAR) / (DISTANCE_SCALE_FAR - DISTANCE_SCALE_NEAR),
+			(distance - adjusted_near) / (adjusted_far - adjusted_near),
 			0.0,
 			1.0
 		)
-		scale_factor = lerp(DISTANCE_SCALE_MAX, DISTANCE_SCALE_MIN, t)
+		target_scale_factor = lerp(DISTANCE_SCALE_MAX, DISTANCE_SCALE_MIN, t)
 	
 	var sprite = node.get_node_or_null("Sprite2D")
 	if sprite:
 		var base_scale = node.get_meta("base_scale", Vector2.ONE)
-		sprite.scale = base_scale * scale_factor
+		var target_scale = base_scale * target_scale_factor
+		
+		# Smoothly interpolate current scale toward target (prevents popping)
+		sprite.scale = sprite.scale.lerp(target_scale, 0.15)
 
 func _spawn_star(star_data: Dictionary, index: int) -> void:
 	var star = star_scene.instantiate()
 	star.initialize(star_data, index)
 	stellar_bodies.add_child(star)
+
+func _spawn_stars_with_formation(stars: Array) -> void:
+	"""Spawn stars with proper formation based on count"""
+	if stars.is_empty():
+		return
+	
+	var star_count = stars.size()
+	
+	# Get RNG seeded to this specific system for consistent results
+	var rng = RandomNumberGenerator.new()
+	rng.seed = current_system_data.get("seed", 0)
+	
+	match star_count:
+		1:
+			# Single star at center
+			_spawn_star_at_position(stars[0], 0, Vector2.ZERO)
+		
+		2:
+			# Binary stars side-by-side with random separation (1200-2500px)
+			var separation = rng.randf_range(1200.0, 2500.0)
+			_spawn_star_at_position(stars[0], 0, Vector2(-separation / 2, 0))
+			_spawn_star_at_position(stars[1], 1, Vector2(separation / 2, 0))
+		
+		3:
+			# Trinary stars in triangle formation with random radius (1000-2000px)
+			var radius = rng.randf_range(1000.0, 2000.0)  # All stars use same distance
+			var rotation = rng.randf() * TAU  # Random rotation
+			
+			for i in range(3):
+				var angle = (TAU / 3.0) * i + rotation  # 120 degrees apart + rotation
+				var position = Vector2(cos(angle), sin(angle)) * radius
+				_spawn_star_at_position(stars[i], i, position)
+		
+		_:
+			# 4+ stars - shouldn't happen, but fall back to circle
+			var radius = rng.randf_range(1200.0, 2000.0)
+			var rotation = rng.randf() * TAU
+			for i in range(stars.size()):
+				var angle = (TAU / stars.size()) * i + rotation
+				var position = Vector2(cos(angle), sin(angle)) * radius
+				_spawn_star_at_position(stars[i], i, position)
+
+func _spawn_star_at_position(star_data: Dictionary, index: int, position: Vector2) -> void:
+	"""Spawn a star at a specific position"""
+	var star = star_scene.instantiate()
+	star.initialize(star_data, index)
+	stellar_bodies.add_child(star)
+	star.global_position = position
 
 func _spawn_planet(planet_data: Dictionary) -> void:
 	var planet = planet_scene.instantiate()

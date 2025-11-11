@@ -28,7 +28,7 @@ func initialize(data: Dictionary, seed: int) -> void:
 	_setup_sprite(data)
 	
 	# Store base scale metadata for LOD system
-	set_meta("base_scale", base_scale)
+	set_meta("base_scale", sprite.scale)
 	
 	print("  Planet initialized: %s (type: %s, orbit: %.1f AU)" % [
 		planet_id,

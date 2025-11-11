@@ -17,6 +17,9 @@ func _ready() -> void:
 	if sprite.texture == null:
 		sprite.texture = PlaceholderTexture2D.new()
 		sprite.texture.size = Vector2(48, 32)  # Width > Height for right-facing ship
+		
+	# Store base scale for LOD system
+	set_meta("base_scale", sprite.scale)
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
