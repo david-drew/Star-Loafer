@@ -14,8 +14,13 @@ var hovered_object: Dictionary = {}
 var hover_timer: float = 0.0
 var player_icon: Node2D = null  # Player ship indicator
 
-const MAP_SCALE = 80.0  # Pixels per AU (for map display, not world space)
+var map_scale: float = 80.0  # Dynamic: pixels per AU (calculated to fit system)
 const ICON_SIZE = Vector2(24, 24)
+const AU_TO_PIXELS = 4000.0  # Match SystemExploration's scaling
+
+# Performance: throttle player icon updates
+const PLAYER_ICON_UPDATE_INTERVAL = 0.05  # Update every 0.05s (20fps) - smooth enough
+var player_icon_update_timer: float = 0.0
 
 func _ready() -> void:
 	hide()
@@ -76,9 +81,21 @@ func _populate_map() -> void:
 		push_warning("SystemMap: No system data available")
 		return
 	
+	# Calculate dynamic scale to fit entire system on screen
+	var max_orbit = 0.0
+	for body in system_data.get("bodies", []):
+		var orbit = body.get("orbit", {})
+		var radius = orbit.get("a_AU", 0.0)
+		if radius > max_orbit:
+			max_orbit = radius
+	
+	# Add 20% padding around system
+	var available_size = $MapContainer.size.x * 0.4  # Use 40% of container (leave room for UI)
+	map_scale = available_size / (max_orbit * 1.2) if max_orbit > 0 else 80.0
+	
 	var map_center = $MapContainer.size / 2.0
 	
-	print("SystemMap: Populating system '%s'" % system_data.get("system_id", "Unknown"))
+	print("SystemMap: Populating system '%s' (max orbit: %.1f AU, scale: %.1f px/AU)" % [system_data.get("system_id", "Unknown"), max_orbit, map_scale])
 	
 	# Draw star(s) at center
 	for star in system_data.get("stars", []):
@@ -141,26 +158,26 @@ func _create_player_ship_icon(map_center: Vector2) -> void:
 func _create_star_icon(star: Dictionary, map_center: Vector2) -> void:
 	var icon = TextureRect.new()
 	icon.texture = PlaceholderTexture2D.new()
-	icon.texture.size = ICON_SIZE * 1.5  # Stars larger
-	icon.custom_minimum_size = ICON_SIZE * 1.5
-	icon.position = map_center - (ICON_SIZE * 1.5) / 2.0
+	icon.texture.size = ICON_SIZE * 2.5  # Stars MUCH larger than planets
+	icon.custom_minimum_size = ICON_SIZE * 2.5
+	icon.position = map_center - (ICON_SIZE * 2.5) / 2.0
 	
-	# Color based on star class
+	# Color based on star class (brighter than before)
 	var star_class = star.get("class", "G")
 	if star_class == "Special":
-		icon.modulate = Color.PURPLE
+		icon.modulate = Color(1.0, 0.5, 1.0, 1.0)  # Bright purple
 	elif star_class in ["O", "B"]:
-		icon.modulate = Color.DODGER_BLUE
+		icon.modulate = Color(0.6, 0.8, 1.0, 1.0)  # Bright blue
 	elif star_class == "A":
 		icon.modulate = Color.WHITE
 	elif star_class == "F":
-		icon.modulate = Color.LIGHT_YELLOW
+		icon.modulate = Color(1.0, 1.0, 0.9, 1.0)  # Light yellow
 	elif star_class == "G":
 		icon.modulate = Color.YELLOW
 	elif star_class == "K":
 		icon.modulate = Color.ORANGE
 	elif star_class == "M":
-		icon.modulate = Color.INDIAN_RED
+		icon.modulate = Color(1.0, 0.4, 0.3, 1.0)  # Bright red
 	
 	icon.mouse_entered.connect(_on_object_hover.bind(star))
 	icon.mouse_exited.connect(_on_object_unhover)
@@ -175,18 +192,31 @@ func _create_body_icon(body: Dictionary, map_center: Vector2) -> void:
 	
 	var icon = TextureRect.new()
 	icon.texture = PlaceholderTexture2D.new()
-	icon.texture.size = ICON_SIZE
-	icon.custom_minimum_size = ICON_SIZE
 	
-	# Position based on orbit
+	# Size based on body type
+	var icon_size = ICON_SIZE
+	if body_kind == "asteroid_belt":
+		icon_size = ICON_SIZE * 0.7  # Smaller for belts
+	else:
+		var body_type = body.get("type", "rocky")
+		if "gas" in body_type:
+			icon_size = ICON_SIZE * 1.5  # Larger for gas giants
+		elif "dwarf" in body_type:
+			icon_size = ICON_SIZE * 0.7  # Smaller for dwarfs
+	
+	icon.texture.size = icon_size
+	icon.custom_minimum_size = icon_size
+	
+	# Position based on orbit - use stored angle from generation
 	var orbit = body.get("orbit", {})
 	var orbit_radius = orbit.get("a_AU", 1.0)
-	var angle = hash(body_id) % 360  # Pseudo-random angle
+	var angle = orbit.get("angle_rad", 0.0)  # Use stored angle - matches world exactly!
+	
 	var offset = Vector2(
-		cos(deg_to_rad(angle)) * orbit_radius * MAP_SCALE,
-		sin(deg_to_rad(angle)) * orbit_radius * MAP_SCALE
+		cos(angle) * orbit_radius * map_scale,
+		sin(angle) * orbit_radius * map_scale
 	)
-	icon.position = map_center + offset - ICON_SIZE / 2.0
+	icon.position = map_center + offset - icon_size / 2.0
 	
 	# Color based on body type
 	if body_kind == "asteroid_belt":
@@ -225,8 +255,8 @@ func _create_station_icon(station: Dictionary, map_center: Vector2) -> void:
 	# Position stations in a ring around center (simplified)
 	var angle = hash(station_id) % 360
 	var offset = Vector2(
-		cos(deg_to_rad(angle)) * 3.0 * MAP_SCALE,
-		sin(deg_to_rad(angle)) * 3.0 * MAP_SCALE
+		cos(deg_to_rad(angle)) * 3.0 * map_scale,
+		sin(deg_to_rad(angle)) * 3.0 * map_scale
 	)
 	icon.position = map_center + offset - (ICON_SIZE * 0.8) / 2.0
 	icon.modulate = Color.CYAN
@@ -241,8 +271,11 @@ func _process(delta: float) -> void:
 	if !visible:
 		return
 	
-	# Update player ship icon position
-	_update_player_ship_position()
+	# Throttle player ship icon updates
+	player_icon_update_timer += delta
+	if player_icon_update_timer >= PLAYER_ICON_UPDATE_INTERVAL:
+		player_icon_update_timer = 0.0
+		_update_player_ship_position()
 	
 	# Handle hover info panel
 	if hovered_object.is_empty():
@@ -269,8 +302,8 @@ func _update_player_ship_position() -> void:
 	var map_center = $MapContainer.size / 2.0
 	var player_world_pos = player_ship.global_position
 	
-	# Scale down from world space (8000 pixels/AU) to map space (80 pixels/AU)
-	var world_to_map_scale = MAP_SCALE / 8000.0  # 80 / 8000 = 0.01
+	# Scale conversion: world pixels → AU → map pixels
+	var world_to_map_scale = map_scale / AU_TO_PIXELS
 	var map_offset = player_world_pos * world_to_map_scale
 	
 	player_icon.position = map_center + map_offset

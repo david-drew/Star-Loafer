@@ -13,6 +13,7 @@ grow_vertical = 2
 script = ExtResource("1")
 
 [node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +23,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.8)
 
 [node name="MapContainer" type="Control" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,6 +38,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MapBorder" type="Panel" parent="MapContainer"]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SystemView" type="Control" parent="MapContainer"]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

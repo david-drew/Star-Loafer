@@ -4,7 +4,7 @@
 # Phase 1+: Will support mining, health, etc.
 
 extends StaticBody2D
-class_name Asteroid
+class_name Asteroid_2
 
 # Phase 1 properties (not used in Phase 0)
 var ore_type: String = ""

@@ -8,6 +8,7 @@
 size = Vector2(58, 96)
 
 [node name="PlayerShip" type="CharacterBody2D" groups=["player", "player_ship"]]
+z_index = 100
 script = ExtResource("1_ugr4l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

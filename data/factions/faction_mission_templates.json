@@ -1,0 +1,222 @@
+{
+  "imperial_meridian_missions": [
+    {
+      "id": "imperial_beacon_inspection",
+      "type": "inspection",
+      "summary": "Inspect and, if needed, repair nav beacons while deterring pirates or saboteurs."
+    },
+    {
+      "id": "imperial_diplomatic_courier",
+      "type": "courier",
+      "summary": "Transport sealed state data; delays or tampering hit reputation."
+    },
+    {
+      "id": "imperial_reclamation_order",
+      "type": "recovery",
+      "summary": "Recover stolen imperial cargo from fringe factions or pirates."
+    },
+    {
+      "id": "imperial_border_defense_drill",
+      "type": "combat_sim",
+      "summary": "Participate in or fake hostiles during fleet exercises."
+    }
+  ],
+  "spindle_cartel_missions": [
+    {
+      "id": "spindle_priority_freight",
+      "type": "delivery",
+      "summary": "Time-sensitive corporate freight run with penalties for delay."
+    },
+    {
+      "id": "spindle_repo_contract",
+      "type": "bounty",
+      "summary": "Track and seize a defaulted ship; moral choices possible."
+    },
+    {
+      "id": "spindle_market_fixer",
+      "type": "manipulation",
+      "summary": "Engineer artificial scarcity in a target system."
+    },
+    {
+      "id": "spindle_patent_enforcement",
+      "type": "strike",
+      "summary": "Shut down illegal fab labs or copycat tech."
+    }
+  ],
+  "free_hab_league_missions": [
+    {
+      "id": "fhl_strike_support",
+      "type": "support",
+      "summary": "Supply or evacuate striking workers."
+    },
+    {
+      "id": "fhl_rescue_trawler",
+      "type": "rescue",
+      "summary": "Save trapped miners before life support fails."
+    },
+    {
+      "id": "fhl_fair_trade_convoy",
+      "type": "escort",
+      "summary": "Escort co-op haulers through hostile territory."
+    },
+    {
+      "id": "fhl_expose_corruption",
+      "type": "intel",
+      "summary": "Leak or broadcast evidence of exploitation."
+    }
+  ],
+  "nomad_clans_missions": [
+    {
+      "id": "nomad_drift_escort",
+      "type": "escort",
+      "summary": "Guide a clan flotilla across dangerous driftspace."
+    },
+    {
+      "id": "nomad_lost_kin_retrieval",
+      "type": "rescue",
+      "summary": "Recover or sanctify lost clan vessels."
+    },
+    {
+      "id": "nomad_story_trade",
+      "type": "explore",
+      "summary": "Collect logs and tales as barter for routes."
+    },
+    {
+      "id": "nomad_storm_chase",
+      "type": "race",
+      "summary": "Race a signal storm to harvest rare debris."
+    }
+  ],
+  "covenant_quiet_suns_missions": [
+    {
+      "id": "cqs_pilgrim_convoy",
+      "type": "escort",
+      "summary": "Guard hospice and pilgrim ships to a dying star."
+    },
+    {
+      "id": "cqs_heretic_hunt",
+      "type": "targeted",
+      "summary": "Silence or retrieve rogue preachers or cult cells."
+    },
+    {
+      "id": "cqs_relic_cleansing",
+      "type": "delivery",
+      "summary": "Deliver forbidden relics for destruction."
+    },
+    {
+      "id": "cqs_medical_relief",
+      "type": "aid",
+      "summary": "Run medicine into plague or war-torn systems."
+    }
+  ],
+  "black_exchange_missions": [
+    {
+      "id": "bx_data_fence",
+      "type": "smuggling",
+      "summary": "Move stolen data cores unseen."
+    },
+    {
+      "id": "bx_silent_auction",
+      "type": "transport",
+      "summary": "Deliver illicit artifacts for a blind auction."
+    },
+    {
+      "id": "bx_witness_extraction",
+      "type": "extraction",
+      "summary": "Evacuate an informant before rivals arrive."
+    },
+    {
+      "id": "bx_dead_drop_delivery",
+      "type": "drop",
+      "summary": "Place encrypted cores at specified orbital coordinates."
+    }
+  ],
+  "artilect_custodians_missions": [
+    {
+      "id": "ac_diagnostic_run",
+      "type": "service",
+      "summary": "Debug malfunctioning relays or stations."
+    },
+    {
+      "id": "ac_preservation_escort",
+      "type": "escort",
+      "summary": "Guard restoration drones in hazardous zones."
+    },
+    {
+      "id": "ac_containment_protocol",
+      "type": "containment",
+      "summary": "Seal runaway code or nanite outbreaks."
+    },
+    {
+      "id": "ac_logic_trial",
+      "type": "puzzle",
+      "summary": "Solve AI-set challenges to gain access rights."
+    }
+  ],
+  "iron_wakes_missions": [
+    {
+      "id": "iw_contract_defense",
+      "type": "escort",
+      "summary": "Defend paying clients from attacks."
+    },
+    {
+      "id": "iw_counter_raid",
+      "type": "strike",
+      "summary": "Preemptively hit pirate or rival bases."
+    },
+    {
+      "id": "iw_debt_collection",
+      "type": "enforcement",
+      "summary": "Collect overdue protection payments."
+    },
+    {
+      "id": "iw_honor_duel",
+      "type": "duel",
+      "summary": "Formalized ship duel settling disputes."
+    }
+  ],
+  "drift_cartographers_missions": [
+    {
+      "id": "dc_survey_run",
+      "type": "survey",
+      "summary": "Map signal weather and anomalies."
+    },
+    {
+      "id": "dc_relic_mapping",
+      "type": "survey",
+      "summary": "Chart precursor ruins or derelicts."
+    },
+    {
+      "id": "dc_rescue_scouts",
+      "type": "rescue",
+      "summary": "Recover missing survey teams."
+    },
+    {
+      "id": "dc_smuggler_mapping",
+      "type": "betrayal",
+      "summary": "Leak routes to pirates or authorities."
+    }
+  ],
+  "radiant_communion_missions": [
+    {
+      "id": "rc_sunfire_vigil",
+      "type": "escort",
+      "summary": "Guard pilgrim rituals near dangerous stars."
+    },
+    {
+      "id": "rc_purity_raid",
+      "type": "strike",
+      "summary": "Destroy 'tainted' AI or relic facilities."
+    },
+    {
+      "id": "rc_conversion_outreach",
+      "type": "broadcast",
+      "summary": "Run religious broadcasts through comm nets."
+    },
+    {
+      "id": "rc_solar_harvest",
+      "type": "hazard_collection",
+      "summary": "Collect stellar material during flares."
+    }
+  ]
+}

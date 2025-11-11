@@ -1,9 +1,13 @@
 extends CharacterBody2D
 
-const MAX_SPEED = 300.0
-const ACCELERATION = 600.0
-const ROTATION_SPEED = 3.0
-const DRAG = 0.98  # Multiplier per frame (space friction)
+const MAX_SPEED 		= 1200.0  	# Pixels per second
+const ACCELERATION 		= 500.0  	# Pixels per second squared
+const ROTATION_SPEED 	= 3.0  		# Radians per second
+const DRAG_COEFFICIENT 	= 1.5  		# Units of speed removed per second (drag)
+
+# Performance: only emit position signal when moved significantly
+const POSITION_CHANGE_THRESHOLD = 10.0  # pixels
+var last_emitted_position: Vector2 = Vector2.ZERO
 
 @onready var sprite = $Sprite2D
 @onready var camera = $Camera2D
@@ -16,7 +20,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
-	_apply_drag()
 	move_and_slide()
 	_update_game_state()
 
@@ -42,15 +45,28 @@ func _handle_input(delta: float) -> void:
 		var thrust_direction = transform.x
 		velocity += thrust_direction * thrust_input * ACCELERATION * delta
 	
+	# Apply drag (proper physics: removes velocity over time)
+	_apply_drag(delta)
+	
 	# Clamp to max speed
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
 
-func _apply_drag() -> void:
-	# Space friction (very light)
-	velocity *= DRAG
+func _apply_drag(delta: float) -> void:
+	# Proper drag: remove velocity proportional to current velocity
+	if velocity.length() > 0:
+		var drag_force = velocity.normalized() * DRAG_COEFFICIENT * delta * 60.0
+		if drag_force.length() < velocity.length():
+			velocity -= drag_force
+		else:
+			velocity = Vector2.ZERO  # Stop completely if drag would reverse direction
 
 func _update_game_state() -> void:
+	# Always update GameState (needed for streaming)
 	GameState.ship_position = global_position
 	GameState.ship_velocity = velocity
-	EventBus.ship_position_changed.emit(global_position)
+	
+	# Only emit signal when position changed significantly (reduces event spam)
+	if last_emitted_position.distance_to(global_position) >= POSITION_CHANGE_THRESHOLD:
+		last_emitted_position = global_position
+		EventBus.ship_position_changed.emit(global_position)

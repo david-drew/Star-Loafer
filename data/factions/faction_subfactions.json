@@ -1,0 +1,79 @@
+[
+  {
+    "id": "imperial_customs_authority",
+    "parent_id": "imperial_meridian",
+    "role": "bureaucracy",
+    "summary": "Enforces tariffs, visas, and beacon certifications.",
+    "tags": ["inspections", "bribery_hooks"]
+  },
+  {
+    "id": "meridian_navy_command",
+    "parent_id": "imperial_meridian",
+    "role": "military",
+    "summary": "Heavy cruisers and lane security.",
+    "tags": ["patrols", "blockades"]
+  },
+  {
+    "id": "spindle_aurum_logistics",
+    "parent_id": "spindle_cartel",
+    "role": "trade",
+    "summary": "Fuel and freight optimization arm.",
+    "tags": ["timed_deliveries"]
+  },
+  {
+    "id": "freehab_union_of_airlocks",
+    "parent_id": "free_hab_league",
+    "role": "labor_syndicate",
+    "summary": "Coordinated strikes and dock actions.",
+    "tags": ["unrest", "negotiation"]
+  },
+  {
+    "id": "nomad_clan_kephra",
+    "parent_id": "nomad_clans",
+    "role": "pilgrims",
+    "summary": "Keepers of oral driftspace charts.",
+    "tags": ["maps", "rituals"]
+  },
+  {
+    "id": "covenant_order_of_veil",
+    "parent_id": "covenant_quiet_suns",
+    "role": "monastic",
+    "summary": "Hospice keepers and quietist clergy.",
+    "tags": ["healing"]
+  },
+  {
+    "id": "bx_grey_hand",
+    "parent_id": "black_exchange",
+    "role": "smugglers",
+    "summary": "Contraband runners across gate lines.",
+    "tags": ["illicit_cargo"]
+  },
+  {
+    "id": "ac_directive_zero",
+    "parent_id": "artilect_custodians",
+    "role": "governance",
+    "summary": "Foundational AIs bound to anti-entropy.",
+    "tags": ["strict_law"]
+  },
+  {
+    "id": "iw_crimson_regiment",
+    "parent_id": "iron_wakes",
+    "role": "elite_mercs",
+    "summary": "Top-tier fleet defense and escorts.",
+    "tags": ["high_danger_contracts"]
+  },
+  {
+    "id": "dc_surveyors_league",
+    "parent_id": "drift_cartographers",
+    "role": "explorers",
+    "summary": "Primary field survey crews.",
+    "tags": ["exploration"]
+  },
+  {
+    "id": "rc_solar_choir",
+    "parent_id": "radiant_communion",
+    "role": "clergy",
+    "summary": "Lead rites at star temples.",
+    "tags": ["pilgrims"]
+  }
+]

@@ -1,0 +1,103 @@
+{
+  "system_id": "sol_system",
+  "display_name": "Sol",
+  "seed": 183923,
+  "star": {
+	"scene": "res://scenes/star_body.tscn",
+	"position": [
+	  0.0,
+	  0.0
+	],
+	"type": "g_class",
+	"color": "#ffd76b",
+	"radius": 695700.0,
+	"light_intensity": 1.0
+  },
+  "planets": [
+	{
+	  "id": "planet_mercury",
+	  "scene": "res://scenes/planet_body.tscn",
+	  "type": "terrestrial",
+	  "texture": "res://art/planets/mercury.png",
+	  "orbit": {
+		"radius": 600.0,
+		"angle": 0.5,
+		"speed": 0.0003
+	  },
+	  "moons": []
+	},
+	{
+	  "id": "planet_earth",
+	  "scene": "res://scenes/planet_body.tscn",
+	  "type": "terrestrial",
+	  "texture": "res://art/planets/earth.png",
+	  "orbit": {
+		"radius": 1200.0,
+		"angle": 2.3,
+		"speed": 0.0002
+	  },
+	  "moons": [
+		{
+		  "id": "moon_luna",
+		  "scene": "res://scenes/planet_body.tscn",
+		  "texture": "res://art/moons/moon.png",
+		  "orbit": {
+			"radius": 50.0,
+			"angle": 1.2,
+			"speed": 0.001
+		  }
+		}
+	  ]
+	}
+  ],
+  "asteroid_belts": [
+	{
+	  "id": "belt_main",
+	  "scene": "res://scenes/asteroid_belt.tscn",
+	  "radius": 2000.0,
+	  "width": 250.0,
+	  "density": 1.0,
+	  "archetype": "rocky",
+	  "visual_set": [
+		"belt_rocky_a",
+        "belt_rocky_b"
+	  ],
+	  "hazards": [
+        "collision_damage"
+	  ],
+	  "center_offset": [
+		0.0,
+		0.0
+	  ],
+	  "seed": 987654
+	}
+  ],
+  "stations": [
+	{
+	  "id": "station_alpha",
+	  "scene": "res://scenes/space_station.tscn",
+	  "faction": "trader_guild",
+	  "role": "trade_hub",
+	  "sprite": "res://art/stations/trade_station_01.png",
+	  "orbit": {
+		"target": "planet_earth",
+		"radius": 100.0,
+		"angle": 3.0,
+		"speed": 0.002
+	  }
+	}
+  ],
+  "npc_ships": [
+	{
+	  "id": "npc_trader_01",
+	  "scene": "res://scenes/npc_ship.tscn",
+	  "faction": "trader_guild",
+	  "role": "hauler",
+	  "sprite": "res://art/ships/trader_01.png",
+	  "position": [
+		1800.0,
+		300.0
+	  ]
+	}
+  ]
+}

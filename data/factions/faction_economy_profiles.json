@@ -1,0 +1,456 @@
+{
+  "system_archetype_weights": {
+    "imperial_meridian_system_weights": {
+      "core_hub": 5,
+      "trade_hub": 4,
+      "military_fortress": 4,
+      "administrative_world": 4,
+      "belt_industrial": 2,
+      "research_node": 2,
+      "fringe_outpost": 1,
+      "pilgrim_sanctuary": 1,
+      "pirate_haven": 0,
+      "smuggler_waypoint": 0
+    },
+    "spindle_cartel_system_weights": {
+      "core_hub": 3,
+      "trade_hub": 6,
+      "corporate_enclave": 5,
+      "belt_industrial": 3,
+      "research_node": 3,
+      "fringe_outpost": 2,
+      "smuggler_waypoint": 2,
+      "pirate_haven": 1
+    },
+    "free_hab_league_system_weights": {
+      "belt_industrial": 5,
+      "habitat_cluster": 6,
+      "fringe_outpost": 3,
+      "trade_hub": 2,
+      "core_hub": 1,
+      "pirate_haven": 0,
+      "smuggler_waypoint": 1
+    },
+    "nomad_clans_system_weights": {
+      "fringe_outpost": 3,
+      "nomad_anchor": 6,
+      "smuggler_waypoint": 3,
+      "pilgrim_sanctuary": 1,
+      "trade_hub": 1,
+      "core_hub": 0,
+      "military_fortress": 0
+    },
+    "covenant_quiet_suns_system_weights": {
+      "hospice_system": 6,
+      "pilgrim_sanctuary": 5,
+      "dying_star_system": 4,
+      "fringe_outpost": 2,
+      "research_node": 1,
+      "trade_hub": 1,
+      "pirate_haven": 0,
+      "smuggler_waypoint": 0
+    },
+    "black_exchange_system_weights": {
+      "smuggler_waypoint": 6,
+      "pirate_haven": 4,
+      "fringe_outpost": 4,
+      "trade_hub": 2,
+      "core_hub": 1,
+      "nomad_anchor": 1
+    },
+    "artilect_custodians_system_weights": {
+      "ai_controlled_system": 6,
+      "ancient_node": 5,
+      "research_node": 4,
+      "infrastructure_hub": 4,
+      "core_hub": 1,
+      "fringe_outpost": 1,
+      "pirate_haven": 0
+    },
+    "iron_wakes_system_weights": {
+      "military_fortress": 4,
+      "contract_fort": 5,
+      "trade_hub": 2,
+      "fringe_outpost": 3,
+      "pirate_haven": 2,
+      "smuggler_waypoint": 2,
+      "core_hub": 1
+    },
+    "drift_cartographers_system_weights": {
+      "survey_node": 5,
+      "fringe_outpost": 3,
+      "anomaly_system": 5,
+      "trade_hub": 2,
+      "core_hub": 1,
+      "nomad_anchor": 2
+    },
+    "radiant_communion_system_weights": {
+      "pilgrim_sanctuary": 4,
+      "hospice_system": 3,
+      "dying_star_system": 5,
+      "fringe_outpost": 2,
+      "ancient_node": 2,
+      "core_hub": 0
+    },
+    "silent_current_guild_system_weights": {
+      "smuggler_waypoint": 4,
+      "trade_hub": 3,
+      "core_hub": 2,
+      "fringe_outpost": 3,
+      "relay_node": 4
+    },
+    "aurum_combine_system_weights": {
+      "belt_industrial": 4,
+      "corporate_enclave": 3,
+      "fringe_outpost": 2,
+      "trade_hub": 2
+    },
+    "ashen_crown_system_weights": {
+      "pirate_haven": 6,
+      "smuggler_waypoint": 4,
+      "fringe_outpost": 3,
+      "trade_hub": 1
+    },
+    "eidolon_circle_system_weights": {
+      "research_node": 3,
+      "ancient_node": 3,
+      "ai_controlled_system": 2,
+      "fringe_outpost": 2
+    },
+    "echo_wardens_system_weights": {
+      "ancient_node": 5,
+      "hospice_system": 1,
+      "fringe_outpost": 2,
+      "pilgrim_sanctuary": 1
+    },
+    "frontier_compacts_system_weights": {
+      "fringe_outpost": 5,
+      "habitat_cluster": 3,
+      "trade_hub": 2,
+      "core_hub": 0
+    }
+  },
+  "market_profiles": {
+    "imperial_meridian_market": {
+      "id": "imperial_meridian_market",
+      "buy_price_factor": 1.00,
+      "sell_price_factor": 0.95,
+      "tax_rate": 0.15,
+      "illegal_tolerance": 0.1,
+      "supply_bias": {
+        "military_hardware": 0.2,
+        "standard_parts": 0.2,
+        "luxury_goods": 0.1,
+        "illegal_goods": -0.4
+      },
+      "demand_bias": {
+        "high_grade_data": 0.2,
+        "fuel": 0.1,
+        "nav_beacons": 0.2
+      },
+      "services": [
+        "official_repair",
+        "shipyard_military",
+        "license_office",
+        "bounty_board"
+      ]
+    },
+    "spindle_cartel_market": {
+      "id": "spindle_cartel_market",
+      "buy_price_factor": 0.95,
+      "sell_price_factor": 0.9,
+      "tax_rate": 0.12,
+      "illegal_tolerance": 0.25,
+      "supply_bias": {
+        "consumer_goods": 0.2,
+        "industrial_goods": 0.3,
+        "fuel": 0.2,
+        "luxury_goods": 0.2
+      },
+      "demand_bias": {
+        "trade_data": 0.3,
+        "exotic_materials": 0.2
+      },
+      "services": [
+        "shipyard_corporate",
+        "speculative_markets",
+        "contract_broker",
+        "security_services"
+      ]
+    },
+    "free_hab_league_market": {
+      "id": "free_hab_league_market",
+      "buy_price_factor": 0.9,
+      "sell_price_factor": 0.98,
+      "tax_rate": 0.05,
+      "illegal_tolerance": 0.3,
+      "supply_bias": {
+        "spare_parts": 0.3,
+        "raw_ore": 0.3,
+        "food": 0.1
+      },
+      "demand_bias": {
+        "tools": 0.2,
+        "medical_supplies": 0.3,
+        "defense_gear": 0.2
+      },
+      "services": [
+        "cheap_repairs",
+        "refit_bays",
+        "union_contracts"
+      ]
+    },
+    "nomad_clans_market": {
+      "id": "nomad_clans_market",
+      "buy_price_factor": 0.92,
+      "sell_price_factor": 0.96,
+      "tax_rate": 0.03,
+      "illegal_tolerance": 0.35,
+      "supply_bias": {
+        "cultural_goods": 0.2,
+        "fuel": 0.1,
+        "scavenged_parts": 0.2
+      },
+      "demand_bias": {
+        "high_efficiency_life_support": 0.3,
+        "navigation_data": 0.3
+      },
+      "services": [
+        "mobile_repair",
+        "story_brokers",
+        "clan_favor_exchange"
+      ]
+    },
+    "covenant_quiet_suns_market": {
+      "id": "covenant_quiet_suns_market",
+      "buy_price_factor": 0.9,
+      "sell_price_factor": 0.9,
+      "tax_rate": 0.08,
+      "illegal_tolerance": 0.05,
+      "supply_bias": {
+        "medical_supplies": 0.3,
+        "aid_goods": 0.3
+      },
+      "demand_bias": {
+        "relics_for_destruction": 0.3,
+        "food": 0.1
+      },
+      "services": [
+        "hospice_care",
+        "medic_contracts",
+        "sanctuary_docks"
+      ]
+    },
+    "black_exchange_market": {
+      "id": "black_exchange_market",
+      "buy_price_factor": 1.05,
+      "sell_price_factor": 1.05,
+      "tax_rate": 0.0,
+      "illegal_tolerance": 0.95,
+      "supply_bias": {
+        "illegal_goods": 0.5,
+        "stolen_data": 0.5,
+        "weapons": 0.2
+      },
+      "demand_bias": {
+        "contraband": 0.4,
+        "intel": 0.4
+      },
+      "services": [
+        "black_market",
+        "identity_forgery",
+        "dead_drop_broker"
+      ]
+    },
+    "artilect_custodians_market": {
+      "id": "artilect_custodians_market",
+      "buy_price_factor": 0.85,
+      "sell_price_factor": 0.9,
+      "tax_rate": 0.1,
+      "illegal_tolerance": 0.1,
+      "supply_bias": {
+        "advanced_components": 0.4,
+        "repair_kits": 0.3
+      },
+      "demand_bias": {
+        "technical_artefacts": 0.3,
+        "rare_data": 0.3
+      },
+      "services": [
+        "precision_repairs",
+        "data_vault_access",
+        "diagnostic_contracts"
+      ]
+    },
+    "iron_wakes_market": {
+      "id": "iron_wakes_market",
+      "buy_price_factor": 0.95,
+      "sell_price_factor": 0.92,
+      "tax_rate": 0.1,
+      "illegal_tolerance": 0.4,
+      "supply_bias": {
+        "weapons": 0.4,
+        "armor": 0.3,
+        "ship_upgrades": 0.2
+      },
+      "demand_bias": {
+        "ammo": 0.3,
+        "repair_supplies": 0.3
+      },
+      "services": [
+        "combat_refit",
+        "merc_contracts",
+        "bounty_clearance"
+      ]
+    },
+    "drift_cartographers_market": {
+      "id": "drift_cartographers_market",
+      "buy_price_factor": 0.9,
+      "sell_price_factor": 0.95,
+      "tax_rate": 0.06,
+      "illegal_tolerance": 0.25,
+      "supply_bias": {
+        "survey_gear": 0.3,
+        "nav_tools": 0.3
+      },
+      "demand_bias": {
+        "anomaly_data": 0.4,
+        "star_charts": 0.4
+      },
+      "services": [
+        "chart_sales",
+        "survey_contracts",
+        "navigation_upgrades"
+      ]
+    },
+    "radiant_communion_market": {
+      "id": "radiant_communion_market",
+      "buy_price_factor": 0.88,
+      "sell_price_factor": 0.88,
+      "tax_rate": 0.12,
+      "illegal_tolerance": 0.02,
+      "supply_bias": {
+        "pilgrim_supplies": 0.3,
+        "lowtech_gear": 0.3
+      },
+      "demand_bias": {
+        "relics": 0.3,
+        "flammable_materials": 0.2
+      },
+      "services": [
+        "pilgrim_hostels",
+        "crusade_contracts",
+        "confiscation_office"
+      ]
+    },
+    "silent_current_guild_market": {
+      "id": "silent_current_guild_market",
+      "buy_price_factor": 0.97,
+      "sell_price_factor": 0.97,
+      "tax_rate": 0.04,
+      "illegal_tolerance": 0.5,
+      "supply_bias": {
+        "courier_tools": 0.3
+      },
+      "demand_bias": {
+        "encrypted_data": 0.4
+      },
+      "services": [
+        "secure_courier_contracts",
+        "message_relays"
+      ]
+    },
+    "aurum_combine_market": {
+      "id": "aurum_combine_market",
+      "buy_price_factor": 1.0,
+      "sell_price_factor": 0.9,
+      "tax_rate": 0.18,
+      "illegal_tolerance": 0.3,
+      "supply_bias": {
+        "loans": 0.3,
+        "mining_equipment": 0.3
+      },
+      "demand_bias": {
+        "raw_ore": 0.4
+      },
+      "services": [
+        "exploitative_loans",
+        "resource_contracts"
+      ]
+    },
+    "ashen_crown_market": {
+      "id": "ashen_crown_market",
+      "buy_price_factor": 0.9,
+      "sell_price_factor": 1.1,
+      "tax_rate": 0.0,
+      "illegal_tolerance": 1.0,
+      "supply_bias": {
+        "stolen_goods": 0.5,
+        "weapons": 0.3
+      },
+      "demand_bias": {
+        "loot": 0.5,
+        "hostages": 0.2
+      },
+      "services": [
+        "pirate_repairs",
+        "fence_goods"
+      ]
+    },
+    "eidolon_circle_market": {
+      "id": "eidolon_circle_market",
+      "buy_price_factor": 0.93,
+      "sell_price_factor": 0.93,
+      "tax_rate": 0.06,
+      "illegal_tolerance": 0.6,
+      "supply_bias": {
+        "cybernetics": 0.4,
+        "experimental_tech": 0.3
+      },
+      "demand_bias": {
+        "relic_code": 0.3,
+        "ai_cores": 0.3
+      },
+      "services": [
+        "augmentation_clinics",
+        "memory_editing"
+      ]
+    },
+    "echo_wardens_market": {
+      "id": "echo_wardens_market",
+      "buy_price_factor": 0.9,
+      "sell_price_factor": 0.9,
+      "tax_rate": 0.05,
+      "illegal_tolerance": 0.15,
+      "supply_bias": {
+        "preservation_tools": 0.3
+      },
+      "demand_bias": {
+        "authentic_relics": 0.5
+      },
+      "services": [
+        "relic_authentication",
+        "restricted_site_access"
+      ]
+    },
+    "frontier_compacts_market": {
+      "id": "frontier_compacts_market",
+      "buy_price_factor": 0.95,
+      "sell_price_factor": 0.95,
+      "tax_rate": 0.08,
+      "illegal_tolerance": 0.4,
+      "supply_bias": {
+        "raw_ore": 0.3,
+        "local_food": 0.2
+      },
+      "demand_bias": {
+        "tools": 0.3,
+        "security_gear": 0.2
+      },
+      "services": [
+        "basic_repairs",
+        "local_bounties"
+      ]
+    }
+  }
+}

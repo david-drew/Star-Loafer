@@ -3,7 +3,12 @@ class_name SystemExploration
 
 # system_exploration.gd
 # Main gameplay mode for flying through a star system
-# Handles player ship, sector streaming, and system-level interactions
+# Handles player ship, sector streaming, NPCs, and system-level interactions
+
+# Preload scene files
+var planet_scene = preload("res://scenes/world/planet.tscn")
+var star_scene = preload("res://scenes/world/star.tscn")
+var station_scene = preload("res://scenes/world/station.tscn")
 
 # Node references
 @onready var player_ship = $PlayerShip
@@ -12,70 +17,116 @@ class_name SystemExploration
 # Dynamically created
 var sectors: Node2D = null
 var stellar_bodies: Node2D = null  # Container for stars and planets
+var npc_ships: Node2D = null  		# Container for NPC ships
 
 # Service references (from GameRoot/Systems)
 var streamer: SectorStreamer = null
 var system_generator: SystemGenerator = null
+var npc_spawner: NPCSpawner = null  # NEW
 
 # State
 var current_system_data: Dictionary = {}
 var is_initialized: bool = false
 
 # Scaling constants for visual display
-const AU_TO_PIXELS = 8000.0  # 1 AU = 8000 pixels (much larger for proper spacing)
-const STAR_BASE_SCALE = 1.5  # Stars are already 1024x1024, scale down a bit
-const PLANET_BASE_SCALE = 0.15  # Planets ~128px, scale down for distant viewing
+const AU_TO_PIXELS = 4000.0  # 1 AU = 4000 pixels
+const STAR_BASE_SCALE = 1.5
+const PLANET_BASE_SCALE = 0.15
 
 # Distance-based scaling (LOD effect)
-const DISTANCE_SCALE_MIN = 0.1  # Minimum scale when far away (10% size)
-const DISTANCE_SCALE_MAX = 1.0  # Maximum scale when close (100% size)
-const DISTANCE_SCALE_NEAR = 2000.0  # Distance at which objects are full size
-const DISTANCE_SCALE_FAR = 15000.0  # Distance at which objects are minimum size
+const DISTANCE_SCALE_MIN = 0.5
+const DISTANCE_SCALE_MAX = 2.0
+const DISTANCE_SCALE_NEAR = 2200.0
+const DISTANCE_SCALE_FAR = 12000.0			# 15000.0
+
+# Performance optimization
+const SCALE_UPDATE_INTERVAL = 0.05
+var scale_update_timer: float = 0.0
 
 # Asteroid belt generation
-const BELT_INNER_RADIUS = 16000.0  # 2.0 AU in pixels
-const BELT_OUTER_RADIUS = 40000.0  # 5.0 AU in pixels
-const BELT_ASTEROID_COUNT = 200  # Number of asteroids in belt ring
+const BELT_INNER_RADIUS = 16000.0
+const BELT_OUTER_RADIUS = 40000.0
+const BELT_ASTEROID_COUNT = 200
 
 func _ready() -> void:
 	print("SystemExploration: Initializing...")
 	
 	_create_sectors_node()
 	_create_stellar_bodies_node()
+	_create_npc_ships_node()  # NEW
 	_setup_services()
 	_setup_player_ship()
 	_setup_background()
 	_generate_current_system()
 	_spawn_stellar_bodies()
+	_spawn_npcs()  
+	_debug_force_spawn_test_npcs()			# TODO Debug
 	_enable_streaming()
 	
 	is_initialized = true
 	print("SystemExploration: Ready")
+	
 
-func _process(_delta: float) -> void:
+func _debug_force_spawn_test_npcs() -> void:
+	"""Temporary debug function to force spawn visible NPCs"""
+	if npc_spawner == null or npc_ships == null:
+		print("DEBUG: Can't spawn - npc_spawner or npc_ships is null")
+		return
+	
+	print("DEBUG: Force spawning 5 test NPCs...")
+	
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	for i in range(5):
+		var ship_data = {
+			"id": "debug_npc_%d" % i,
+			"type": "patrol_corvette",
+			"faction_id": "imperial_meridian",
+			"name": "DEBUG Ship %d" % i,
+			"spawn_position": player_ship.global_position + Vector2(rng.randf_range(-2000, 2000), rng.randf_range(-2000, 2000)),
+			"patrol_route": [],
+			"ai_behavior": "patrol"
+		}
+		
+		var npc_ship_scene = load("res://scenes/actors/npc_ship.tscn")
+		var npc = npc_ship_scene.instantiate()
+		npc_ships.add_child(npc)
+		npc.initialize(ship_data)
+		print("  Spawned debug NPC at: ", ship_data["spawn_position"])
+
+func _process(delta: float) -> void:
 	if !is_initialized or player_ship == null or stellar_bodies == null:
 		return
 	
-	# Update distance-based scaling for all stellar bodies
-	_update_stellar_body_scales()
+	# Update distance-based scaling periodically, not every frame
+	scale_update_timer += delta
+	if scale_update_timer >= SCALE_UPDATE_INTERVAL:
+		scale_update_timer = 0.0
+		_update_stellar_body_scales()
 
 func _create_sectors_node() -> void:
-	# Create the Sectors container node
 	sectors = Node2D.new()
 	sectors.name = "Sectors"
 	add_child(sectors)
 	print("SystemExploration: Created Sectors node")
 
 func _create_stellar_bodies_node() -> void:
-	# Create container for stars and planets
 	stellar_bodies = Node2D.new()
 	stellar_bodies.name = "StellarBodies"
-	stellar_bodies.z_index = -1  # Render behind everything else
+	stellar_bodies.z_index = -1
 	add_child(stellar_bodies)
 	print("SystemExploration: Created StellarBodies node")
 
+func _create_npc_ships_node() -> void:
+	"""NEW: Create container for NPC ships"""
+	npc_ships = Node2D.new()
+	npc_ships.name = "NPCShips"
+	npc_ships.z_index = 0  # Same layer as player
+	add_child(npc_ships)
+	print("SystemExploration: Created NPCShips node")
+
 func _setup_services() -> void:
-	# Get references to services from GameRoot/Systems
 	var game_root = get_node_or_null("/root/GameRoot")
 	if game_root == null:
 		push_error("SystemExploration: Cannot find GameRoot!")
@@ -88,29 +139,35 @@ func _setup_services() -> void:
 	
 	streamer = systems_node.get_node_or_null("SectorStreamer")
 	system_generator = systems_node.get_node_or_null("SystemGenerator")
+	npc_spawner = systems_node.get_node_or_null("NPCSpawner")
 	
 	if streamer == null:
 		push_error("SystemExploration: SectorStreamer not found!")
 	
 	if system_generator == null:
 		push_error("SystemExploration: SystemGenerator not found!")
+	
+	if npc_spawner == null:
+		push_error("SystemExploration: NPCSpawner not found! NPCs will not spawn.")
+		push_error("SystemExploration: Make sure NPCSpawner is added as a child of GameRoot/Systems")
+		# Print debug info to help locate the issue
+		print("SystemExploration: Available nodes under Systems:")
+		for child in systems_node.get_children():
+			print("  - ", child.name, " (", child.get_class(), ")")
 
 func _setup_player_ship() -> void:
 	if player_ship == null:
 		push_error("SystemExploration: PlayerShip not found!")
 		return
 	
-	# Restore ship position from GameState or use default spawn
 	if GameState.ship_position != Vector2.ZERO:
 		player_ship.global_position = GameState.ship_position
 		print("SystemExploration: Ship positioned at saved location: ", GameState.ship_position)
 	else:
-		# Default spawn near center of system (center of sector 0,0)
 		player_ship.global_position = Vector2(512, 512)
 		GameState.ship_position = player_ship.global_position
 		print("SystemExploration: Ship positioned at default spawn: ", player_ship.global_position)
 	
-	# Restore velocity if saved
 	if GameState.ship_velocity != Vector2.ZERO:
 		player_ship.velocity = GameState.ship_velocity
 
@@ -119,7 +176,6 @@ func _setup_background() -> void:
 		push_warning("SystemExploration: Background not found, skipping")
 		return
 	
-	# Background is set up in scene, just ensure it's visible
 	background.visible = true
 	print("SystemExploration: Background configured")
 
@@ -148,15 +204,20 @@ func _generate_current_system() -> void:
 		system_info.get("mining_quality", 5)
 	)
 	
+	# NEW: Add faction data to system_data for NPC spawning
+	current_system_data["faction_id"] = system_info.get("faction_id", "")
+	current_system_data["faction_influence"] = system_info.get("faction_influence", 100)
+	
 	print("SystemExploration: Generated system '%s'" % system_info.get("name", system_id))
 	print("  - Stars: %d" % current_system_data.get("stars", []).size())
 	print("  - Bodies: %d" % current_system_data.get("bodies", []).size())
 	print("  - Stations: %d" % current_system_data.get("stations", []).size())
+	print("  - Faction: %s (influence: %d)" % [
+		current_system_data.get("faction_id", "none"),
+		current_system_data.get("faction_influence", 0)
+	])
 	
-	# Mark system as discovered
 	GameState.mark_discovered("galaxy", system_id)
-	
-	# Emit signal that system was entered
 	EventBus.system_entered.emit(system_id)
 
 func _spawn_stellar_bodies() -> void:
@@ -191,24 +252,39 @@ func _spawn_stellar_bodies() -> void:
 	
 	print("SystemExploration: Spawned %d stars and %d bodies" % [stars.size(), bodies.size()])
 
+func _spawn_npcs() -> void:
+	"""NEW: Spawn NPC ships for this system"""
+	if npc_spawner == null:
+		push_warning("SystemExploration: NPCSpawner not available, skipping NPC spawn")
+		return
+	
+	if npc_ships == null:
+		push_error("SystemExploration: NPCShips container is null")
+		return
+	
+	# Set the NPC container
+	npc_spawner.set_npc_container(npc_ships)
+	
+	# Spawn NPCs based on system data
+	var system_seed = current_system_data.get("seed", 0)
+	npc_spawner.spawn_npcs_for_system(current_system_data, system_seed)
+	
+	print("SystemExploration: Spawned %d NPC ships" % npc_spawner.get_npc_count())
+
 func _update_stellar_body_scales() -> void:
-	# Update all stellar bodies based on distance from player
 	var player_pos = player_ship.global_position
 	
 	for child in stellar_bodies.get_children():
-		# Handle belt containers specially (they have asteroid children)
 		if child.name.begins_with("belt"):
 			for asteroid in child.get_children():
 				var distance = player_pos.distance_to(asteroid.global_position)
 				_apply_distance_scale(asteroid, distance)
 		else:
-			# Handle stars and planets
 			var distance = player_pos.distance_to(child.global_position)
 			_apply_distance_scale(child, distance)
 
 func _apply_distance_scale(node: Node2D, distance: float) -> void:
-	# Calculate scale based on distance (lerp between min and max)
-	var scale_factor = 1.0
+	var scale_factor = DISTANCE_SCALE_MAX
 	if distance > DISTANCE_SCALE_NEAR:
 		var t = clamp(
 			(distance - DISTANCE_SCALE_NEAR) / (DISTANCE_SCALE_FAR - DISTANCE_SCALE_NEAR),
@@ -217,162 +293,41 @@ func _apply_distance_scale(node: Node2D, distance: float) -> void:
 		)
 		scale_factor = lerp(DISTANCE_SCALE_MAX, DISTANCE_SCALE_MIN, t)
 	
-	# Apply scale to sprite (first child is always the sprite)
 	var sprite = node.get_node_or_null("Sprite2D")
 	if sprite:
-		# Get base scale from metadata (stored when created)
 		var base_scale = node.get_meta("base_scale", Vector2.ONE)
 		sprite.scale = base_scale * scale_factor
 
 func _spawn_star(star_data: Dictionary, index: int) -> void:
-	var star_node = Node2D.new()
-	star_node.name = star_data.get("id", "star:%d" % index)
-	
-	# Position stars slightly offset if multiple
-	if index > 0:
-		star_node.position = Vector2(index * 1500, 0)  # Binary/trinary offset (larger spacing)
-	
-	# Create sprite
-	var sprite = Sprite2D.new()
-	var sprite_path = star_data.get("sprite", "")
-	
-	# Try to load the sprite, fallback to placeholder
-	if sprite_path != "" and ResourceLoader.exists(sprite_path):
-		sprite.texture = load(sprite_path)
-	else:
-		# Placeholder
-		sprite.texture = PlaceholderTexture2D.new()
-		sprite.texture.size = Vector2(1024, 1024)  # Match real star size
-		
-		# Color by spectral class
-		var star_class = star_data.get("class", "G")
-		if star_class == "Special":
-			sprite.modulate = Color.PURPLE
-		elif star_class in ["O", "B"]:
-			sprite.modulate = Color.DODGER_BLUE
-		elif star_class == "A":
-			sprite.modulate = Color.WHITE
-		elif star_class == "F":
-			sprite.modulate = Color.LIGHT_YELLOW
-		elif star_class == "G":
-			sprite.modulate = Color.YELLOW
-		elif star_class == "K":
-			sprite.modulate = Color.ORANGE
-		elif star_class == "M":
-			sprite.modulate = Color.INDIAN_RED
-	
-	var base_scale = Vector2.ONE * STAR_BASE_SCALE
-	sprite.scale = base_scale
-	star_node.add_child(sprite)
-	
-	# Store base scale for distance scaling
-	star_node.set_meta("base_scale", base_scale)
-	
-	# Add point light for glow effect (optional)
-	var light = PointLight2D.new()
-	light.texture_scale = 5.0  # Larger glow
-	light.energy = 1.5
-	light.color = sprite.modulate
-	star_node.add_child(light)
-	
-	stellar_bodies.add_child(star_node)
-	print("  Spawned star: %s (class %s)" % [star_node.name, star_data.get("class", "Unknown")])
+	var star = star_scene.instantiate()
+	star.initialize(star_data, index)
+	stellar_bodies.add_child(star)
 
 func _spawn_planet(planet_data: Dictionary) -> void:
-	var planet_node = Node2D.new()
-	planet_node.name = planet_data.get("id", "planet")
-	
-	# Get orbital data
-	var orbit = planet_data.get("orbit", {})
-	var orbit_radius_au = orbit.get("a_AU", 1.0)
-	var orbit_radius_pixels = orbit_radius_au * AU_TO_PIXELS
-	
-	# Generate random but consistent angle for this planet using RNG
-	var planet_id = planet_data.get("id", "")
-	var rng = RandomNumberGenerator.new()
-	# Combine system seed and planet ID for consistent but random angle
-	rng.seed = hash(GameState.galaxy_seed) ^ hash(current_system_data.get("system_id", "").hash()) ^ hash(planet_id.hash())
-	
-	# Random angle in radians (0 to 2*PI)
-	var angle = rng.randf() * TAU
-	var orbit_pos = Vector2(
-		cos(angle) * orbit_radius_pixels,
-		sin(angle) * orbit_radius_pixels
-	)
-	planet_node.position = orbit_pos
-	
-	# Create sprite
-	var sprite = Sprite2D.new()
-	var sprite_path = planet_data.get("sprite", "")
-	
-	# Try to load the sprite, fallback to placeholder
-	if sprite_path != "" and ResourceLoader.exists(sprite_path):
-		sprite.texture = load(sprite_path)
-	else:
-		# Placeholder - assume planets are ~128x128
-		sprite.texture = PlaceholderTexture2D.new()
-		sprite.texture.size = Vector2(128, 128)
-		
-		# Color by planet type
-		var planet_type = planet_data.get("type", "rocky")
-		if "terran" in planet_type or "primordial" in planet_type:
-			sprite.modulate = Color.GREEN
-		elif "ocean" in planet_type:
-			sprite.modulate = Color.DEEP_SKY_BLUE
-		elif "ice" in planet_type:
-			sprite.modulate = Color.LIGHT_CYAN
-		elif "gas" in planet_type:
-			sprite.modulate = Color.SANDY_BROWN
-		elif "volcanic" in planet_type:
-			sprite.modulate = Color.ORANGE_RED
-		elif "desert" in planet_type:
-			sprite.modulate = Color.SANDY_BROWN
-		elif "toxic" in planet_type:
-			sprite.modulate = Color.DARK_GREEN
-		else:
-			sprite.modulate = Color.GRAY
-	
-	var base_scale = Vector2.ONE * PLANET_BASE_SCALE
-	sprite.scale = base_scale
-	planet_node.add_child(sprite)
-	
-	# Store base scale for distance scaling
-	planet_node.set_meta("base_scale", base_scale)
-	
-	stellar_bodies.add_child(planet_node)
-	print("  Spawned planet: %s (type: %s, orbit: %.1f AU)" % [
-		planet_node.name,
-		planet_data.get("type", "Unknown"),
-		orbit_radius_au
-	])
+	var planet = planet_scene.instantiate()
+	planet.initialize(planet_data, GameState.galaxy_seed)
+	stellar_bodies.add_child(planet)
 
 func _spawn_asteroid_belt(belt_data: Dictionary) -> void:
-	# Get belt orbital data
 	var orbit = belt_data.get("orbit", {})
 	var belt_radius_au = orbit.get("a_AU", 3.0)
 	var belt_radius_pixels = belt_radius_au * AU_TO_PIXELS
 	
-	# Create a container for the belt
 	var belt_container = Node2D.new()
 	belt_container.name = belt_data.get("id", "belt")
 	belt_container.position = Vector2.ZERO
 	
-	# Generate random seed from belt ID
 	var belt_id = belt_data.get("id", "belt:0")
 	var rng = RandomNumberGenerator.new()
 	rng.seed = hash(belt_id)
 	
-	# Spawn asteroids in a ring
 	var asteroid_count = BELT_ASTEROID_COUNT
 	for i in range(asteroid_count):
 		var asteroid_node = Node2D.new()
 		asteroid_node.name = "belt_asteroid_%d" % i
 		
-		# Random angle around the ring
 		var angle = rng.randf() * TAU
-		
-		# Random distance from belt center (creates thickness)
-		var thickness = belt_radius_pixels * 0.15  # Belt is 15% thick
+		var thickness = belt_radius_pixels * 0.15
 		var distance = belt_radius_pixels + rng.randf_range(-thickness, thickness)
 		
 		asteroid_node.position = Vector2(
@@ -380,27 +335,20 @@ func _spawn_asteroid_belt(belt_data: Dictionary) -> void:
 			sin(angle) * distance
 		)
 		
-		# Create sprite
 		var sprite = Sprite2D.new()
 		var sprite_path = ContentDB.get_asteroid_sprite(rng)
 		
 		if sprite_path != "" and ResourceLoader.exists(sprite_path):
 			sprite.texture = load(sprite_path)
 		else:
-			# Placeholder asteroid
 			sprite.texture = PlaceholderTexture2D.new()
 			sprite.texture.size = Vector2(32, 32)
 			sprite.modulate = Color.GRAY
 		
-		# Random rotation
 		sprite.rotation = rng.randf() * TAU
-		
-		# Random scale (smaller than sector asteroids)
 		var base_scale = Vector2.ONE * rng.randf_range(0.05, 0.15)
 		sprite.scale = base_scale
 		asteroid_node.add_child(sprite)
-		
-		# Store base scale for distance scaling
 		asteroid_node.set_meta("base_scale", base_scale)
 		
 		belt_container.add_child(asteroid_node)
@@ -432,38 +380,37 @@ func _enable_streaming() -> void:
 		push_error("SystemExploration: Cannot enable streaming, Sectors node is null")
 		return
 	
-	# Configure streamer
 	streamer.set_tile_parent(sectors)
 	streamer.enable_streaming(true)
 	
 	print("SystemExploration: Sector streaming enabled")
 
 func _input(event: InputEvent) -> void:
-	# Handle mode-specific inputs
 	if event.is_action_pressed("ui_map"):
 		_toggle_galaxy_map()
 	elif event.is_action_pressed("ui_map_system"):
 		_toggle_system_map()
 
 func _toggle_galaxy_map() -> void:
-	# Signal to open galaxy map overlay
 	EventBus.map_toggled.emit("galaxy", true)
 	print("SystemExploration: Galaxy map toggle requested")
 
 func _toggle_system_map() -> void:
-	# Signal to open system map overlay
 	EventBus.map_toggled.emit("system", true)
 	print("SystemExploration: System map toggle requested")
 
 func _exit_tree() -> void:
-	# Cleanup when leaving this mode
 	if streamer:
 		streamer.enable_streaming(false)
 		streamer.clear_all_tiles()
 	
+	# NEW: Clean up NPCs
+	if npc_spawner:
+		npc_spawner.clear_all_npcs()
+	
 	print("SystemExploration: Cleanup complete")
 
-# Public API for other systems
+# === PUBLIC API ===
 
 func get_current_system_data() -> Dictionary:
 	return current_system_data
@@ -472,6 +419,10 @@ func get_system_name() -> String:
 	var system_id = GameState.current_system_id
 	var system_info = _find_system_in_galaxy(system_id)
 	return system_info.get("name", system_id)
+
+func get_system_faction() -> String:
+	"""NEW: Get the faction controlling this system"""
+	return current_system_data.get("faction_id", "")
 
 func teleport_ship(new_position: Vector2) -> void:
 	if player_ship:
@@ -484,18 +435,34 @@ func teleport_ship(new_position: Vector2) -> void:
 func get_player_ship() -> CharacterBody2D:
 	return player_ship
 
-# Debug functions
+func get_nearby_npcs(range_radius: float = 1000.0) -> Array:
+	"""NEW: Get NPCs near the player"""
+	if npc_spawner == null or player_ship == null:
+		return []
+	
+	return npc_spawner.get_npcs_in_range(player_ship.global_position, range_radius)
+
+func get_hostile_npcs_nearby(range_radius: float = 2000.0) -> Array:
+	"""NEW: Get hostile NPCs near the player"""
+	if npc_spawner == null or player_ship == null:
+		return []
+	
+	return npc_spawner.get_hostile_npcs_in_range(player_ship.global_position, range_radius)
+
+# === DEBUG FUNCTIONS ===
 
 func debug_print_system_info() -> void:
 	print("=== System Exploration Debug ===")
 	print("System ID: ", GameState.current_system_id)
 	print("System Name: ", get_system_name())
+	print("System Faction: ", get_system_faction())
 	print("Ship Position: ", player_ship.global_position if player_ship else "N/A")
 	print("Ship Velocity: ", player_ship.velocity if player_ship else "N/A")
 	print("Current Sector: ", GameState.current_sector)
 	print("Active Tiles: ", streamer.get_active_tile_count() if streamer else 0)
 	print("Stars: ", current_system_data.get("stars", []).size())
 	print("Bodies: ", current_system_data.get("bodies", []).size())
+	print("NPCs: ", npc_spawner.get_npc_count() if npc_spawner else 0)
 	print("================================")
 
 func debug_force_streaming_refresh() -> void:

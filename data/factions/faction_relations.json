@@ -1,0 +1,112 @@
+{
+  "imperial_meridian": {
+    "spindle_cartel": 30,
+    "free_hab_league": -40,
+    "nomad_clans": -20,
+    "covenant_quiet_suns": 20,
+    "black_exchange": -60,
+    "artilect_custodians": 10,
+    "iron_wakes": 10,
+    "drift_cartographers": 0,
+    "radiant_communion": -10
+  },
+  "spindle_cartel": {
+    "imperial_meridian": 30,
+    "free_hab_league": -60,
+    "nomad_clans": -20,
+    "covenant_quiet_suns": -30,
+    "black_exchange": 10,
+    "artilect_custodians": 40,
+    "iron_wakes": 20,
+    "drift_cartographers": 30,
+    "radiant_communion": -20
+  },
+  "free_hab_league": {
+    "imperial_meridian": -40,
+    "spindle_cartel": -60,
+    "nomad_clans": 20,
+    "covenant_quiet_suns": 10,
+    "black_exchange": 10,
+    "artilect_custodians": -30,
+    "iron_wakes": 0,
+    "drift_cartographers": 20,
+    "radiant_communion": -10
+  },
+  "nomad_clans": {
+    "imperial_meridian": -20,
+    "spindle_cartel": -20,
+    "free_hab_league": 20,
+    "covenant_quiet_suns": 30,
+    "black_exchange": 20,
+    "artilect_custodians": 0,
+    "iron_wakes": 0,
+    "drift_cartographers": 40,
+    "radiant_communion": 10
+  },
+  "covenant_quiet_suns": {
+    "imperial_meridian": 20,
+    "spindle_cartel": -30,
+    "free_hab_league": 10,
+    "nomad_clans": 30,
+    "black_exchange": -20,
+    "artilect_custodians": 10,
+    "iron_wakes": 0,
+    "drift_cartographers": 0,
+    "radiant_communion": -20
+  },
+  "black_exchange": {
+    "imperial_meridian": -60,
+    "spindle_cartel": 10,
+    "free_hab_league": 10,
+    "nomad_clans": 20,
+    "covenant_quiet_suns": -20,
+    "artilect_custodians": -10,
+    "iron_wakes": 30,
+    "drift_cartographers": 30,
+    "radiant_communion": -30
+  },
+  "artilect_custodians": {
+    "imperial_meridian": 10,
+    "spindle_cartel": 40,
+    "free_hab_league": -30,
+    "nomad_clans": 0,
+    "covenant_quiet_suns": 10,
+    "black_exchange": -10,
+    "iron_wakes": 0,
+    "drift_cartographers": 10,
+    "radiant_communion": -10
+  },
+  "iron_wakes": {
+    "imperial_meridian": 10,
+    "spindle_cartel": 20,
+    "free_hab_league": 0,
+    "nomad_clans": 0,
+    "covenant_quiet_suns": 0,
+    "black_exchange": 30,
+    "artilect_custodians": 0,
+    "drift_cartographers": 10,
+    "radiant_communion": -10
+  },
+  "drift_cartographers": {
+    "imperial_meridian": 0,
+    "spindle_cartel": 30,
+    "free_hab_league": 20,
+    "nomad_clans": 40,
+    "covenant_quiet_suns": 0,
+    "black_exchange": 30,
+    "artilect_custodians": 10,
+    "iron_wakes": 10,
+    "radiant_communion": 0
+  },
+  "radiant_communion": {
+    "imperial_meridian": -10,
+    "spindle_cartel": -20,
+    "free_hab_league": -10,
+    "nomad_clans": 10,
+    "covenant_quiet_suns": -20,
+    "black_exchange": -30,
+    "artilect_custodians": -10,
+    "iron_wakes": -10,
+    "drift_cartographers": 0
+  }
+}

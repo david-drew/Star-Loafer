@@ -93,12 +93,20 @@ func _roll_spectral_class(rng: RandomNumberGenerator) -> String:
 
 func _generate_bodies(rng: RandomNumberGenerator, stars: Array, pop_level: int, tech_level: int, mining_quality: int) -> Array:
 	var bodies = []
-	var planet_count = clampi(pop_level / 2 + rng.randi_range(1, 4), 1, 9)
+	
+	# FIX: Planet count should NOT depend on pop_level
+	# Base count 4-10, with rare chance of up to 15
+	var planet_count = rng.randi_range(4, 10)
+	if rng.randf() < 0.1:  # 10% chance of extra planets
+		planet_count += rng.randi_range(1, 5)  # Could go up to 15
+	
+	planet_count = clampi(planet_count, 1, 15)  # Hard cap at 15
 	
 	# Generate planets
 	for i in range(planet_count):
-		var orbit_radius = 0.5 + i * 0.7 + rng.randf_range(-0.2, 0.2)
+		var orbit_radius = 2.0 + i * 4.0 + rng.randf_range(-1.0, 1.0)
 		var planet_type = _select_planet_type(rng, pop_level, orbit_radius)
+		var orbit_angle = rng.randf() * TAU
 		
 		var body = {
 			"id": "body:%d" % i,
@@ -107,10 +115,12 @@ func _generate_bodies(rng: RandomNumberGenerator, stars: Array, pop_level: int, 
 			"orbit": {
 				"parent": stars[0]["id"],
 				"a_AU": orbit_radius,
+				"angle_rad": orbit_angle,
 				"period_days": _calculate_period(orbit_radius)
 			},
 			"sprite": ContentDB.get_planet_sprite(planet_type, rng),
-			"resources": _roll_resources(rng, planet_type, mining_quality)
+			"resources": _roll_resources(rng, planet_type, mining_quality),
+			"population": _calculate_planet_population(planet_type, pop_level)  # NEW
 		}
 		
 		bodies.append(body)
@@ -119,7 +129,11 @@ func _generate_bodies(rng: RandomNumberGenerator, stars: Array, pop_level: int, 
 	if mining_quality >= 6:
 		var belt_count = rng.randi_range(1, 2)
 		for i in range(belt_count):
-			var belt_radius = rng.randf_range(2.0, 5.0)
+			var belt_radius = 0.0
+			if i == 0:
+				belt_radius = rng.randf_range(15.0, 25.0)  # Middle belt
+			else:
+				belt_radius = rng.randf_range(40.0, 60.0)  # Outer belt
 			bodies.append({
 				"id": "belt:%d" % i,
 				"kind": "asteroid_belt",
@@ -132,13 +146,32 @@ func _generate_bodies(rng: RandomNumberGenerator, stars: Array, pop_level: int, 
 	
 	return bodies
 
+func _calculate_planet_population(planet_type: String, system_pop_level: int) -> int:
+	"""
+	Calculate individual planet population based on type and system pop_level
+	Returns 0-10 scale for this specific planet
+	"""
+	
+	# Base population from system level (but with variance)
+	var base_pop = system_pop_level
+	
+	# Habitable planets get population boost
+	match planet_type:
+		"terran", "primordial":
+			base_pop += 3  # Major boost for Earth-like
+		"ocean_world":
+			base_pop += 2  # Good for population
+		"ice_world":
+			base_pop += 1  # Can be colonized
+		"volcanic", "barren":
+			base_pop -= 2  # Harsh conditions
+		"gas":
+			base_pop -= 5  # Gas giants can't be inhabited (but moons could)
+	
+	return clampi(base_pop, 0, 10)
+
 func _select_planet_type(rng: RandomNumberGenerator, pop_level: int, orbit_radius: float) -> String:
 	var planet_types = ContentDB.planet_types.get("types", [])
-	
-	# Bias toward habitable types if high pop_level
-	if pop_level >= 7 and rng.randf() < 0.6:
-		var habitable = ["terran", "primordial", "ocean_world"]
-		return habitable[rng.randi_range(0, habitable.size() - 1)]
 	
 	# Otherwise, select based on orbit
 	if orbit_radius < 1.0:

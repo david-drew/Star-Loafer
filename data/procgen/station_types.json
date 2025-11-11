@@ -1,0 +1,19 @@
+{
+  "schema": "star_loafer.station_types.v1",
+  "types": [
+	{ "id": "habitat", "variants": 1, "pop_bias": "very_high" },
+	{ "id": "ore_refinery", "variants": 3, "pop_bias": "medium" },
+	{ "id": "mining_outpost", "variants": 1, "pop_bias": "medium" },
+	{ "id": "refuel_depot", "variants": 1, "pop_bias": "any" },
+	{ "id": "corporate_hq", "variants": 1, "pop_bias": "high" },
+	{ "id": "shipyard", "variants": 1, "pop_bias": "very_high" },
+	{ "id": "naval_station", "variants": 1, "pop_bias": "any" },
+	{ "id": "trading_station", "variants": 1, "pop_bias": "very_high" },
+	{ "id": "research_lab", "variants": 1, "pop_bias": "low" },
+	{ "id": "small_market", "variants": 1, "pop_bias": "medium" },
+	{ "id": "observation_post", "variants": 1, "pop_bias": "low" },
+	{ "id": "warp_gate", "variants": 2, "pop_bias": "very_high" },
+	{ "id": "comm_relay", "variants": 1, "pop_bias": "high" }
+  ],
+  "asset_pattern": "res:///assets/images/actors/stations/{type}_{variant}.png.png"
+}	

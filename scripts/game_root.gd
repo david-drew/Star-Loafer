@@ -2,6 +2,20 @@ extends Node2D
 
 @onready var galaxy_gen = $Systems/GalaxyGenerator
 @onready var loading_overlay = $LoadingOverlay
+#@onready var FactionManager  = $Systems/FactionManager
+#@onready var NpcSpawner      = $Systems/NpcSpawner
+
+@onready var galaxy_generator:GalaxyGenerator = GalaxyGenerator.new()
+@onready var faction_manager:FactionManager = FactionManager.new()
+@onready var npc_spawner:NPCSpawner = NPCSpawner.new()
+
+#$Systems.add_child(faction_manager)
+#faction_manager.name = "FactionManager"
+
+# Add NPCSpawner as child of Systems
+
+#$Systems.add_child(npc_spawner)
+#npc_spawner.name = "NPCSpawner"
 
 func _ready() -> void:
 	_register_save_providers()
@@ -10,6 +24,13 @@ func _ready() -> void:
 		_load_game()
 	elif SceneManager.start_new_game:
 		_start_new_game()
+
+	#faction_manager = FactionManager.new()
+	#npc_spawner = NPCSpawner.new()
+
+	# Connect FactionManager to other services
+	npc_spawner.faction_manager = faction_manager
+	galaxy_generator.faction_manager = faction_manager
 
 func _register_save_providers() -> void:
 	SaveSystem.register_provider("game_state", 

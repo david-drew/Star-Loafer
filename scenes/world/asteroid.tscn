@@ -6,6 +6,7 @@
 radius = 16.0
 
 [node name="Asteroid" type="StaticBody2D"]
+z_index = 10
 script = ExtResource("1_gwsj5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

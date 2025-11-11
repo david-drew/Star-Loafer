@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bofainyreyq5b"]
+
+[ext_resource type="Script" uid="uid://q26gxwgfikjs" path="res://scripts/actors/npc_ship.gd" id="1_pypqt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sl0tn"]
+radius = 29.0
+height = 58.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dvi77"]
+radius = 400.0
+
+[node name="NpcShip" type="CharacterBody2D" groups=["actor", "npc"]]
+z_index = 50
+script = ExtResource("1_pypqt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_sl0tn")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_dvi77")

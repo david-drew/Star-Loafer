@@ -32,6 +32,8 @@ window/size/viewport_height=1440
 
 player=""
 player_ship=""
+actor=""
+npc=""
 
 [input]
 

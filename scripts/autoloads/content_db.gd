@@ -18,6 +18,8 @@ func _ready() -> void:
 	_validate_assets()
 	if missing_assets.size() > 0:
 		push_warning("ContentDB: %d missing assets detected" % missing_assets.size())
+		for a in missing_assets:
+			push_warning("\tMissing: %s" % a)
 
 func _load_all_schemas() -> void:
 	star_types = _load_json("res://data/procgen/star_types.json")
