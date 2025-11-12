@@ -11,6 +11,37 @@ const SIZE_CONFIG = {
 # Reference to FactionManager (will be set from GameRoot/Systems)
 @onready var faction_manager: FactionManager = FactionManager.new()
 
+# System archetype data loaded from JSON
+var system_archetypes: Dictionary = {}
+
+func _ready() -> void:
+	_load_system_archetypes()
+
+func _load_system_archetypes() -> void:
+	"""Load system archetype definitions from JSON"""
+	var path = "res://data/system_archetypes.json"
+	
+	if not FileAccess.file_exists(path):
+		push_warning("GalaxyGenerator: system_archetypes.json not found at %s" % path)
+		return
+	
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_error("GalaxyGenerator: Failed to open system_archetypes.json")
+		return
+	
+	var json_text = file.get_as_text()
+	file.close()
+	
+	var json = JSON.new()
+	var error = json.parse(json_text)
+	if error != OK:
+		push_error("GalaxyGenerator: JSON parse error in system_archetypes.json: %s" % json.get_error_message())
+		return
+	
+	system_archetypes = json.data
+	print("GalaxyGenerator: Loaded %d system archetypes" % system_archetypes.get("archetypes", []).size())
+
 func generate(seed_value: int, size: String) -> Dictionary:
 	var rng = RandomNumberGenerator.new()
 	rng.seed = seed_value
@@ -59,24 +90,139 @@ func _generate_systems(rng: RandomNumberGenerator, count: int) -> Array:
 			continue
 		
 		var system_id = "sys:%05d" % i
-		var pop_level = rng.randi_range(0, 10)
-		var tech_level = rng.randi_range(0, 10)
-		var mining_quality = rng.randi_range(0, 10)
 		
-		systems.append({
+		# Create the base system structure
+		var system = {
 			"id": system_id,
 			"name": _generate_system_name(rng),
 			"pos": [pos.x, pos.y],
 			"region_id": "",  # Assigned later
-			"pop_level": pop_level,
-			"tech_level": tech_level,
-			"mining_quality": mining_quality,
-			"faction_id": "",  # NEW: Assigned later
-			"faction_influence": 100,  # NEW: How strong faction control is (0-100)
-			"tags": []
-		})
+			"pop_level": 5,  # Default, will be set by archetype
+			"tech_level": 5,  # Default, will be set by archetype
+			"mining_quality": 5,  # Default, will be set by archetype
+			"faction_id": "",  # Assigned later
+			"faction_influence": 100,  # How strong faction control is (0-100)
+			"tags": [],  # Will be populated by archetype
+			"archetype": ""  # Will be assigned below
+		}
+		
+		# Assign archetype and apply its properties
+		_assign_system_archetype(system, rng)
+		
+		systems.append(system)
 	
 	return systems
+
+func _assign_system_archetype(system: Dictionary, rng: RandomNumberGenerator) -> void:
+	"""
+	Assign an archetype to the system and apply its properties.
+	This determines the system's tags, base stats, and character.
+	"""
+	var archetypes = system_archetypes.get("archetypes", [])
+	
+	if archetypes.is_empty():
+		# Fallback: Generate basic stats without archetypes
+		system["pop_level"] = rng.randi_range(0, 10)
+		system["tech_level"] = rng.randi_range(0, 10)
+		system["mining_quality"] = rng.randi_range(0, 10)
+		system["tags"] = _generate_fallback_tags(rng)
+		system["archetype"] = "generic"
+		return
+	
+	# Build weighted list of archetypes
+	var weighted_archetypes = []
+	for archetype in archetypes:
+		var weight = archetype.get("weight", 10)
+		weighted_archetypes.append({
+			"archetype": archetype,
+			"weight": weight
+		})
+	
+	# Select archetype using weighted random
+	var total_weight = 0
+	for entry in weighted_archetypes:
+		total_weight += entry["weight"]
+	
+	var roll = rng.randi_range(0, total_weight - 1)
+	var accum = 0
+	var selected_archetype = null
+	
+	for entry in weighted_archetypes:
+		accum += entry["weight"]
+		if roll < accum:
+			selected_archetype = entry["archetype"]
+			break
+	
+	if selected_archetype == null:
+		selected_archetype = weighted_archetypes[0]["archetype"]
+	
+	# Apply archetype properties
+	system["archetype"] = selected_archetype.get("id", "generic")
+	
+	# Set base stats from archetype with some variance
+	var base_pop = selected_archetype.get("base_pop_level", 5)
+	var base_tech = selected_archetype.get("base_tech_level", 5)
+	var base_mining = selected_archetype.get("base_mining_quality", 5)
+	
+	system["pop_level"] = clampi(base_pop + rng.randi_range(-2, 2), 0, 10)
+	system["tech_level"] = clampi(base_tech + rng.randi_range(-2, 2), 0, 10)
+	system["mining_quality"] = clampi(base_mining + rng.randi_range(-2, 2), 0, 10)
+	
+	# Copy tags from archetype
+	var archetype_tags = selected_archetype.get("tags", [])
+	system["tags"] = archetype_tags.duplicate()
+
+func _apply_regional_modifiers(systems: Array, regions: Array) -> void:
+	"""
+	Apply regional modifiers to systems based on their region.
+	This adjusts archetypes and stats based on location (core vs frontier).
+	"""
+	var regional_modifiers = system_archetypes.get("regional_modifiers", {})
+	
+	for system in systems:
+		var region_id = system.get("region_id", "")
+		if region_id == "":
+			continue
+		
+		# Find the region
+		var region = null
+		for r in regions:
+			if r["id"] == region_id:
+				region = r
+				break
+		
+		if region == null:
+			continue
+		
+		var biome = region.get("biome", "neutral_zone")
+		var modifier = regional_modifiers.get(biome, {})
+		
+		if modifier.is_empty():
+			continue
+		
+		# Apply stat modifiers
+		var pop_mod = modifier.get("pop_modifier", 0)
+		var tech_mod = modifier.get("tech_modifier", 0)
+		
+		system["pop_level"] = clampi(system["pop_level"] + pop_mod, 0, 10)
+		system["tech_level"] = clampi(system["tech_level"] + tech_mod, 0, 10)
+
+func _generate_fallback_tags(rng: RandomNumberGenerator) -> Array:
+	"""Generate basic tags when archetypes aren't available"""
+	var possible_tags = [
+		"industrial", "trade", "frontier", "mining", 
+		"agricultural", "military", "research", "peaceful", "lawless"
+	]
+	
+	var tag_count = rng.randi_range(1, 3)
+	var selected_tags = []
+	
+	for i in range(tag_count):
+		var tag = possible_tags[rng.randi_range(0, possible_tags.size() - 1)]
+		if not selected_tags.has(tag):
+			selected_tags.append(tag)
+	
+	return selected_tags
 
 func _generate_routes(systems: Array, rng: RandomNumberGenerator) -> Array:
 	var routes = []
@@ -136,6 +282,9 @@ func _generate_regions(systems: Array, rng: RandomNumberGenerator) -> Array:
 		region_index = clampi(region_index, 0, region_count - 1)
 		system["region_id"] = "region:%d" % region_index
 	
+	# Apply regional modifiers to systems
+	_apply_regional_modifiers(systems, regions)
+	
 	return regions
 
 func _assign_factions_to_systems(systems: Array, rng: RandomNumberGenerator) -> void:
@@ -148,10 +297,13 @@ func _assign_factions_to_systems(systems: Array, rng: RandomNumberGenerator) -> 
 		return
 	
 	print("GalaxyGenerator: Assigning factions to %d systems..." % systems.size())
+	var use_minor_factions = true
 	
 	# First pass: Assign primary faction to each system
 	for system in systems:
-		var faction_id = faction_manager.select_faction_for_system(rng, system)
+		# FIXED: Pass the entire system dictionary, not just tags
+		var faction_id = faction_manager.select_faction_for_system(system, use_minor_factions)
+		
 		system["faction_id"] = faction_id
 		
 		# Determine influence strength (how much control faction has)
@@ -224,7 +376,8 @@ func _create_faction_borders(systems: Array, rng: RandomNumberGenerator) -> void
 		# Reduce influence if surrounded by hostiles (contested border)
 		if hostile_neighbors >= 2:
 			system["faction_influence"] = max(system["faction_influence"] - 25, 30)
-			system["tags"].append("contested")
+			if not system["tags"].has("contested"):
+				system["tags"].append("contested")
 
 func _log_faction_distribution(systems: Array) -> void:
 	"""Log faction distribution for debugging"""

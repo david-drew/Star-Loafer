@@ -1,9 +1,11 @@
 extends Node
 
-const SAVE_DIR = "user://saves/"
+const SAVE_DIR = "user://StarLoafer/saves/"
 const MAX_SLOTS = 10
 
-var providers: Dictionary = {}  # { "provider_name": { "get": Callable, "set": Callable } }
+var providers: Dictionary = {}  	# { "provider_name": { "get": Callable, "set": Callable } }
+var loaded_data: Dictionary = {}  	# whole save file contents
+
 
 func _ready() -> void:
 	if !DirAccess.dir_exists_absolute(SAVE_DIR):
@@ -19,7 +21,7 @@ func save_to_slot(slot: int) -> bool:
 	
 	var save_data = {}
 	for provider_name in providers:
-		var get_callable = providers[provider_name]["get"]
+		var get_callable = providers[provider_name]["write"]
 		save_data[provider_name] = get_callable.call()
 	
 	save_data["timestamp"] = Time.get_unix_time_from_system()
@@ -66,7 +68,7 @@ func load_from_slot(slot: int) -> bool:
 	
 	for provider_name in providers:
 		if provider_name in save_data:
-			var set_callable = providers[provider_name]["set"]
+			var set_callable = providers[provider_name]["read"]
 			set_callable.call(save_data[provider_name])
 	
 	print("Game loaded from slot %d" % slot)

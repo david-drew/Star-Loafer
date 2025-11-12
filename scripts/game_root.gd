@@ -35,7 +35,8 @@ func _ready() -> void:
 func _register_save_providers() -> void:
 	SaveSystem.register_provider("game_state", 
 		Callable(GameState, "get_state"),
-		Callable(GameState, "set_state"))
+		Callable(GameState, "set_state")
+	)
 
 func _start_new_game() -> void:
 	loading_overlay.show()

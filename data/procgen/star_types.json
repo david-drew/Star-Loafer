@@ -1,31 +1,108 @@
 {
-  "schema": "star_loafer.star_types.v1",
+  "schema": "star_loafer.star_types.v2",
+  "notes": "Core star archetypes and layout rules for Star Loafer. Values are tendencies for procgen, not strict simulation.",
   "spectral_classes": ["O", "B", "A", "F", "G", "K", "M"],
   "class_to_color": {
-	"O": "blue", "B": "blue", "A": "white",
-	"F": "white", "G": "yellow", "K": "orange", "M": "red"
+    "O": "blue",
+    "B": "blue",
+    "A": "white",
+    "F": "white",
+    "G": "yellow",
+    "K": "orange",
+    "M": "red"
   },
   "colors": ["blue", "orange", "red", "white", "yellow"],
   "variants_per_color": 4,
   "sprite_resolver": {
-	"pattern": "res://assets/images/stellar_bodies/stars/{color}_{variant}.png",
-	"fallback": "res://assets/images/stellar_bodies/stars/white_1.png"
+    "pattern": "res://assets/images/stellar_bodies/stars/{color}_{variant}.png",
+    "fallback": "res://assets/images/stellar_bodies/stars/white_1.png"
   },
+
+  "layout_rules": {
+    "system_star_count_range": [0, 3],
+
+    "multi_star_min_separation_px": 1000,
+
+    "triple_star_triangle": {
+      "radius_px_range": [800, 1200],
+      "rotation_jitter_deg": 30
+    },
+
+    "star_to_lso_min_distance_px": 800
+  },
+
+  "class_properties": {
+    "O": {
+      "size_px_range": [800, 1100],
+      "luminosity_factor": 3.0,
+      "gravity_factor": 2.2,
+      "safe_radius_px": 1200
+    },
+    "B": {
+      "size_px_range": [700, 950],
+      "luminosity_factor": 2.4,
+      "gravity_factor": 1.9,
+      "safe_radius_px": 1100
+    },
+    "A": {
+      "size_px_range": [600, 900],
+      "luminosity_factor": 1.8,
+      "gravity_factor": 1.6,
+      "safe_radius_px": 1000
+    },
+    "F": {
+      "size_px_range": [520, 820],
+      "luminosity_factor": 1.4,
+      "gravity_factor": 1.3,
+      "safe_radius_px": 900
+    },
+    "G": {
+      "size_px_range": [460, 760],
+      "luminosity_factor": 1.0,
+      "gravity_factor": 1.0,
+      "safe_radius_px": 850
+    },
+    "K": {
+      "size_px_range": [380, 640],
+      "luminosity_factor": 0.7,
+      "gravity_factor": 0.9,
+      "safe_radius_px": 750
+    },
+    "M": {
+      "size_px_range": [260, 520],
+      "luminosity_factor": 0.4,
+      "gravity_factor": 0.8,
+      "safe_radius_px": 650
+    }
+  },
+
   "special": {
-	"brown_dwarf": {
-	  "chance": 0.02,
-	  "sprite": "res://assets/images/stellar_bodies/stars/star_dwarf_brown.png",
-	  "effects": ["low_luminosity", "reduced_solar_power"]
-	},
-	"white_dwarf": {
-	  "chance": 0.02,
-	  "sprite": "res://assets/images/stellar_bodies/stars/star_dwarf.png",
-	  "effects": ["dense_gravity", "navigation_penalty"]
-	},
-	"hypergiant": {
-	  "chance": 0.003,
-	  "sprite": "res://assets/images/stellar_bodies/stars/star_hypergiant.png",
-	  "effects": ["radiation_zones", "exotic_ores"]
-	}
+    "brown_dwarf": {
+      "chance": 0.02,
+      "sprite": "res://assets/images/stellar_bodies/stars/star_dwarf_brown.png",
+      "size_px_range": [260, 420],
+      "luminosity_factor": 0.2,
+      "gravity_factor": 1.0,
+      "safe_radius_px": 700,
+      "effects": ["low_luminosity", "reduced_solar_power"]
+    },
+    "white_dwarf": {
+      "chance": 0.02,
+      "sprite": "res://assets/images/stellar_bodies/stars/star_dwarf.png",
+      "size_px_range": [220, 360],
+      "luminosity_factor": 0.5,
+      "gravity_factor": 1.4,
+      "safe_radius_px": 750,
+      "effects": ["dense_gravity", "navigation_penalty"]
+    },
+    "hypergiant": {
+      "chance": 0.003,
+      "sprite": "res://assets/images/stellar_bodies/stars/star_hypergiant.png",
+      "size_px_range": [1000, 1400],
+      "luminosity_factor": 4.0,
+      "gravity_factor": 2.8,
+      "safe_radius_px": 1500,
+      "effects": ["radiation_zones", "exotic_ores"]
+    }
   }
 }

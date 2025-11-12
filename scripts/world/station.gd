@@ -19,6 +19,11 @@ var docking_enabled: bool = true
 var broadcast_enabled: bool = false
 var broadcast_message: String = ""
 
+# Comm system properties
+var comm_profile_id: String = "default_station"
+var personality: Dictionary = {}
+var is_locked_down: bool = false
+
 # Visual
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -99,10 +104,11 @@ func _load_station_sprite() -> void:
 		return
 	
 	# Try to load sprite from asset pattern
-	var sprite_path = "res://assets/images/actors/stations/%s_%d.png" % [station_type, variant]
+	var sprite_path = "res://assets/images/actors/stations/%s_%02d.png" % [station_type, variant]
 	
 	if !ResourceLoader.exists(sprite_path):
 		# Try without variant
+		print("\tStation sprite not found: %s" % sprite_path)
 		sprite_path = "res://assets/images/actors/stations/%s.png" % station_type
 	
 	if ResourceLoader.exists(sprite_path):
@@ -235,3 +241,85 @@ func dock_ship() -> void:
 	print("Station: Docking at %s" % station_name)
 	# TODO: Add EventBus.station_docking_started signal later
 	# TODO: Actual docking logic
+
+
+## Comm System Integration
+
+func can_accept_hail() -> bool:
+	"""Check if station can currently accept a comm hail"""
+	if is_locked_down:
+		return false
+	
+	# Stations are generally very responsive
+	return true
+
+
+func handle_docking_request(requesting_ship: Node) -> void:
+	"""Handle a docking request from a ship via comm system"""
+	var comm_system = get_node_or_null("/root/GameRoot/Systems/CommSystem")
+	if not comm_system:
+		push_error("Station: CommSystem not found")
+		return
+	
+	# Build context for response
+	var context = comm_system.build_comm_context(self, requesting_ship)
+	
+	# Check if we can approve docking
+	var can_approve = can_dock()
+	var denial_reason = ""
+	
+	if not can_approve:
+		denial_reason = "no_docking_services"
+	
+	# Check faction relations
+	if requesting_ship.has("faction_id") and requesting_ship.faction_id:
+		var faction_relations = get_node_or_null("/root/GameRoot/Systems/FactionRelations")
+		if faction_relations:
+			var rep_tier = faction_relations.get_reputation_tier(faction_id)
+			if rep_tier == "Hostile":
+				can_approve = false
+				denial_reason = "hostile_faction"
+	
+	if is_locked_down:
+		can_approve = false
+		denial_reason = "station_lockdown"
+	
+	# Generate response
+	var response_type = "docking_approved" if can_approve else "docking_denied"
+	var response = comm_system.generate_response(self, context, response_type)
+	
+	# Emit appropriate signal
+	if can_approve:
+		var bay_id = 0  # TODO: Implement bay assignment
+		EventBus.emit_signal("docking_approved", self, requesting_ship, bay_id)
+	
+	# TODO: Send response to UI system for display
+	print("Station %s: Docking request from %s - %s" % [station_name, requesting_ship.name, "APPROVED" if can_approve else "DENIED (" + denial_reason + ")"])
+
+
+func get_docking_point(bay_id: int = 0) -> Vector2:
+	"""Get the position for a specific docking bay"""
+	# For now, return position near station
+	# TODO: Implement proper bay positions based on station size/type
+	var offset_angle = (bay_id * PI / 4.0)  # Spread bays around station
+	var offset = Vector2(150, 0).rotated(offset_angle)
+	return global_position + offset
+
+
+func initiate_broadcast(message: String, priority: String = "normal") -> void:
+	"""Send a broadcast message from this station"""
+	if not broadcast_enabled:
+		return
+	
+	var comm_system = get_node_or_null("/root/GameRoot/Systems/CommSystem")
+	if not comm_system:
+		return
+	
+	# Determine tech level based on station type
+	var tech_level = 2  # Default
+	if station_type in ["research_station", "military_base"]:
+		tech_level = 3
+	elif station_type in ["habitat", "mining_outpost"]:
+		tech_level = 1
+	
+	comm_system.broadcast_message(self, message, "station_announcement", priority, tech_level)

@@ -153,15 +153,15 @@ func _spawn_tile(tile_id: String) -> void:
 	active_tiles[tile_id] = tile_container
 	tile_spawned.emit(tile_id, {})
 	
-	if asteroid_count > 0:
-		print("SectorStreamer: Spawned tile %s (%s, %.1f AU) with %d asteroids" % [tile_id, biome_id, distance_from_origin_AU, asteroid_count])
+	#if asteroid_count > 0:
+	#	print("SectorStreamer: Spawned tile %s (%s, %.1f AU) with %d asteroids" % [tile_id, biome_id, distance_from_origin_AU, asteroid_count])
 
 func _despawn_tile(tile_id: String) -> void:
 	if tile_id in active_tiles:
 		active_tiles[tile_id].queue_free()
 		active_tiles.erase(tile_id)
 		tile_despawned.emit(tile_id)
-		print("SectorStreamer: Despawned tile %s" % tile_id)
+		#print("SectorStreamer: Despawned tile %s" % tile_id)
 
 # Public API
 
@@ -184,7 +184,7 @@ func clear_all_tiles() -> void:
 	for tile_id in active_tiles.keys():
 		_despawn_tile(tile_id)
 	active_tiles.clear()
-	print("SectorStreamer: All tiles cleared")
+	#print("SectorStreamer: All tiles cleared")
 
 func get_active_tile_count() -> int:
 	return active_tiles.size()

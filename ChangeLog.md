@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [0.2.2] - 2025-11-11
+	Fixed
+		LoD problems (stars, planets, stations)
+		Station spawning 
+		Binary star positions (randomized distance)
+		Trinary star positions (randomized distance with triangle formation)
 
 ## [0.2.1] - 2025-11-10
 

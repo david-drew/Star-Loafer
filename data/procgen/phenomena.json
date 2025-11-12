@@ -1,32 +1,167 @@
 {
   "schema": "star_loafer.phenomena.v1",
-  "phenomena": [
+  "notes": "Special stellar objects and spatial anomalies for Star Loafer. Used as weighted options during system generation.",
+  "enums": {
+	"category": [
+	  "stellar_remnant",
+	  "gravitational_anomaly",
+	  "energy_anomaly",
+	  "nebula",
+	  "debris_field",
+	  "artifact",
+      "other"
+	]
+  },
+  "types": [
 	{
-	  "id": "aurora_minor",
-	  "where": ["planet:terran", "planet:ice_world"],
-	  "effects": ["visual_only"],
-	  "rarity": 0.15
+	  "id": "black_hole",
+	  "category": "stellar_remnant",
+	  "spawn_weight": 0.001,
+	  "max_per_galaxy": 6,
+	  "size_px_range": [120, 200],
+	  "color_hint": "black_blue_accretion",
+	  "min_distance_from_star_px": 2500,
+	  "min_distance_from_lso_px": 2000,
+	  "effects": [
+		"extreme_gravity",
+		"navigation_hazard",
+		"time_dilation_flavor",
+        "exotic_ore_routes"
+	  ],
+	  "sprite": "res://assets/images/phenomena/black_hole.png"
+	},
+	{
+	  "id": "neutron_star",
+	  "category": "stellar_remnant",
+	  "spawn_weight": 0.002,
+	  "max_per_galaxy": 10,
+	  "size_px_range": [80, 140],
+	  "color_hint": "white_blue",
+	  "min_distance_from_star_px": 2200,
+	  "min_distance_from_lso_px": 1800,
+	  "effects": [
+		"radiation_zones",
+        "precision_navigation_required"
+	  ],
+	  "sprite": "res://assets/images/phenomena/neutron_star.png"
+	},
+	{
+	  "id": "pulsar",
+	  "category": "stellar_remnant",
+	  "spawn_weight": 0.0015,
+	  "max_per_galaxy": 8,
+	  "size_px_range": [80, 140],
+	  "color_hint": "white_blue_beams",
+	  "min_distance_from_star_px": 2200,
+	  "min_distance_from_lso_px": 1800,
+	  "effects": [
+		"pulsing_radiation",
+		"sensor_interference",
+        "timed_navigation_events"
+	  ],
+	  "sprite": "res://assets/images/phenomena/pulsar.png"
+	},
+	{
+	  "id": "micro_quasar",
+	  "category": "energy_anomaly",
+	  "spawn_weight": 0.0008,
+	  "max_per_galaxy": 4,
+	  "size_px_range": [140, 220],
+	  "color_hint": "violet_blue_jets",
+	  "min_distance_from_star_px": 2600,
+	  "min_distance_from_lso_px": 2200,
+	  "effects": [
+		"high_energy_streams",
+        "rare_exotic_resources"
+	  ],
+	  "sprite": "res://assets/images/phenomena/micro_quasar.png"
 	},
 	{
 	  "id": "ion_storm",
-	  "where": ["space:inner_lane", "space:deep_space"],
-	  "effects": ["sensor_range_-50%", "shield_regen_-25%"],
-	  "rarity": 0.05,
-	  "visual": "particle_field_blue"
+	  "category": "energy_anomaly",
+	  "spawn_weight": 0.02,
+	  "size_px_range": [600, 1200],
+	  "color_hint": "green_purple_electric",
+	  "min_distance_from_star_px": 1200,
+	  "min_distance_from_lso_px": 800,
+	  "effects": [
+		"shield_drain",
+		"sensor_noise",
+        "navigation_risk"
+	  ],
+	  "sprite": "res://assets/images/phenomena/ion_storm.png"
 	},
 	{
-	  "id": "nebula_drift",
-	  "where": ["space:deep_space"],
-	  "effects": ["speed_-30%", "sensor_range_-70%"],
-	  "rarity": 0.08,
-	  "visual": "fog_overlay_purple"
+	  "id": "nebula_pocket",
+	  "category": "nebula",
+	  "spawn_weight": 0.05,
+	  "size_px_range": [800, 1600],
+	  "color_hint": "teal_magenta_cloud",
+	  "min_distance_from_star_px": 1000,
+	  "min_distance_from_lso_px": 600,
+	  "effects": [
+		"reduced_visibility",
+		"sensor_scatter",
+        "smuggler_hideouts"
+	  ],
+	  "sprite": "res://assets/images/phenomena/nebula_pocket.png"
 	},
 	{
-	  "id": "radiation_belt",
-	  "where": ["space:near_star", "special:hypergiant"],
-	  "effects": ["hull_damage_over_time", "exotic_ore_boost"],
-	  "rarity": 0.03,
-	  "visual": "shimmer_overlay_yellow"
+	  "id": "dense_asteroid_cluster",
+	  "category": "debris_field",
+	  "spawn_weight": 0.06,
+	  "size_px_range": [400, 900],
+	  "color_hint": "rocky_dark",
+	  "min_distance_from_star_px": 900,
+	  "min_distance_from_lso_px": 400,
+	  "effects": [
+		"navigation_hazard",
+        "high_mining_yield"
+	  ],
+	  "sprite": "res://assets/images/phenomena/dense_asteroids.png"
+	},
+	{
+	  "id": "derelict_graveyard",
+	  "category": "debris_field",
+	  "spawn_weight": 0.015,
+	  "size_px_range": [400, 900],
+	  "color_hint": "dark_metallic",
+	  "min_distance_from_star_px": 900,
+	  "min_distance_from_lso_px": 600,
+	  "effects": [
+		"loot_opportunities",
+		"pirate_activity",
+        "mystery_hooks"
+	  ],
+	  "sprite": "res://assets/images/phenomena/derelict_graveyard.png"
+	},
+	{
+	  "id": "ancient_gate",
+	  "category": "artifact",
+	  "spawn_weight": 0.005,
+	  "size_px_range": [260, 520],
+	  "color_hint": "gold_blue",
+	  "min_distance_from_star_px": 1200,
+	  "min_distance_from_lso_px": 900,
+	  "effects": [
+		"fast_travel_hook",
+        "story_anchor"
+	  ],
+	  "sprite": "res://assets/images/phenomena/ancient_gate.png"
+	},
+	{
+	  "id": "spatial_rift",
+	  "category": "gravitational_anomaly",
+	  "spawn_weight": 0.01,
+	  "size_px_range": [260, 520],
+	  "color_hint": "purple_black",
+	  "min_distance_from_star_px": 1200,
+	  "min_distance_from_lso_px": 900,
+	  "effects": [
+		"unstable_navigation",
+        "random_encounters"
+	  ],
+	  "sprite": "res://assets/images/phenomena/spatial_rift.png"
 	}
   ]
 }
