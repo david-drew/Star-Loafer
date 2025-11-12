@@ -3,6 +3,7 @@ extends Node
 # Loaded schemas
 var star_types: Dictionary = {}
 var planet_types: Dictionary = {}
+var moon_types: Dictionary = {}
 var asteroid_types: Dictionary = {}
 var biomes: Dictionary = {}
 var phenomena: Dictionary = {}
@@ -22,8 +23,9 @@ func _ready() -> void:
 			push_warning("\tMissing: %s" % a)
 
 func _load_all_schemas() -> void:
-	star_types = _load_json("res://data/procgen/star_types.json")
-	planet_types = _load_json("res://data/procgen/planet_types.json")
+	star_types     = _load_json("res://data/procgen/star_types.json")
+	planet_types   = _load_json("res://data/procgen/planet_types.json")
+	moon_types     = _load_json("res://data/procgen/moon_types.json")
 	asteroid_types = _load_json("res://data/procgen/asteroid_types.json")
 	biomes = _load_json("res://data/procgen/biomes.json")
 	phenomena = _load_json("res://data/procgen/phenomena.json")
@@ -99,6 +101,35 @@ func get_planet_sprite(type_id: String, rng: RandomNumberGenerator) -> String:
 			return pattern.format({"type": type_id, "variant": variant})
 	return ""
 
+func get_moon_sprite(moon_type: String, rng: RandomNumberGenerator) -> String:
+	"""Get sprite path for a moon type with random variant"""
+	if moon_types.is_empty():
+		push_warning("ContentDB: Moon types not loaded")
+		return ""
+	
+	var types: Array = moon_types.get("types", [])
+	var moon_data: Dictionary = {}
+	
+	# Find the moon type
+	for mt in types:
+		if mt.get("id", "") == moon_type:
+			moon_data = mt
+			break
+	
+	if moon_data.is_empty():
+		push_warning("ContentDB: Moon type '%s' not found" % moon_type)
+		return ""
+	
+	var variants: int = moon_data.get("variants", 1)
+	var variant: int = rng.randi_range(0, variants - 1)
+	
+	var asset_pattern: String = moon_types.get("asset_pattern", "res://assets/images/stellar_bodies/moons/moon_{type}_{variant}.png")
+	var sprite_path := asset_pattern.replace("{type}", moon_type)
+	sprite_path = sprite_path.replace("{variant}", "%02d" % variant)
+	
+	return sprite_path
+
+
 func get_asteroid_sprite(rng: RandomNumberGenerator) -> String:
 	var variant = rng.randi_range(1, asteroid_types.get("variants", 6))
 	var pattern = asteroid_types.get("asset_pattern", "")
@@ -131,3 +162,32 @@ func get_travel_lane(lane_id: String) -> Dictionary:
 		if lane.get("id") == lane_id:
 			return lane
 	return {}
+
+func get_planet_moon_range(planet_type: String) -> Array:
+	"""Get the num_moons_range for a planet type from planet_types data"""
+	# This assumes you have a planet_types dictionary loaded similar to moon_types
+	# If planet data is structured differently, adjust accordingly
+	
+	if !planet_types.has("types"):
+		return [0, 0]  # No moons if planet types not loaded
+	
+	var types: Array = planet_types.get("types", [])
+	
+	for pt in types:
+		if pt.get("id", "") == planet_type:
+			return pt.get("num_moons_range", [0, 0])
+	
+	# Default fallback based on planet type if not in JSON
+	match planet_type:
+		"gas":
+			return [2, 8]  # Gas giants have many moons
+		"ice_world":
+			return [1, 4]  # Ice worlds can have several moons
+		"terran", "primordial", "ocean_world":
+			return [0, 2]  # Habitable worlds typically have 0-2 moons
+		"rocky", "barren":
+			return [0, 1]  # Rocky worlds might have one moon
+		"volcanic":
+			return [0, 1]  # Volcanic worlds rarely have moons
+		_:
+			return [0, 1]  # Default: 0-1 moons

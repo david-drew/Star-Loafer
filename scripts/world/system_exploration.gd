@@ -1,15 +1,11 @@
 extends Node2D
 class_name SystemExploration
 
-# system_exploration.gd
-# Main gameplay mode for flying through a star system
-# Handles player ship, sector streaming, NPCs, and system-level interactions
-
 # Preload scene files
 var planet_scene = preload("res://scenes/world/planet.tscn")
 var star_scene = preload("res://scenes/world/star.tscn")
 var station_scene = preload("res://scenes/world/station.tscn")
-var npc_ship_scene = preload("res://scenes/actors/npc_ship.tscn")  # Add this if missing
+var npc_ship_scene = preload("res://scenes/actors/npc_ship.tscn")
 
 # Node references
 @onready var player_ship = $PlayerShip
@@ -17,22 +13,23 @@ var npc_ship_scene = preload("res://scenes/actors/npc_ship.tscn")  # Add this if
 
 # Dynamically created
 var sectors: Node2D = null
-var stellar_bodies: Node2D = null  # Container for stars and planets
-var npc_ships: Node2D = null  # NEW: Container for NPC ships
+var stellar_bodies: Node2D = null
+var npc_ships: Node2D = null
 
 # Service references (from GameRoot/Systems)
 var streamer: SectorStreamer = null
 var system_generator: SystemGenerator = null
-var npc_spawner: NPCSpawner = null  # NEW
+var npc_spawner: NPCSpawner = null
 
 # State
 var current_system_data: Dictionary = {}
 var is_initialized: bool = false
 
 # Scaling constants for visual display
-const AU_TO_PIXELS = 4000.0  # 1 AU = 4000 pixels
+const AU_TO_PIXELS = 4000.0
 const STAR_BASE_SCALE = 1.5
 const PLANET_BASE_SCALE = 0.15
+const MOON_BASE_SCALE = 0.05  # Moons are smaller than planets
 
 # Distance-based scaling (LOD effect)
 const DISTANCE_SCALE_MIN = 0.5
@@ -148,6 +145,7 @@ func _generate_current_system() -> void:
 	if system_info.is_empty():
 		push_error("SystemExploration: System '%s' not found in galaxy data!" % system_id)
 		return
+	
 	current_system_data = system_generator.generate(
 		system_id,
 		GameState.galaxy_seed,
@@ -155,18 +153,48 @@ func _generate_current_system() -> void:
 		system_info.get("tech_level", 5),
 		system_info.get("mining_quality", 5)
 	)
+	
 	current_system_data["faction_id"] = system_info.get("faction_id", "")
 	current_system_data["faction_influence"] = system_info.get("faction_influence", 100)
+	
+	# Apply faction_id to all inhabitant_data
+	_apply_faction_to_inhabitants(current_system_data.get("faction_id", ""))
+	
+	# Count moons separately for logging
+	var bodies: Array = current_system_data.get("bodies", [])
+	var planet_count := 0
+	var moon_count := 0
+	for body in bodies:
+		match body.get("kind", ""):
+			"planet":
+				planet_count += 1
+			"moon":
+				moon_count += 1
+	
 	print("SystemExploration: Generated system '%s'" % system_info.get("name", system_id))
 	print("  - Stars: %d" % current_system_data.get("stars", []).size())
-	print("  - Bodies: %d" % current_system_data.get("bodies", []).size())
+	print("  - Planets: %d" % planet_count)
+	print("  - Moons: %d" % moon_count)
 	print("  - Stations: %d" % current_system_data.get("stations", []).size())
 	print("  - Faction: %s (influence: %d)" % [
 		current_system_data.get("faction_id", "none"),
 		current_system_data.get("faction_influence", 0)
 	])
+	
 	GameState.mark_discovered("galaxy", system_id)
 	EventBus.system_entered.emit(system_id)
+
+func _apply_faction_to_inhabitants(faction_id: String) -> void:
+	"""Apply system faction to all inhabited bodies and stations"""
+	var bodies: Array = current_system_data.get("bodies", [])
+	for body in bodies:
+		if body.has("inhabitant_data"):
+			body["inhabitant_data"]["faction_id"] = faction_id
+	
+	var stations: Array = current_system_data.get("stations", [])
+	for station in stations:
+		if station.has("inhabitant_data"):
+			station["inhabitant_data"]["faction_id"] = faction_id
 
 func _spawn_stellar_bodies() -> void:
 	if stellar_bodies == null:
@@ -175,18 +203,33 @@ func _spawn_stellar_bodies() -> void:
 	if current_system_data.is_empty():
 		push_warning("SystemExploration: No system data to spawn bodies from")
 		return
+	
 	for child in stellar_bodies.get_children():
 		child.queue_free()
+	
 	var stars:Array = current_system_data.get("stars", [])
 	_spawn_stars_with_formation(stars)
+	
 	var bodies:Array = current_system_data.get("bodies", [])
+	
+	# Spawn planets first
 	for body in bodies:
 		if body.get("kind", "") == "planet":
 			_spawn_planet(body)
+	
+	# Spawn moons (they need planets to exist first for positioning)
+	for body in bodies:
+		if body.get("kind", "") == "moon":
+			_spawn_moon(body)
+	
+	# Spawn asteroid belts
 	for body in bodies:
 		if body.get("kind", "") == "asteroid_belt":
 			_spawn_asteroid_belt(body)
-	print("SystemExploration: Spawned %d stars and %d bodies" % [stars.size(), bodies.size()])
+	
+	var planet_count := bodies.filter(func(b): return b.get("kind") == "planet").size()
+	var moon_count := bodies.filter(func(b): return b.get("kind") == "moon").size()
+	print("SystemExploration: Spawned %d stars, %d planets, %d moons" % [stars.size(), planet_count, moon_count])
 
 func _spawn_stations() -> void:
 	if stellar_bodies == null:
@@ -214,56 +257,39 @@ func _spawn_station(station_data: Dictionary) -> void:
 	station.initialize(station_data)
 
 func _spawn_npcs() -> void:
-	"""NEW: Spawn NPC ships for this system"""
 	if npc_spawner == null:
 		push_warning("SystemExploration: NPCSpawner not available, skipping NPC spawn")
 		return
-	
 	if npc_ships == null:
 		push_error("SystemExploration: NPCShips container is null")
 		return
-	
-	# Set the NPC container
 	npc_spawner.set_npc_container(npc_ships)
-	
-	# Spawn NPCs based on system data
 	var system_seed = current_system_data.get("seed", 0)
 	npc_spawner.spawn_npcs_for_system(current_system_data, system_seed)
-	
 	print("SystemExploration: Spawned %d NPC ships" % npc_spawner.get_npc_count())
 
 func _update_stellar_body_scales() -> void:
-	var player_pos = player_ship.global_position
-	
-	for child in stellar_bodies.get_children():
-		if child.name.begins_with("belt"):
-			for asteroid in child.get_children():
-				var distance = player_pos.distance_to(asteroid.global_position)
-				_apply_distance_scale(asteroid, distance)
-		else:
-			var distance = player_pos.distance_to(child.global_position)
-			_apply_distance_scale(child, distance)
+	if stellar_bodies == null or player_ship == null:
+		return
+	for node in stellar_bodies.get_children():
+		if node.has_meta("base_scale"):
+			_update_node_scale(node)
 
-
-func _apply_distance_scale(node: Node2D, distance: float) -> void:
-	# Get camera zoom factor to adjust LOD thresholds
-	var camera_zoom = 1.0
-	if player_ship and player_ship.has_node("Camera2D"):
+func _update_node_scale(node: Node2D) -> void:
+	if player_ship == null:
+		return
+	var distance:float = player_ship.global_position.distance_to(node.global_position)
+	var camera_zoom := 1.0
+	if player_ship.has_node("Camera2D"):
 		var cam = player_ship.get_node("Camera2D")
-		camera_zoom = cam.zoom.x  # Lower value = zoomed in closer
+		camera_zoom = cam.zoom.x
 	
-	# Adjust distance thresholds by camera zoom
-	# When zoomed in (0.6), multiply thresholds to make them larger
-	# When zoomed out (1.5), divide thresholds to make them smaller
-	var adjusted_near = DISTANCE_SCALE_NEAR * camera_zoom
-	var adjusted_far = DISTANCE_SCALE_FAR * camera_zoom
-	
-	# Calculate target scale based on adjusted distance
-	var target_scale_factor = DISTANCE_SCALE_MAX  # Start at MAX (close = big)
+	var adjusted_near := DISTANCE_SCALE_NEAR * camera_zoom
+	var adjusted_far := DISTANCE_SCALE_FAR * camera_zoom
+	var target_scale_factor := DISTANCE_SCALE_MAX
 	
 	if distance > adjusted_near:
-		# Interpolate from MAX (close) to MIN (far)
-		var t = clamp(
+		var t:float = clamp(
 			(distance - adjusted_near) / (adjusted_far - adjusted_near),
 			0.0,
 			1.0
@@ -274,8 +300,6 @@ func _apply_distance_scale(node: Node2D, distance: float) -> void:
 	if sprite:
 		var base_scale = node.get_meta("base_scale", Vector2.ONE)
 		var target_scale = base_scale * target_scale_factor
-		
-		# Smoothly interpolate current scale toward target (prevents popping)
 		sprite.scale = sprite.scale.lerp(target_scale, 0.15)
 
 func _spawn_star(star_data: Dictionary, index: int) -> void:
@@ -284,39 +308,28 @@ func _spawn_star(star_data: Dictionary, index: int) -> void:
 	stellar_bodies.add_child(star)
 
 func _spawn_stars_with_formation(stars: Array) -> void:
-	"""Spawn stars with proper formation based on count"""
 	if stars.is_empty():
 		return
 	
 	var star_count = stars.size()
-	
-	# Get RNG seeded to this specific system for consistent results
 	var rng = RandomNumberGenerator.new()
 	rng.seed = current_system_data.get("seed", 0)
 	
 	match star_count:
 		1:
-			# Single star at center
 			_spawn_star_at_position(stars[0], 0, Vector2.ZERO)
-		
 		2:
-			# Binary stars side-by-side with random separation (1200-2500px)
 			var separation = rng.randf_range(1200.0, 2500.0)
 			_spawn_star_at_position(stars[0], 0, Vector2(-separation / 2, 0))
 			_spawn_star_at_position(stars[1], 1, Vector2(separation / 2, 0))
-		
 		3:
-			# Trinary stars in triangle formation with random radius (1000-2000px)
-			var radius = rng.randf_range(1000.0, 2000.0)  # All stars use same distance
-			var rotation = rng.randf() * TAU  # Random rotation
-			
+			var radius = rng.randf_range(1000.0, 2000.0)
+			var rotation = rng.randf() * TAU
 			for i in range(3):
-				var angle = (TAU / 3.0) * i + rotation  # 120 degrees apart + rotation
+				var angle = (TAU / 3.0) * i + rotation
 				var position = Vector2(cos(angle), sin(angle)) * radius
 				_spawn_star_at_position(stars[i], i, position)
-		
 		_:
-			# 4+ stars - shouldn't happen, but fall back to circle
 			var radius = rng.randf_range(1200.0, 2000.0)
 			var rotation = rng.randf() * TAU
 			for i in range(stars.size()):
@@ -325,7 +338,6 @@ func _spawn_stars_with_formation(stars: Array) -> void:
 				_spawn_star_at_position(stars[i], i, position)
 
 func _spawn_star_at_position(star_data: Dictionary, index: int, position: Vector2) -> void:
-	"""Spawn a star at a specific position"""
 	var star = star_scene.instantiate()
 	star.initialize(star_data, index)
 	stellar_bodies.add_child(star)
@@ -335,6 +347,46 @@ func _spawn_planet(planet_data: Dictionary) -> void:
 	var planet = planet_scene.instantiate()
 	planet.initialize(planet_data, GameState.galaxy_seed)
 	stellar_bodies.add_child(planet)
+
+func _spawn_moon(moon_data: Dictionary) -> void:
+	"""Spawn a moon orbiting a planet"""
+	# Moons use the same planet scene but are initialized differently
+	var moon = planet_scene.instantiate()
+	moon.initialize(moon_data, GameState.galaxy_seed)
+	stellar_bodies.add_child(moon)
+	
+	# Position moon relative to its parent planet
+	var parent_id: String = moon_data.get("parent_id", "")
+	var parent_planet = _find_body_node_by_id(parent_id)
+	
+	if parent_planet:
+		# Get moon orbit data
+		var orbit: Dictionary = moon_data.get("orbit", {})
+		var radius_px: float = orbit.get("radius_px", 500.0)
+		var angle_rad: float = orbit.get("angle_rad", 0.0)
+		
+		# Position moon in orbit around planet
+		var offset := Vector2(cos(angle_rad), sin(angle_rad)) * radius_px
+		moon.global_position = parent_planet.global_position + offset
+		
+		# Store parent reference for orbital updates
+		moon.set_meta("orbit_parent", parent_planet)
+		moon.set_meta("orbit_radius_px", radius_px)
+		moon.set_meta("orbit_angle_rad", angle_rad)
+		moon.set_meta("orbit_period_days", orbit.get("period_days", 1.0))
+	else:
+		push_warning("SystemExploration: Could not find parent planet '%s' for moon '%s'" % [parent_id, moon_data.get("id", "unknown")])
+
+func _find_body_node_by_id(body_id: String) -> Node2D:
+	"""Find a spawned body node by its ID"""
+	if stellar_bodies == null:
+		return null
+	
+	for node in stellar_bodies.get_children():
+		if node.has_meta("body_id") and node.get_meta("body_id") == body_id:
+			return node
+	
+	return null
 
 func _spawn_asteroid_belt(belt_data: Dictionary) -> void:
 	var orbit = belt_data.get("orbit", {})
@@ -403,14 +455,11 @@ func _enable_streaming() -> void:
 	if streamer == null:
 		push_error("SystemExploration: Cannot enable streaming, SectorStreamer is null")
 		return
-	
 	if sectors == null:
 		push_error("SystemExploration: Cannot enable streaming, Sectors node is null")
 		return
-	
 	streamer.set_tile_parent(sectors)
 	streamer.enable_streaming(true)
-	
 	print("SystemExploration: Sector streaming enabled")
 
 func _input(event: InputEvent) -> void:
@@ -431,11 +480,8 @@ func _exit_tree() -> void:
 	if streamer:
 		streamer.enable_streaming(false)
 		streamer.clear_all_tiles()
-	
-	# NEW: Clean up NPCs
 	if npc_spawner:
 		npc_spawner.clear_all_npcs()
-	
 	print("SystemExploration: Cleanup complete")
 
 # === PUBLIC API ===
@@ -449,7 +495,6 @@ func get_system_name() -> String:
 	return system_info.get("name", system_id)
 
 func get_system_faction() -> String:
-	"""NEW: Get the faction controlling this system"""
 	return current_system_data.get("faction_id", "")
 
 func teleport_ship(new_position: Vector2) -> void:
@@ -464,17 +509,13 @@ func get_player_ship() -> CharacterBody2D:
 	return player_ship
 
 func get_nearby_npcs(range_radius: float = 1000.0) -> Array:
-	"""NEW: Get NPCs near the player"""
 	if npc_spawner == null or player_ship == null:
 		return []
-	
 	return npc_spawner.get_npcs_in_range(player_ship.global_position, range_radius)
 
 func get_hostile_npcs_nearby(range_radius: float = 2000.0) -> Array:
-	"""NEW: Get hostile NPCs near the player"""
 	if npc_spawner == null or player_ship == null:
 		return []
-	
 	return npc_spawner.get_hostile_npcs_in_range(player_ship.global_position, range_radius)
 
 # === DEBUG FUNCTIONS ===
@@ -489,7 +530,13 @@ func debug_print_system_info() -> void:
 	print("Current Sector: ", GameState.current_sector)
 	print("Active Tiles: ", streamer.get_active_tile_count() if streamer else 0)
 	print("Stars: ", current_system_data.get("stars", []).size())
-	print("Bodies: ", current_system_data.get("bodies", []).size())
+	
+	var bodies: Array = current_system_data.get("bodies", [])
+	var planet_count := bodies.filter(func(b): return b.get("kind") == "planet").size()
+	var moon_count := bodies.filter(func(b): return b.get("kind") == "moon").size()
+	print("Planets: ", planet_count)
+	print("Moons: ", moon_count)
+	print("Stations: ", current_system_data.get("stations", []).size())
 	print("NPCs: ", npc_spawner.get_npc_count() if npc_spawner else 0)
 	print("================================")
 

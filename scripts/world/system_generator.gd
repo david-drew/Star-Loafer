@@ -6,6 +6,11 @@ var station_types_data: Dictionary = {}
 var station_types_loaded: bool = false
 var _asset_pattern: String = "res://assets/images/actors/stations/{type}_{variant}.png"
 
+# Moon types data
+var moon_types_data: Dictionary = {}
+var moon_types_loaded: bool = false
+var _moon_asset_pattern: String = "res://assets/images/stellar_bodies/moons/{type}_{variant}.png"
+
 func _load_station_types() -> void:
 	"""Load station types from JSON"""
 	var path = "res://data/procgen/station_types.json"
@@ -44,11 +49,54 @@ func _load_station_types() -> void:
 		_asset_pattern = station_types_data.get("asset_pattern", _asset_pattern)
 		print("SystemGenerator: Loaded %d station types" % station_types_data.get("types", []).size())
 
+func _load_moon_types() -> void:
+	"""Load moon types from JSON"""
+	var path = "res://data/procgen/moon_types.json"
+	
+	if !FileAccess.file_exists(path):
+		push_warning("SystemGenerator: moon_types.json not found at %s, skipping moon generation" % path)
+		moon_types_data = {}
+		return
+	
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_error("SystemGenerator: Failed to open moon_types.json, skipping moon generation")
+		moon_types_data = {}
+		return
+	
+	var json_text = file.get_as_text()
+	file.close()
+	
+	if json_text == "" or json_text.length() > 100000:
+		push_error("SystemGenerator: Invalid JSON file size for moon_types.json")
+		moon_types_data = {}
+		return
+	
+	var json := JSON.new()
+	var err := json.parse(json_text)
+	if err != OK:
+		push_error("SystemGenerator: JSON parse error in moon_types.json: %s" % json.get_error_message())
+		moon_types_data = {}
+		return
+	
+	moon_types_data = json.data
+	
+	if moon_types_data.is_empty():
+		push_warning("SystemGenerator: moon_types.json loaded but is empty")
+	else:
+		_moon_asset_pattern = moon_types_data.get("asset_pattern", _moon_asset_pattern)
+		print("SystemGenerator: Loaded %d moon types" % moon_types_data.get("types", []).size())
+
 func generate(system_id: String, galaxy_seed: int, pop_level: int, tech_level: int, mining_quality: int) -> Dictionary:
 	# Lazy load station types on first use
 	if !station_types_loaded:
 		_load_station_types()
 		station_types_loaded = true
+	
+	# Lazy load moon types on first use
+	if !moon_types_loaded:
+		_load_moon_types()
+		moon_types_loaded = true
 	
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash(galaxy_seed) ^ hash(system_id.hash())
@@ -71,7 +119,7 @@ func generate(system_id: String, galaxy_seed: int, pop_level: int, tech_level: i
 		}
 	}
 
-# -------------------- STARS & BODIES (unchanged) --------------------
+# -------------------- STARS & BODIES --------------------
 
 func _generate_stars(rng: RandomNumberGenerator) -> Array:
 	var star_count := _roll_star_count(rng)
@@ -129,20 +177,36 @@ func _generate_bodies(rng: RandomNumberGenerator, stars: Array, pop_level: int, 
 	if rng.randf() < 0.1:
 		planet_count += rng.randi_range(1, 5)
 	planet_count = clampi(planet_count, 1, 15)
+	
+	# Generate planets
 	for i in range(planet_count):
 		var orbit_radius := 2.0 + i * 4.0 + rng.randf_range(-1.0, 1.0)
 		var planet_type := _select_planet_type(rng, orbit_radius)
 		var orbit_angle := rng.randf() * TAU
-		var body := {
+		
+		var planet := {
 			"id": "body:%d" % i,
 			"kind": "planet",
 			"type": planet_type,
-			"orbit": {"parent": stars[0]["id"], "a_AU": orbit_radius, "angle_rad": orbit_angle, "period_days": _calculate_period(orbit_radius)},
+			"orbit": {
+				"parent": stars[0]["id"], 
+				"a_AU": orbit_radius, 
+				"angle_rad": orbit_angle, 
+				"period_days": _calculate_period(orbit_radius)
+			},
 			"sprite": ContentDB.get_planet_sprite(planet_type, rng),
 			"resources": _roll_resources(rng, planet_type, mining_quality),
-			"population": _calculate_planet_population(planet_type, pop_level)
+			"population": _calculate_planet_population(planet_type, pop_level),
+			"inhabitant_data": {}  # Will be filled later
 		}
-		bodies.append(body)
+		
+		bodies.append(planet)
+		
+		# Generate moons for this planet
+		var moons := _generate_moons_for_planet(rng, planet, i, pop_level, mining_quality)
+		bodies.append_array(moons)
+	
+	# Generate asteroid belts
 	if mining_quality >= 6:
 		var belt_count := rng.randi_range(1, 2)
 		for i in range(belt_count):
@@ -151,9 +215,190 @@ func _generate_bodies(rng: RandomNumberGenerator, stars: Array, pop_level: int, 
 				belt_radius = rng.randf_range(15.0, 25.0)
 			else:
 				belt_radius = rng.randf_range(40.0, 60.0)
-
-			bodies.append({"id":"belt:%d"%i,"kind":"asteroid_belt","orbit":{"parent":stars[0]["id"],"a_AU":belt_radius},"resources":_roll_resources(rng,"asteroid_belt",mining_quality)})
+			
+			bodies.append({
+				"id":"belt:%d"%i,
+				"kind":"asteroid_belt",
+				"orbit":{"parent":stars[0]["id"],"a_AU":belt_radius},
+				"resources":_roll_resources(rng,"asteroid_belt",mining_quality),
+				"inhabitant_data": {}  # Belts typically uninhabited
+			})
+	
+	# Add inhabitant data to all bodies
+	_populate_inhabitant_data(bodies, pop_level, rng)
+	
 	return bodies
+
+func _generate_moons_for_planet(rng: RandomNumberGenerator, planet: Dictionary, planet_index: int, pop_level: int, mining_quality: int) -> Array:
+	"""Generate moons orbiting a planet"""
+	var moons := []
+	
+	# Check if we should generate moons (30% chance of 0 moons)
+	if rng.randf() < 0.3:
+		return moons
+	
+	# Get planet type data from ContentDB to determine moon count range
+	var planet_type: String = planet.get("type", "")
+	var moon_count_range: Array = ContentDB.get_planet_moon_range(planet_type)
+	
+	if moon_count_range.is_empty() or moon_count_range.size() != 2:
+		# No moon data for this planet type
+		return moons
+	
+	var num_moons := rng.randi_range(moon_count_range[0], moon_count_range[1])
+	
+	if num_moons <= 0:
+		return moons
+	
+	# Get available moon types
+	var moon_types: Array = moon_types_data.get("types", [])
+	if moon_types.is_empty():
+		return moons
+	
+	for moon_idx in range(num_moons):
+		var moon_type_data: Dictionary = _select_moon_type(rng, moon_types)
+		if moon_type_data.is_empty():
+			continue
+		
+		var moon_type: String = moon_type_data.get("id", "barren")
+		
+		# Get orbit radius from moon type data (in pixels)
+		var orbit_range: Array = moon_type_data.get("orbit_radius_px_range", [400, 1200])
+		var orbit_radius_px: float = rng.randf_range(float(orbit_range[0]), float(orbit_range[1]))
+		var orbit_angle := rng.randf() * TAU
+		
+		# Calculate orbital period (moons orbit faster, days)
+		var period_days := _calculate_moon_period(orbit_radius_px)
+		
+		var moon := {
+			"id": "moon:%d_%d" % [planet_index, moon_idx],
+			"kind": "moon",
+			"type": moon_type,
+			"parent_id": planet.get("id", "body:0"),
+			"orbit": {
+				"parent": planet.get("id", "body:0"),
+				"radius_px": orbit_radius_px,
+				"angle_rad": orbit_angle,
+				"period_days": period_days
+			},
+			"sprite": ContentDB.get_moon_sprite(moon_type, rng),
+			"resources": _roll_resources(rng, moon_type, mining_quality),
+			"population": _calculate_moon_population(moon_type, pop_level),
+			"inhabitant_data": {},  # Will be filled later
+			"size_px_range": moon_type_data.get("size_px_range", [20, 40]),
+			"gravity_factor": moon_type_data.get("gravity_factor", 0.1),
+			"has_atmosphere": moon_type_data.get("has_atmosphere", 0.0),
+			"tidal_lock": moon_type_data.get("tidal_lock", 0.8)
+		}
+		print("\tMoon Sprite: %s" %moon.sprite) 	# DEBUG
+		
+		moons.append(moon)
+	
+	return moons
+
+func _select_moon_type(rng: RandomNumberGenerator, moon_types: Array) -> Dictionary:
+	"""Select a random moon type from available types"""
+	if moon_types.is_empty():
+		return {}
+	return moon_types[rng.randi_range(0, moon_types.size() - 1)]
+
+func _calculate_moon_period(orbit_radius_px: float) -> float:
+	"""Calculate orbital period for a moon (faster than planets)"""
+	# Moons orbit much faster - scale based on pixel distance
+	# Rough approximation: closer moons orbit faster
+	return max(0.5, orbit_radius_px / 400.0)  # 0.5 to ~5 days typically
+
+func _calculate_moon_population(moon_type: String, system_pop_level: int) -> int:
+	"""Calculate moon population based on type and system pop (similar to planets)"""
+	if moon_types_data.is_empty():
+		return 0
+	
+	var moon_types: Array = moon_types_data.get("types", [])
+	var moon_data: Dictionary = {}
+	
+	# Find the moon type data
+	for mt in moon_types:
+		if mt.get("id", "") == moon_type:
+			moon_data = mt
+			break
+	
+	if moon_data.is_empty():
+		return 0
+	
+	var pop_bias: String = moon_data.get("pop_bias", "low")
+	var base_pop := system_pop_level
+	
+	# Adjust based on pop_bias
+	match pop_bias:
+		"very_high":
+			base_pop += 3
+		"high":
+			base_pop += 2
+		"any":
+			base_pop += 0
+		"low":
+			base_pop -= 2
+		"none":
+			base_pop -= 5
+	
+	return clampi(base_pop, 0, 10)
+
+func _populate_inhabitant_data(bodies: Array, pop_level: int, rng: RandomNumberGenerator) -> void:
+	"""Add inhabitant data to all bodies (planets and moons)"""
+	for body in bodies:
+		var kind: String = body.get("kind", "")
+		
+		if kind in ["planet", "moon"]:
+			var population: int = body.get("population", 0)
+			var body_type: String = body.get("type", "")
+			
+			var inhabitant_data := {
+				"is_inhabited": population > 0,
+				"population": population,
+				"faction_id": "",  # Will be set by SystemExploration from system data
+				"settlement_type": _determine_settlement_type(population),
+				"has_spaceport": population >= 5,
+				"tech_level": _determine_body_tech_level(population, pop_level),
+			}
+			
+			body["inhabitant_data"] = inhabitant_data
+		
+		elif kind == "asteroid_belt":
+			# Belts typically have mining outposts, not settlements
+			body["inhabitant_data"] = {
+				"is_inhabited": false,
+				"population": 0,
+				"faction_id": "",
+				"settlement_type": "none",
+				"has_spaceport": false,
+				"tech_level": 0
+			}
+
+func _determine_settlement_type(population: int) -> String:
+	"""Determine settlement type based on population level"""
+	if population <= 0:
+		return "none"
+	elif population <= 2:
+		return "outpost"
+	elif population <= 4:
+		return "colony"
+	elif population <= 6:
+		return "settlement"
+	elif population <= 8:
+		return "city"
+	else:
+		return "metropolis"
+
+func _determine_body_tech_level(population: int, system_pop_level: int) -> int:
+	"""Determine tech level for a body based on its population"""
+	if population <= 0:
+		return 0
+	
+	# Tech level scales with population but capped by system level
+	var base_tech := clampi(population / 2, 1, 5)
+	var system_tech := clampi(system_pop_level / 2, 1, 5)
+	
+	return mini(base_tech, system_tech)
 
 func _select_planet_type(rng: RandomNumberGenerator, orbit_radius: float) -> String:
 	if orbit_radius < 1.0:
@@ -194,7 +439,7 @@ func _roll_resources(rng: RandomNumberGenerator, body_type: String, mining_quali
 		resources.append({"type":res_type,"richness":richness})
 	return resources
 
-# -------------------- STATIONS (rewired to JSON) --------------------
+# -------------------- STATIONS --------------------
 
 func _generate_stations(rng: RandomNumberGenerator, bodies: Array, stars: Array, pop_level: int, tech_level: int, mining_quality: int) -> Array:
 	var stations := []
@@ -203,55 +448,69 @@ func _generate_stations(rng: RandomNumberGenerator, bodies: Array, stars: Array,
 		return _generate_stations_fallback(rng, pop_level, tech_level, mining_quality)
 	
 	var types: Array = station_types_data.get("types", [])
+	if types.is_empty():
+		return _generate_stations_fallback(rng, pop_level, tech_level, mining_quality)
+	
+	var budget := _calculate_station_budget(pop_level, tech_level)
+	var categorized := _categorize_stations_by_bias(types, pop_level)
+	var available := _get_all_available_types(categorized, pop_level)
+	
+	if available.is_empty():
+		return []
+	
 	var station_counter := 0
-	
-	# Always spawn warp gate in high-pop/high-tech systems (using JSON def)
-	if pop_level >= 5 and tech_level >= 3:
-		var gate_type := _find_station_type(types, "warp_gate")
-		if gate_type:
-			var pos := _position_from_prefs_or_safe_ring(rng, gate_type, 8.0, 15.0) # AU ring fallback
-			stations.append(_create_station_data("station:%d" % station_counter, gate_type, pos, rng))
-			station_counter += 1
-	
-	var station_budget := _calculate_station_budget(pop_level, tech_level)
-	var available_by_bias := _categorize_stations_by_bias(types, pop_level)
-	var available_types := _get_all_available_types(available_by_bias, pop_level)
-	
-	if available_types.is_empty():
-		print("SystemGenerator: No available station types for pop_level %d" % pop_level)
-		return stations
-	
-	for i in range(station_budget):
-		if station_counter >= 20:
-			# hard cap to avoid overcrowding
+	for _i in range(budget):
+		if available.is_empty():
 			break
 		
-		var station_type: Dictionary = available_types[rng.randi() % available_types.size()]
+		var station_type: Dictionary = available[rng.randi_range(0, available.size() - 1)]
 		var position := _calculate_station_position_json(station_type, bodies, stars, rng)
 		
-		# Enforce minimum distance from star (>= 8000 px ≈ 2 AU)
-		var MIN_DISTANCE_FROM_STAR := 8000.0
-		if position.length() < MIN_DISTANCE_FROM_STAR:
-			var ang := position.angle()
-			position = Vector2(cos(ang), sin(ang)) * MIN_DISTANCE_FROM_STAR
+		var station_data := _create_station_data(
+			"station:%d" % station_counter,
+			station_type,
+			position,
+			rng
+		)
 		
-		stations.append(_create_station_data("station:%d" % station_counter, station_type, position, rng))
+		# Add inhabitant data for stations
+		_add_station_inhabitant_data(station_data, station_type, rng)
+		
+		stations.append(station_data)
 		station_counter += 1
 	
 	print("SystemGenerator: Generated %d stations" % stations.size())
 	return stations
 
-func _position_from_prefs_or_safe_ring(rng: RandomNumberGenerator, station_type: Dictionary, min_au: float, max_au: float) -> Vector2:
-	# Prefer JSON placement_prefs.orbit_radius_px_range if present
-	var prefs:Dictionary = station_type.get("placement_prefs", {})
-	if typeof(prefs) == TYPE_DICTIONARY and prefs.has("orbit_radius_px_range"):
-		var r:Array = prefs["orbit_radius_px_range"]
-		if typeof(r) == TYPE_ARRAY and r.size() == 2:
-			var angle := rng.randf() * TAU
-			var radius_px := rng.randf_range(float(r[0]), float(r[1]))
-			return Vector2(cos(angle), sin(angle)) * radius_px
-	# Fallback to AU ring
-	return _random_orbit_position(rng, min_au, max_au)
+func _add_station_inhabitant_data(station_data: Dictionary, station_type: Dictionary, rng: RandomNumberGenerator) -> void:
+	"""Add inhabitant data to a station"""
+	var pop_range: Array = station_type.get("population_range", [10, 500])
+	var population := rng.randi_range(pop_range[0], pop_range[1]) if pop_range.size() == 2 else 100
+	
+	var inhabitant_data := {
+		"is_inhabited": true,  # Stations are almost always inhabited
+		"population": population,
+		"faction_id": "",  # Will be set by SystemExploration from system data
+		"settlement_type": "station",
+		"has_spaceport": station_data.get("can_dock", true),
+		"tech_level": _station_tech_level(station_type.get("tech_level", "standard")),
+	}
+	
+	station_data["inhabitant_data"] = inhabitant_data
+
+func _station_tech_level(tech_level_str: String) -> int:
+	"""Convert station tech level string to numeric value"""
+	match tech_level_str:
+		"primitive":
+			return 1
+		"standard":
+			return 3
+		"advanced":
+			return 5
+		"cutting_edge":
+			return 7
+		_:
+			return 3
 
 func _calculate_station_position_json(station_type: Dictionary, bodies: Array, stars: Array, rng: RandomNumberGenerator) -> Vector2:
 	var type_id:String = station_type.get("id", "")
@@ -265,7 +524,7 @@ func _calculate_station_position_json(station_type: Dictionary, bodies: Array, s
 			var rp := rng.randf_range(float(rr[0]), float(rr[1]))
 			return Vector2(cos(a), sin(a)) * rp
 	
-	# Otherwise keep your previous per-type heuristics (AU), minimal change
+	# Otherwise keep previous per-type heuristics (AU)
 	match type_id:
 		"warp_gate":
 			return _random_orbit_position(rng, 8.0, 15.0)
@@ -311,7 +570,7 @@ func _create_station_data(id: String, station_type: Dictionary, position: Vector
 	variants = max(variants, 1)
 	var variant := rng.randi_range(1, variants)
 	
-	# Size selection (pixels) from range; pass as scalar for Station.gd to scale exactly
+	# Size selection (pixels) from range
 	var size_px := 256.0
 	if station_type.has("size_px_range"):
 		var r:Array = station_type["size_px_range"]
@@ -326,18 +585,15 @@ func _create_station_data(id: String, station_type: Dictionary, position: Vector
 	# Compose services directly from JSON
 	var services: Array = station_type.get("services", [])
 	
-	# Pass through key fields so Station.gd can configure itself
 	var station_data := {
 		"id": id,
 		"type": station_type.get("id",""),
 		"name": _generate_station_name(station_type.get("id",""), rng),
-		"faction_id": "", # filled by SystemExploration from system_data if needed
+		"faction_id": "",
 		"variant": variant,
 		"position": [position.x, position.y],
 		"services": services,
 		"broadcast": _generate_broadcast_message(station_type.get("id",""), rng),
-		
-		# JSON-driven visuals/flags
 		"sprite_path": sprite_path,
 		"size_px": size_px,
 		"color_hints": station_type.get("color_hints", []),
@@ -349,12 +605,13 @@ func _create_station_data(id: String, station_type: Dictionary, position: Vector
 		"repair_tier": int(station_type.get("repair_tier", 0)),
 		"shipyard_tier": int(station_type.get("shipyard_tier", 0)),
 		"security_level": int(station_type.get("security_level", 0)),
-		"faction_bias": station_type.get("faction_bias", "neutral")
+		"faction_bias": station_type.get("faction_bias", "neutral"),
+		"inhabitant_data": {}  # Will be filled by _add_station_inhabitant_data
 	}
 	
 	return station_data
 
-# ---- Existing helpers (names kept) ----
+# ---- Helper functions ----
 
 func _generate_station_name(type_id: String, rng: RandomNumberGenerator) -> String:
 	var prefixes := ["Alpha","Beta","Gamma","Delta","Epsilon","Station","Hub","Post"]
@@ -408,19 +665,17 @@ func _find_station_type(types: Array, type_id: String) -> Dictionary:
 func _generate_stations_fallback(rng: RandomNumberGenerator, pop_level: int, tech_level: int, mining_quality: int) -> Array:
 	var stations := []
 	if pop_level >= 5 and tech_level >= 3:
-		stations.append({"id":"station:gate","type":"warp_gate","name":"System Gate","variant":0,"position":[0,0],"services":["warp"],"broadcast":""})
+		stations.append({"id":"station:gate","type":"warp_gate","name":"System Gate","variant":0,"position":[0,0],"services":["warp"],"broadcast":"","inhabitant_data":{"is_inhabited":true,"population":50,"faction_id":"","settlement_type":"station","has_spaceport":true,"tech_level":3}})
 	if mining_quality >= 6:
-		stations.append({"id":"station:refinery","type":"ore_refinery","name":"Ore Processing","variant":0,"position":[20000,10000],"services":["dock","sell_ore"],"broadcast":""})
+		stations.append({"id":"station:refinery","type":"ore_refinery","name":"Ore Processing","variant":0,"position":[20000,10000],"services":["dock","sell_ore"],"broadcast":"","inhabitant_data":{"is_inhabited":true,"population":30,"faction_id":"","settlement_type":"station","has_spaceport":true,"tech_level":2}})
 	return stations
 
 func _calculate_station_budget(pop_level: int, tech_level: int) -> int:
-	"""Calculate how many stations to spawn"""
-	var base_count = pop_level / 2  # 0-5 base stations
-	var tech_bonus = tech_level / 3  # 0-3 tech bonus
+	var base_count = pop_level / 2
+	var tech_bonus = tech_level / 3
 	return clampi(base_count + tech_bonus, 1, 12)
 
 func _categorize_stations_by_bias(types: Array, pop_level: int) -> Dictionary:
-	"""Group station types by their pop_bias"""
 	var categorized = {
 		"very_high": [],
 		"high": [],
@@ -435,9 +690,7 @@ func _categorize_stations_by_bias(types: Array, pop_level: int) -> Dictionary:
 	return categorized
 
 func _get_all_available_types(available_by_bias: Dictionary, pop_level: int) -> Array:
-	"""Get flat list of all available station types for this pop level"""
 	var available: Array = []
-	# Determine which bias levels are appropriate
 	if pop_level >= 8:
 		available += available_by_bias["very_high"]
 		available += available_by_bias["high"]
@@ -449,6 +702,5 @@ func _get_all_available_types(available_by_bias: Dictionary, pop_level: int) -> 
 		available += available_by_bias["low"]
 	else:
 		available += available_by_bias["low"]
-	# Always include "any" bias types
 	available += available_by_bias["any"]
 	return available

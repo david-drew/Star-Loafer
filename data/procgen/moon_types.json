@@ -191,5 +191,5 @@
 	  "ring_chance": 0.05
 	}
   ],
-  "asset_pattern": "res://assets/images/stellar_bodies/moons/{type}_{variant}.png"
+  "asset_pattern": "res://assets/images/stellar_bodies/moons/moon_{type}_{variant}.png"
 }
