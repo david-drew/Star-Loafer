@@ -35,13 +35,13 @@ const STAR_BASE_SCALE = 1.5
 const PLANET_BASE_SCALE = 0.15
 
 # Distance-based scaling (LOD effect)
-const DISTANCE_SCALE_MIN = 0.5   # Minimum size when FAR (50%)
-const DISTANCE_SCALE_MAX = 2.0   # Maximum size when NEAR (200%)
-const DISTANCE_SCALE_NEAR = 3000.0  # Distance for full size
-const DISTANCE_SCALE_FAR = 20000.0  # Distance for minimum size
+const DISTANCE_SCALE_MIN = 0.5
+const DISTANCE_SCALE_MAX = 2.0
+const DISTANCE_SCALE_NEAR = 3000.0
+const DISTANCE_SCALE_FAR = 20000.0
 
 # Performance optimization
-const SCALE_UPDATE_INTERVAL = 0.05  # Update 20 times per second (smoother)
+const SCALE_UPDATE_INTERVAL = 0.05
 var scale_update_timer: float = 0.0
 
 # Asteroid belt generation
@@ -51,27 +51,23 @@ const BELT_ASTEROID_COUNT = 200
 
 func _ready() -> void:
 	print("SystemExploration: Initializing...")
-	
 	_create_sectors_node()
 	_create_stellar_bodies_node()
-	_create_npc_ships_node()  # NEW
+	_create_npc_ships_node()
 	_setup_services()
 	_setup_player_ship()
 	_setup_background()
 	_generate_current_system()
 	_spawn_stellar_bodies()
-	_spawn_stations()  # NEW: Spawn stations
+	_spawn_stations()
 	_spawn_npcs()
 	_enable_streaming()
-	
 	is_initialized = true
 	print("SystemExploration: Ready")
 
 func _process(delta: float) -> void:
 	if !is_initialized or player_ship == null or stellar_bodies == null:
 		return
-	
-	# Update distance-based scaling periodically, not every frame
 	scale_update_timer += delta
 	if scale_update_timer >= SCALE_UPDATE_INTERVAL:
 		scale_update_timer = 0.0
@@ -91,10 +87,9 @@ func _create_stellar_bodies_node() -> void:
 	print("SystemExploration: Created StellarBodies node")
 
 func _create_npc_ships_node() -> void:
-	"""NEW: Create container for NPC ships"""
 	npc_ships = Node2D.new()
 	npc_ships.name = "NPCShips"
-	npc_ships.z_index = 0  # Same layer as player
+	npc_ships.z_index = 0
 	add_child(npc_ships)
 	print("SystemExploration: Created NPCShips node")
 
@@ -103,26 +98,19 @@ func _setup_services() -> void:
 	if game_root == null:
 		push_error("SystemExploration: Cannot find GameRoot!")
 		return
-	
 	var systems_node = game_root.get_node_or_null("Systems")
 	if systems_node == null:
 		push_error("SystemExploration: Cannot find GameRoot/Systems!")
 		return
-	
 	streamer = systems_node.get_node_or_null("SectorStreamer")
 	system_generator = systems_node.get_node_or_null("SystemGenerator")
 	npc_spawner = systems_node.get_node_or_null("NPCSpawner")
-	
 	if streamer == null:
 		push_error("SystemExploration: SectorStreamer not found!")
-	
 	if system_generator == null:
 		push_error("SystemExploration: SystemGenerator not found!")
-	
 	if npc_spawner == null:
 		push_error("SystemExploration: NPCSpawner not found! NPCs will not spawn.")
-		push_error("SystemExploration: Make sure NPCSpawner is added as a child of GameRoot/Systems")
-		# Print debug info to help locate the issue
 		print("SystemExploration: Available nodes under Systems:")
 		for child in systems_node.get_children():
 			print("  - ", child.name, " (", child.get_class(), ")")
@@ -131,7 +119,6 @@ func _setup_player_ship() -> void:
 	if player_ship == null:
 		push_error("SystemExploration: PlayerShip not found!")
 		return
-	
 	if GameState.ship_position != Vector2.ZERO:
 		player_ship.global_position = GameState.ship_position
 		print("SystemExploration: Ship positioned at saved location: ", GameState.ship_position)
@@ -139,7 +126,6 @@ func _setup_player_ship() -> void:
 		player_ship.global_position = Vector2(512, 512)
 		GameState.ship_position = player_ship.global_position
 		print("SystemExploration: Ship positioned at default spawn: ", player_ship.global_position)
-	
 	if GameState.ship_velocity != Vector2.ZERO:
 		player_ship.velocity = GameState.ship_velocity
 
@@ -147,7 +133,6 @@ func _setup_background() -> void:
 	if background == null:
 		push_warning("SystemExploration: Background not found, skipping")
 		return
-	
 	background.visible = true
 	print("SystemExploration: Background configured")
 
@@ -155,19 +140,14 @@ func _generate_current_system() -> void:
 	if system_generator == null:
 		push_error("SystemExploration: Cannot generate system, SystemGenerator is null")
 		return
-	
-	var system_id = GameState.current_system_id
+	var system_id := GameState.current_system_id
 	if system_id == "":
 		push_error("SystemExploration: No current system ID in GameState!")
 		return
-	
-	# Find system data in galaxy
-	var system_info = _find_system_in_galaxy(system_id)
+	var system_info := _find_system_in_galaxy(system_id)
 	if system_info.is_empty():
 		push_error("SystemExploration: System '%s' not found in galaxy data!" % system_id)
 		return
-	
-	# Generate full system details
 	current_system_data = system_generator.generate(
 		system_id,
 		GameState.galaxy_seed,
@@ -175,11 +155,8 @@ func _generate_current_system() -> void:
 		system_info.get("tech_level", 5),
 		system_info.get("mining_quality", 5)
 	)
-	
-	# NEW: Add faction data to system_data for NPC spawning
 	current_system_data["faction_id"] = system_info.get("faction_id", "")
 	current_system_data["faction_influence"] = system_info.get("faction_influence", 100)
-	
 	print("SystemExploration: Generated system '%s'" % system_info.get("name", system_id))
 	print("  - Stars: %d" % current_system_data.get("stars", []).size())
 	print("  - Bodies: %d" % current_system_data.get("bodies", []).size())
@@ -188,7 +165,6 @@ func _generate_current_system() -> void:
 		current_system_data.get("faction_id", "none"),
 		current_system_data.get("faction_influence", 0)
 	])
-	
 	GameState.mark_discovered("galaxy", system_id)
 	EventBus.system_entered.emit(system_id)
 
@@ -196,68 +172,44 @@ func _spawn_stellar_bodies() -> void:
 	if stellar_bodies == null:
 		push_error("SystemExploration: Cannot spawn bodies, StellarBodies node is null")
 		return
-	
 	if current_system_data.is_empty():
 		push_warning("SystemExploration: No system data to spawn bodies from")
 		return
-	
-	# Clear any existing bodies
 	for child in stellar_bodies.get_children():
 		child.queue_free()
-	
-	# Spawn stars with proper positioning
-	var stars = current_system_data.get("stars", [])
+	var stars:Array = current_system_data.get("stars", [])
 	_spawn_stars_with_formation(stars)
-	
-	# Spawn planets at their orbital distances
-	var bodies = current_system_data.get("bodies", [])
+	var bodies:Array = current_system_data.get("bodies", [])
 	for body in bodies:
 		if body.get("kind", "") == "planet":
 			_spawn_planet(body)
-	
-	# Spawn asteroid belts if they exist
 	for body in bodies:
 		if body.get("kind", "") == "asteroid_belt":
 			_spawn_asteroid_belt(body)
-	
 	print("SystemExploration: Spawned %d stars and %d bodies" % [stars.size(), bodies.size()])
 
 func _spawn_stations() -> void:
-	"""Spawn stations in the system"""
 	if stellar_bodies == null:
 		push_error("SystemExploration: Cannot spawn stations, StellarBodies node is null")
 		return
-	
 	if current_system_data.is_empty():
 		push_warning("SystemExploration: No system data to spawn stations from")
 		return
-	
-	var stations = current_system_data.get("stations", [])
+	var stations:Array = current_system_data.get("stations", [])
 	if stations.is_empty():
 		print("SystemExploration: No stations in this system")
 		return
-	
 	for station_data in stations:
 		_spawn_station(station_data)
-	
 	print("SystemExploration: Spawned %d stations" % stations.size())
 
 func _spawn_station(station_data: Dictionary) -> void:
-	"""Spawn a single station"""
 	var station = station_scene.instantiate()
-	
-	# Convert position array to Vector2
-	var pos_array = station_data.get("position", [0, 0])
-	var position = Vector2(pos_array[0], pos_array[1])
-	
-	# Add faction_id from system if not in station data
+	var pos_array:Array = station_data.get("position", [0, 0])
+	var position:Vector2 = Vector2(pos_array[0], pos_array[1])
 	if !station_data.has("faction_id"):
 		station_data["faction_id"] = current_system_data.get("faction_id", "")
-	
-	# Update position in data
 	station_data["position"] = position
-	
-	# Initialize and add to scene
 	stellar_bodies.add_child(station)
 	station.initialize(station_data)
 

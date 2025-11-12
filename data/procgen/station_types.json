@@ -9,7 +9,7 @@
   "types": [
 	{
 	  "id": "habitat",
-	  "variants": 4,
+	  "variants": 2,
 	  "pop_bias": "very_high",
 	  "size_px_range": [280, 520],
 	  "color_hints": ["blue_white","warm_white"],
@@ -55,7 +55,7 @@
 	},
 	{
 	  "id": "mining_outpost",
-	  "variants": 3,
+	  "variants": 1,
 	  "pop_bias": "low",
 	  "size_px_range": [160, 320],
 	  "color_hints": ["dust_brown","industrial_gray"],
@@ -101,7 +101,7 @@
 	},
 	{
 	  "id": "corporate_hq",
-	  "variants": 3,
+	  "variants": 1,
 	  "pop_bias": "high",
 	  "size_px_range": [260, 500],
 	  "color_hints": ["corporate_blue","white"],
@@ -527,7 +527,7 @@
 	},
 	{
 	  "id": "drydock_platform",
-	  "variants": 2,
+	  "variants": 1,
 	  "pop_bias": "medium",
 	  "size_px_range": [280, 560],
 	  "color_hints": ["scaffold_gray","arc_welder_blue"],
