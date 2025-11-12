@@ -1,0 +1,192 @@
+[gd_scene load_steps=13 format=3 uid="uid://cljapp8pda8g7"]
+
+[ext_resource type="Script" uid="uid://bfixq1sigteri" path="res://scripts/game_root.gd" id="1_78s5d"]
+[ext_resource type="Script" uid="uid://cnjqsjdc6fsi5" path="res://scripts/world/galaxy_generator.gd" id="2_uebra"]
+[ext_resource type="Script" uid="uid://lejg5m6kfyrm" path="res://scripts/world/system_generator.gd" id="3_jb3nc"]
+[ext_resource type="Script" uid="uid://crd8wpxfgk3ox" path="res://scripts/flight/sector_streamer.gd" id="4_iusj4"]
+[ext_resource type="Script" uid="uid://2seovgr8rd12" path="res://scripts/ui/hud.gd" id="4_jb3nc"]
+[ext_resource type="Script" uid="uid://3kyatodl4hbn" path="res://scripts/actors/faction_manager.gd" id="5_ylec3"]
+[ext_resource type="Script" uid="uid://dyklksc0xvnbj" path="res://scripts/actors/npc_spawner.gd" id="6_6v30a"]
+[ext_resource type="PackedScene" uid="uid://0w2lptp2cmwk" path="res://scenes/ui/galaxy_map.tscn" id="6_j7aru"]
+[ext_resource type="Script" uid="uid://riixlr0qd1ne" path="res://scripts/systems/CommSystem.gd" id="7_5dyip"]
+[ext_resource type="PackedScene" uid="uid://bf8lc4003rgi0" path="res://scenes/ui/system_map.tscn" id="7_ylec3"]
+[ext_resource type="Script" uid="uid://b1bxxrajlbi28" path="res://scripts/systems/DockingManager.gd" id="8_ywsqi"]
+[ext_resource type="Script" uid="uid://djhl8tkua11qy" path="res://scripts/systems/FactionRelations.gd" id="9_i7pw8"]
+
+[node name="GameRoot" type="Node2D"]
+script = ExtResource("1_78s5d")
+
+[node name="WorldRoot" type="Node2D" parent="."]
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="GalaxyGenerator" type="Node" parent="Systems"]
+script = ExtResource("2_uebra")
+
+[node name="SystemGenerator" type="Node" parent="Systems"]
+script = ExtResource("3_jb3nc")
+
+[node name="SectorStreamer" type="Node" parent="Systems"]
+script = ExtResource("4_iusj4")
+
+[node name="FactionManager" type="Node" parent="Systems"]
+script = ExtResource("5_ylec3")
+
+[node name="NPCSpawner" type="Node" parent="Systems"]
+script = ExtResource("6_6v30a")
+
+[node name="CommSystem" type="Node" parent="Systems"]
+script = ExtResource("7_5dyip")
+
+[node name="DockingManager" type="Node" parent="Systems"]
+script = ExtResource("8_ywsqi")
+
+[node name="FactionRelations" type="Node" parent="Systems"]
+script = ExtResource("9_i7pw8")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_jb3nc")
+
+[node name="FlightMode" type="Control" parent="UI/HUD"]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 1
+anchors_preset = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 250.0
+offset_bottom = 350.0
+
+[node name="SpeedIndicator" type="Label" parent="UI/HUD/FlightMode"]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = -20.0
+offset_bottom = 30.0
+grow_horizontal = 2
+text = "Speed"
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/HUD/FlightMode"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 50.0
+offset_bottom = 80.0
+grow_horizontal = 2
+step = 1.0
+
+[node name="Compass" type="TextureRect" parent="UI/HUD/FlightMode"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1400.0
+offset_right = 1600.0
+offset_bottom = 200.0
+grow_horizontal = 0
+
+[node name="TargetInfo" type="Panel" parent="UI/HUD/FlightMode"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+offset_top = 100.0
+offset_right = 100.0
+offset_bottom = 140.0
+
+[node name="AutopilotStatus" type="HBoxContainer" parent="UI/HUD/FlightMode"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/HUD/FlightMode/AutopilotStatus"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/HUD/FlightMode/AutopilotStatus"]
+layout_mode = 2
+
+[node name="OnFootMode" type="Control" parent="UI/HUD"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="ProgressBar" parent="UI/HUD/OnFootMode"]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="StaminaBar" type="ProgressBar" parent="UI/HUD/OnFootMode"]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="Inventory" type="HBoxContainer" parent="UI/HUD/OnFootMode"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InteractPrompt" type="Label" parent="UI/HUD/OnFootMode/Inventory"]
+layout_mode = 2
+
+[node name="GalaxyMap" parent="UI" instance=ExtResource("6_j7aru")]
+
+[node name="SystemMap" parent="UI" instance=ExtResource("7_ylec3")]
+
+[node name="LoadingOverlay" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="LoadingOverlay"]
+custom_minimum_size = Vector2(250, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LoadingOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 15.0
+offset_right = 79.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Generating Universe"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="LoadingOverlay/Panel"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = 5.0
+offset_right = 90.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2

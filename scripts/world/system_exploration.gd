@@ -29,7 +29,11 @@ var is_initialized: bool = false
 const AU_TO_PIXELS = 4000.0
 const STAR_BASE_SCALE = 1.5
 const PLANET_BASE_SCALE = 0.15
-const MOON_BASE_SCALE = 0.05  # Moons are smaller than planets
+const MOON_BASE_SCALE = 0.05  # Moons are 1/3 the scale of planets (0.05 vs 0.15)
+
+# Moon scale multiplier - adjust this to make moons relatively larger or smaller
+# 1.0 = normal size (1/3 of planet), 0.5 = half size (1/6 of planet), 2.0 = double size (2/3 of planet)
+const MOON_SCALE_MULTIPLIER = 1.0
 
 # Distance-based scaling (LOD effect)
 const DISTANCE_SCALE_MIN = 0.5
@@ -296,10 +300,26 @@ func _update_node_scale(node: Node2D) -> void:
 		)
 		target_scale_factor = lerp(DISTANCE_SCALE_MAX, DISTANCE_SCALE_MIN, t)
 	
+	# If this is a moon, also consider parent planet's scale
+	var final_scale_factor := target_scale_factor
+	if node.has_meta("is_moon") and node.has_meta("parent_id"):
+		var parent_id: String = node.get_meta("parent_id")
+		var parent_planet = _find_body_node_by_id(parent_id)
+		if parent_planet and parent_planet.has_node("Sprite2D"):
+			var parent_sprite = parent_planet.get_node("Sprite2D")
+			var parent_base_scale = parent_planet.get_meta("base_scale", Vector2.ONE * PLANET_BASE_SCALE)
+			
+			# Calculate parent's current scale factor
+			var parent_current_scale:float = parent_sprite.scale.x
+			var parent_scale_factor:float = parent_current_scale / parent_base_scale.x if parent_base_scale.x > 0 else 1.0
+			
+			# Moon scales proportionally with parent (if parent shrinks, moon shrinks too)
+			final_scale_factor *= parent_scale_factor
+	
 	var sprite = node.get_node_or_null("Sprite2D")
 	if sprite:
 		var base_scale = node.get_meta("base_scale", Vector2.ONE)
-		var target_scale = base_scale * target_scale_factor
+		var target_scale = base_scale * final_scale_factor
 		sprite.scale = sprite.scale.lerp(target_scale, 0.15)
 
 func _spawn_star(star_data: Dictionary, index: int) -> void:
@@ -347,6 +367,14 @@ func _spawn_planet(planet_data: Dictionary) -> void:
 	var planet = planet_scene.instantiate()
 	planet.initialize(planet_data, GameState.galaxy_seed)
 	stellar_bodies.add_child(planet)
+	
+	# Store body_id metadata so moons can find their parent
+	planet.set_meta("body_id", planet_data.get("id", "unknown"))
+	
+	# Set base_scale for distance-based LOD (if planet has size data)
+	# This metadata is used by _update_stellar_body_scales()
+	if not planet.has_meta("base_scale"):
+		planet.set_meta("base_scale", Vector2.ONE * PLANET_BASE_SCALE)
 
 func _spawn_moon(moon_data: Dictionary) -> void:
 	"""Spawn a moon orbiting a planet"""
@@ -355,27 +383,51 @@ func _spawn_moon(moon_data: Dictionary) -> void:
 	moon.initialize(moon_data, GameState.galaxy_seed)
 	stellar_bodies.add_child(moon)
 	
-	# Position moon relative to its parent planet
-	var parent_id: String = moon_data.get("parent_id", "")
-	var parent_planet = _find_body_node_by_id(parent_id)
-	
-	if parent_planet:
-		# Get moon orbit data
-		var orbit: Dictionary = moon_data.get("orbit", {})
-		var radius_px: float = orbit.get("radius_px", 500.0)
-		var angle_rad: float = orbit.get("angle_rad", 0.0)
-		
-		# Position moon in orbit around planet
-		var offset := Vector2(cos(angle_rad), sin(angle_rad)) * radius_px
-		moon.global_position = parent_planet.global_position + offset
-		
-		# Store parent reference for orbital updates
-		moon.set_meta("orbit_parent", parent_planet)
-		moon.set_meta("orbit_radius_px", radius_px)
-		moon.set_meta("orbit_angle_rad", angle_rad)
-		moon.set_meta("orbit_period_days", orbit.get("period_days", 1.0))
+	# Use the pre-calculated absolute position from layout system
+	if moon_data.has("_position_px"):
+		moon.global_position = moon_data["_position_px"]
 	else:
-		push_warning("SystemExploration: Could not find parent planet '%s' for moon '%s'" % [parent_id, moon_data.get("id", "unknown")])
+		# Fallback: calculate position relative to parent planet
+		var parent_id: String = moon_data.get("parent_id", "")
+		var parent_planet = _find_body_node_by_id(parent_id)
+		
+		if parent_planet:
+			# Get moon orbit data
+			var orbit: Dictionary = moon_data.get("orbit", {})
+			var radius_px: float = orbit.get("radius_px", 500.0)
+			var angle_rad: float = orbit.get("angle_rad", 0.0)
+			
+			# Position moon in orbit around planet
+			var offset := Vector2(cos(angle_rad), sin(angle_rad)) * radius_px
+			moon.global_position = parent_planet.global_position + offset
+		else:
+			push_warning("SystemExploration: Could not find parent planet '%s' for moon '%s'" % [parent_id, moon_data.get("id", "unknown")])
+	
+	# Calculate moon scale based on size data
+	var moon_size_range: Array = moon_data.get("size_px_range", [20, 40])
+	var avg_moon_size: float = (float(moon_size_range[0]) + float(moon_size_range[1])) / 2.0
+	
+	# Moon base scale: smaller than planets (MOON_BASE_SCALE is 0.05, PLANET_BASE_SCALE is 0.15)
+	# This gives moons 1/3 the scale of planets by default
+	# Adjust with MOON_SCALE_MULTIPLIER if you want all moons larger/smaller
+	var moon_scale: float = MOON_BASE_SCALE * (avg_moon_size / 40.0) * MOON_SCALE_MULTIPLIER  # Normalize to typical moon size
+	
+	# Store metadata for orbital updates and scaling
+	var orbit: Dictionary = moon_data.get("orbit", {})
+	var parent_id: String = moon_data.get("parent_id", "")
+	
+	moon.set_meta("orbit_radius_px", orbit.get("radius_px", 500.0))
+	moon.set_meta("orbit_angle_rad", orbit.get("angle_rad", 0.0))
+	moon.set_meta("orbit_period_days", orbit.get("period_days", 1.0))
+	moon.set_meta("parent_id", parent_id)
+	moon.set_meta("body_id", moon_data.get("id", "unknown"))
+	moon.set_meta("base_scale", Vector2.ONE * moon_scale)  # For distance-based LOD
+	moon.set_meta("is_moon", true)  # Flag for special moon handling
+	
+	# Apply initial scale to sprite
+	var sprite = moon.get_node_or_null("Sprite2D")
+	if sprite:
+		sprite.scale = Vector2.ONE * moon_scale
 
 func _find_body_node_by_id(body_id: String) -> Node2D:
 	"""Find a spawned body node by its ID"""
