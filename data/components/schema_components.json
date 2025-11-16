@@ -1,0 +1,225 @@
+{
+  "schema": "star_loafer.component_types.v1",
+  "notes": "Defines the properties and behaviors each component type can have. Used for validation and UI generation.",
+  "component_types": [
+	{
+	  "type": "reactor",
+	  "display_name": "Reactor",
+	  "description": "Power generation systems that provide energy for all ship systems",
+	  "category": "power",
+	  "properties": {
+		"power_output": { "type": "float", "required": true, "description": "Power generated in units" },
+		"heat": { "type": "float", "required": true, "description": "Heat generated during operation" },
+		"throttleable": { "type": "bool", "default": true, "description": "Can be throttled for variable output" }
+	  },
+	  "provides": ["power_generation", "heat_generation"],
+	  "icon": "res://assets/icons/components/reactor.png"
+	},
+	{
+	  "type": "drive",
+	  "display_name": "Drive System",
+	  "description": "Propulsion systems for thrust and maneuvering",
+	  "category": "propulsion",
+	  "properties": {
+		"thrust": { "type": "float", "required": true, "description": "Forward thrust force" },
+		"turning_torque": { "type": "float", "required": true, "description": "Rotational force for turning" },
+		"speed_bonus": { "type": "float", "default": 0.0, "description": "Bonus to top speed" },
+		"throttleable": { "type": "bool", "default": true }
+	  },
+	  "provides": ["propulsion", "maneuverability"],
+	  "icon": "res://assets/icons/components/drive.png"
+	},
+	{
+	  "type": "shield",
+	  "display_name": "Shield Generator",
+	  "description": "Energy shields that absorb damage",
+	  "category": "defense",
+	  "properties": {
+		"shield_hp_bonus": { "type": "int", "required": true, "description": "Additional shield hit points" },
+		"shield_recharge_rate": { "type": "float", "default": 0.0, "description": "Shield recharge per second" },
+		"shield_recharge_delay": { "type": "float", "default": 3.0, "description": "Delay before recharge starts" }
+	  },
+	  "provides": ["shield_capacity", "shield_regeneration"],
+	  "icon": "res://assets/icons/components/shield.png"
+	},
+	{
+	  "type": "weapon",
+	  "display_name": "Weapon System",
+	  "description": "Offensive systems for combat",
+	  "category": "offense",
+	  "properties": {
+		"damage": { "type": "float", "required": true, "description": "Base damage per shot/burst" },
+		"fire_rate": { "type": "float", "required": true, "description": "Shots per second" },
+		"range": { "type": "float", "required": true, "description": "Maximum effective range" },
+		"projectile_speed": { "type": "float", "default": 0.0, "description": "Projectile velocity" },
+		"energy_cost": { "type": "float", "default": 0.0, "description": "Energy per shot" },
+		"hardpoint_size": { "type": "string", "required": true, "description": "Required hardpoint: light/medium/heavy/turret" },
+		"slot_cost": { "type": "int", "default": 1, "description": "Number of hardpoint slots required" },
+		"weapon_class": { "type": "string", "required": true, "description": "beam/projectile/missile/etc" }
+	  },
+	  "provides": ["offensive_capability"],
+	  "icon": "res://assets/icons/components/weapon.png"
+	},
+	{
+	  "type": "sensor",
+	  "display_name": "Sensor Array",
+	  "description": "Detection and scanning systems",
+	  "category": "electronics",
+	  "properties": {
+		"sensor_strength_bonus": { "type": "float", "required": true, "description": "Added sensor strength" },
+		"scan_range": { "type": "float", "default": 0.0, "description": "Maximum scanning range" },
+		"scan_speed": { "type": "float", "default": 1.0, "description": "Scan completion speed multiplier" },
+		"scan_detail": { "type": "int", "default": 1, "description": "Detail level of scans" }
+	  },
+	  "provides": ["detection", "scanning"],
+	  "icon": "res://assets/icons/components/sensor.png"
+	},
+	{
+	  "type": "armor",
+	  "display_name": "Armor Plating",
+	  "description": "Physical armor that increases hull integrity",
+	  "category": "defense",
+	  "properties": {
+		"hull_points_bonus": { "type": "int", "required": true, "description": "Additional hull points" },
+		"damage_reduction": { "type": "float", "default": 0.0, "description": "Percentage damage reduction" }
+	  },
+	  "provides": ["hull_strength"],
+	  "stacking": "diminishing_returns",
+	  "icon": "res://assets/icons/components/armor.png"
+	},
+	{
+	  "type": "ecm",
+	  "display_name": "ECM Suite",
+	  "description": "Electronic countermeasures for stealth and defense",
+	  "category": "electronics",
+	  "properties": {
+		"scan_defense_bonus": { "type": "float", "default": 0.0, "description": "Difficulty to scan this ship" },
+		"signature_mult": { "type": "float", "default": 1.0, "description": "Signature multiplier (lower is better)" },
+		"missile_defense": { "type": "float", "default": 0.0, "description": "Chance to spoof missiles" }
+	  },
+	  "provides": ["stealth", "countermeasures"],
+	  "stacking": "diminishing_returns",
+	  "icon": "res://assets/icons/components/ecm.png"
+	},
+	{
+	  "type": "computer",
+	  "display_name": "Computer System",
+	  "description": "Computing and AI systems for automation",
+	  "category": "electronics",
+	  "properties": {
+		"ai_assistance": { "type": "float", "default": 0.0, "description": "AI efficiency bonus" },
+		"automation_slots": { "type": "int", "default": 0, "description": "Number of systems that can be automated" },
+		"targeting_bonus": { "type": "float", "default": 0.0, "description": "Weapon accuracy bonus" }
+	  },
+	  "provides": ["automation", "ai_support"],
+	  "icon": "res://assets/icons/components/computer.png"
+	},
+	{
+	  "type": "cloaking",
+	  "display_name": "Cloaking Device",
+	  "description": "Advanced stealth system for invisibility",
+	  "category": "electronics",
+	  "properties": {
+		"cloak_strength": { "type": "float", "required": true, "description": "Effectiveness of cloaking" },
+		"cloak_power_mult": { "type": "float", "default": 2.0, "description": "Power draw multiplier when active" }
+	  },
+	  "provides": ["cloaking"],
+	  "icon": "res://assets/icons/components/cloaking.png"
+	},
+	{
+	  "type": "radiator",
+	  "display_name": "Heat Radiator",
+	  "description": "Cooling systems that dissipate excess heat",
+	  "category": "support",
+	  "properties": {
+		"heat_dissipation_bonus": { "type": "float", "required": true, "description": "Heat dissipated per second" }
+	  },
+	  "provides": ["heat_management"],
+	  "icon": "res://assets/icons/components/radiator.png"
+	},
+	{
+	  "type": "cargo_module",
+	  "display_name": "Cargo Module",
+	  "description": "Storage capacity for goods and materials",
+	  "category": "utility",
+	  "properties": {
+		"cargo_bonus": { "type": "int", "required": true, "description": "Additional cargo capacity" }
+	  },
+	  "provides": ["cargo_capacity"],
+	  "icon": "res://assets/icons/components/cargo.png"
+	},
+	{
+	  "type": "habitat",
+	  "display_name": "Habitat Module",
+	  "description": "Living quarters and life support",
+	  "category": "utility",
+	  "properties": {
+		"crew_support": { "type": "int", "required": true, "description": "Additional crew capacity" },
+		"crew_comfort": { "type": "int", "default": 0, "description": "Crew morale bonus" }
+	  },
+	  "provides": ["crew_capacity", "life_support"],
+	  "icon": "res://assets/icons/components/habitat.png"
+	},
+	{
+	  "type": "fabricator",
+	  "display_name": "Fabricator",
+	  "description": "Manufacturing and repair systems",
+	  "category": "utility",
+	  "properties": {
+		"repair_time_multiplier": { "type": "float", "default": 1.0, "description": "Repair time multiplier (lower is faster)" },
+		"repair_cost_multiplier": { "type": "float", "default": 1.0, "description": "Repair cost multiplier (lower is cheaper)" },
+		"fabrication_rate": { "type": "float", "default": 0.0, "description": "Production speed" }
+	  },
+	  "provides": ["repair", "manufacturing"],
+	  "icon": "res://assets/icons/components/fabricator.png"
+	},
+	{
+	  "type": "lab",
+	  "display_name": "Laboratory",
+	  "description": "Research and analysis facilities",
+	  "category": "utility",
+	  "properties": {
+		"science_yield_bonus": { "type": "float", "default": 0.0, "description": "Research speed multiplier" },
+		"analysis_quality": { "type": "int", "default": 1, "description": "Quality of scientific analysis" }
+	  },
+	  "provides": ["research", "analysis"],
+	  "icon": "res://assets/icons/components/lab.png"
+	},
+	{
+	  "type": "hangar",
+	  "display_name": "Hangar Bay",
+	  "description": "Launch and recovery systems for small craft",
+	  "category": "utility",
+	  "properties": {
+		"fighter_capacity": { "type": "int", "default": 0, "description": "Number of fighters/drones" },
+		"launch_rate": { "type": "float", "default": 1.0, "description": "Craft per minute launch rate" }
+	  },
+	  "provides": ["fighter_support"],
+	  "icon": "res://assets/icons/components/hangar.png"
+	},
+	{
+	  "type": "industrial",
+	  "display_name": "Industrial Module",
+	  "description": "Heavy industry and resource processing",
+	  "category": "utility",
+	  "properties": {
+		"processing_rate": { "type": "float", "default": 0.0, "description": "Resource processing speed" },
+		"refining_efficiency": { "type": "float", "default": 1.0, "description": "Resource yield multiplier" }
+	  },
+	  "provides": ["resource_processing"],
+	  "icon": "res://assets/icons/components/industrial.png"
+	},
+	{
+	  "type": "utility",
+	  "display_name": "Utility System",
+	  "description": "Miscellaneous support systems",
+	  "category": "utility",
+	  "properties": {
+		"component_space_bonus_pct": { "type": "float", "default": 0.0, "description": "Percentage bonus to component space" },
+		"add_hardpoints": { "type": "dict", "default": {}, "description": "Additional hardpoints by type" }
+	  },
+	  "provides": ["support"],
+	  "icon": "res://assets/icons/components/utility.png"
+	}
+  ]
+}

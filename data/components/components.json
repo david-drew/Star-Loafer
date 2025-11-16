@@ -1,0 +1,8499 @@
+{
+  "schema": "star_loafer.components.v1",
+  "notes": "Starter component set for Star Loafer. IDs are namespaced as <type>__<name>. HUD should display stealth_rating (inverse of signature).",
+  "defaults": {
+	"ai_fallback_efficiency": 0.6,
+	"staffed_efficiency": 0.9,
+	"skilled_efficiency": 1.0,
+	"expert_efficiency": 1.1,
+	"diminishing_returns": {
+	  "armor": 0.7,
+	  "speed": 0.8,
+	  "ecm": 0.6
+	},
+	"retrofit_hardpoint_caps": {
+	  "total": 2,
+	  "per_class": 1
+	},
+	"warmup_defaults_s": {
+	  "reactor": 5.0,
+	  "drive": 2.0,
+	  "shield": 1.5,
+	  "weapon": 0.5,
+	  "cloaking": 3.0,
+	  "sensor": 0.5,
+	  "computer": 0.5
+	},
+	"turn_inertia_factor": 1.0
+  },
+  "components": [
+	{
+	  "id": "armor/belt_reinforced_mk3",
+	  "type": "armor",
+	  "display_name": "Armor Belt Reinforced Mk 3",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.97,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 5000,
+		"sell_price": 3800,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.7
+	  },
+	  "hull_points_bonus": 80
+	},
+	{
+	  "id": "armor__plating_light",
+	  "type": "armor",
+	  "display_name": "Light Plating",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.97,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 5000,
+		"sell_price": 3800,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.7
+	  },
+	  "hull_points_bonus": 80
+	},
+	{
+	  "id": "armor__plating_medium",
+	  "type": "armor",
+	  "display_name": "Medium Plating",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 260,
+		"remove_cost": 120
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.7
+	  },
+	  "hull_points_bonus": 150
+	},
+	{
+	  "id": "cargo/rack_100",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 100",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_10000",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 10000",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_12",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 12",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_120",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 120",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_1500",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 1500",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_160",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 160",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_20",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 20",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_200",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 200",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_2000",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 2000",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_2500",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 2500",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_300",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 300",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_3000",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 3000",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_400",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 400",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_600",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 600",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_80",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 80",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo/rack_8000",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack 8000",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cargo__rack_large",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack Large",
+	  "manufacturer": "Nova Freight",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.6,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 40,
+		"repair_cost_base": 130
+	  },
+	  "economy": {
+		"buy_price": 5000,
+		"sell_price": 3700,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 150,
+		"remove_cost": 70
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 220
+	},
+	{
+	  "id": "cargo__rack_medium",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack Medium",
+	  "manufacturer": "Nova Freight",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.15,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.5,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 35,
+		"repair_cost_base": 100
+	  },
+	  "economy": {
+		"buy_price": 3500,
+		"sell_price": 2600,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 120,
+		"remove_cost": 60
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 120
+	},
+	{
+	  "id": "cargo__rack_small",
+	  "type": "cargo_module",
+	  "display_name": "Cargo Rack Small",
+	  "manufacturer": "Nova Freight",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "cloak_field_mk2",
+	  "type": "cloaking",
+	  "display_name": "Cloak Field Mk 2",
+	  "manufacturer": "Blackline Systems",
+	  "tier": 2,
+	  "tech_level": 4,
+	  "space_cost": 5,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 24,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.0,
+	  "signature_mult": 0.6,
+	  "reliability": 0.9,
+	  "maintenance_load": 1.5,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 3.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 400
+	  },
+	  "economy": {
+		"buy_price": 32000,
+		"sell_price": 24000,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 900,
+		"remove_cost": 420
+	  },
+	  "stacking_rules": {
+		"mode": "one_active",
+		"diminishing_return": 1.0
+	  },
+	  "speed_penalty": 0.2,
+	  "cloak_device": true
+	},
+	{
+	  "id": "cloaking__field_mk1",
+	  "type": "cloaking",
+	  "display_name": "Cloak Field Mk I",
+	  "manufacturer": "Blackline Systems",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 5,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 24,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.0,
+	  "signature_mult": 0.6,
+	  "reliability": 0.9,
+	  "maintenance_load": 1.5,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 3.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 400
+	  },
+	  "economy": {
+		"buy_price": 32000,
+		"sell_price": 24000,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 900,
+		"remove_cost": 420
+	  },
+	  "stacking_rules": {
+		"mode": "one_active",
+		"diminishing_return": 1.0
+	  },
+	  "speed_penalty": 0.2,
+	  "cloak_device": true
+	},
+	{
+	  "id": "command_bridge_fleet_mk2",
+	  "type": "computer",
+	  "display_name": "Command Bridge Fleet Mk 2",
+	  "manufacturer": "Heliotronic",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 5,
+	  "heat": 2,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 55,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 6500,
+		"sell_price": 4800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "ai_core": true
+	},
+	{
+	  "id": "computer__avionics_mk1",
+	  "type": "computer",
+	  "display_name": "Avionics Core Mk I",
+	  "manufacturer": "Heliotronic",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 4,
+	  "heat": 2,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 4500,
+		"sell_price": 3400,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 160,
+		"remove_cost": 80
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "ai_core": true
+	},
+	{
+	  "id": "computer__avionics_mk2",
+	  "type": "computer",
+	  "display_name": "Avionics Core Mk II",
+	  "manufacturer": "Heliotronic",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 5,
+	  "heat": 2,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 55,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 6500,
+		"sell_price": 4800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "ai_core": true
+	},
+	{
+	  "id": "conference_deck_mk1",
+	  "type": "habitat",
+	  "display_name": "Conference Deck Mk 1",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 6,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "core_drone_ai_defense_mk2",
+	  "type": "computer",
+	  "display_name": "Core Drone Ai Defense Mk 2",
+	  "manufacturer": "Heliotronic",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 5,
+	  "heat": 2,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 55,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 6500,
+		"sell_price": 4800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "ai_core": true
+	},
+	{
+	  "id": "core_drone_ai_recon_mk2",
+	  "type": "computer",
+	  "display_name": "Core Drone Ai Recon Mk 2",
+	  "manufacturer": "Heliotronic",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 5,
+	  "heat": 2,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 55,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 6500,
+		"sell_price": 4800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "ai_core": true
+	},
+	{
+	  "id": "cryo_vault_block_mk2",
+	  "type": "habitat",
+	  "display_name": "Cryo Vault Block Mk 2",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "cryo_vault_block_mk3",
+	  "type": "habitat",
+	  "display_name": "Cryo Vault Block Mk 3",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "cutting_laser_mk2",
+	  "type": "industrial",
+	  "display_name": "Cutting Laser Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "drive/ark_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Ark Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/assault_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Assault Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/barge_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Barge Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/capital_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Capital Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/chem_booster_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Chem Booster Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/colony_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Colony Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/cruiser_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Cruiser Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/escort_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Escort Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/fast_response_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Fast Response Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/freighter_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Freighter Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/hotrunner_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Hotrunner Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/liner_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Liner Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/liner_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Liner Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/longrange_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Longrange Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/micro_impulse_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Micro Impulse Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/military_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Military Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/military_mk3",
+	  "type": "drive",
+	  "display_name": "Drive Military Mk 3",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/standard_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Standard Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/stealth_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Stealth Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/survey_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Survey Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/survey_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Survey Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/vector_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Vector Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive/workboat_mk1",
+	  "type": "drive",
+	  "display_name": "Drive Workboat Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive/workboat_mk2",
+	  "type": "drive",
+	  "display_name": "Drive Workboat Mk 2",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive__chem_impulse_mk1",
+	  "type": "drive",
+	  "display_name": "Chemical Impulse Drive Mk I",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 80.0,
+	  "turning_torque": 45.0,
+	  "speed_bonus": 0.4
+	},
+	{
+	  "id": "drive__chem_impulse_mk2",
+	  "type": "drive",
+	  "display_name": "Chemical Impulse Drive Mk II",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8500,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 220
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 100.0,
+	  "turning_torque": 55.0,
+	  "speed_bonus": 0.6
+	},
+	{
+	  "id": "drive__ion_mk1",
+	  "type": "drive",
+	  "display_name": "Ion Drive Mk I",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 5,
+	  "mass": 7,
+	  "power_output": 0,
+	  "power_draw": 16,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 320
+	  },
+	  "economy": {
+		"buy_price": 14000,
+		"sell_price": 10500,
+		"install_time_s": 60,
+		"remove_time_s": 45,
+		"install_cost": 500,
+		"remove_cost": 260
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 120.0,
+	  "turning_torque": 40.0,
+	  "speed_bonus": 0.7
+	},
+	{
+	  "id": "drive__ion_mk2",
+	  "type": "drive",
+	  "display_name": "Ion Drive Mk II",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 5,
+	  "mass": 7,
+	  "power_output": 0,
+	  "power_draw": 20,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.9,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.3,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 120,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 380
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 65,
+		"remove_time_s": 45,
+		"install_cost": 550,
+		"remove_cost": 280
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 150.0,
+	  "turning_torque": 48.0,
+	  "speed_bonus": 0.9
+	},
+	{
+	  "id": "drive__plasma_mk1",
+	  "type": "drive",
+	  "display_name": "Plasma Drive Mk I",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 4,
+	  "tech_level": 5,
+	  "space_cost": 6,
+	  "mass": 9,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.1,
+	  "signature_mult": 1.08,
+	  "reliability": 0.93,
+	  "maintenance_load": 1.4,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1,
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 130,
+		"repair_difficulty": 4,
+		"repair_time_base_s": 100,
+		"repair_cost_base": 440
+	  },
+	  "economy": {
+		"buy_price": 24000,
+		"sell_price": 18000,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 650,
+		"remove_cost": 320
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.8
+	  },
+	  "thrust": 190.0,
+	  "turning_torque": 60.0,
+	  "speed_bonus": 1.2
+	},
+	{
+	  "id": "ecm__jammer_mk1",
+	  "type": "ecm",
+	  "display_name": "ECM Jammer Mk I",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 12,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 0.98,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 11000,
+		"sell_price": 8200,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 300,
+		"remove_cost": 140
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.6
+	  },
+	  "scan_defense_bonus": 10.0
+	},
+	{
+	  "id": "ecm__jammer_mk2",
+	  "type": "ecm",
+	  "display_name": "ECM Jammer Mk II",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 16,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 0.97,
+	  "reliability": 0.93,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 320
+	  },
+	  "economy": {
+		"buy_price": 16000,
+		"sell_price": 12000,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 350,
+		"remove_cost": 160
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 0.6
+	  },
+	  "scan_defense_bonus": 16.0
+	},
+	{
+	  "id": "fab_bay_industrial_mk2",
+	  "type": "fabricator",
+	  "display_name": "Fab Bay Industrial Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 14000,
+		"sell_price": 10500,
+		"install_time_s": 60,
+		"remove_time_s": 40,
+		"install_cost": 360,
+		"remove_cost": 170
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "repair_time_multiplier": 0.85,
+	  "repair_cost_multiplier": 0.9
+	},
+	{
+	  "id": "fab_bay_industrial_mk3",
+	  "type": "fabricator",
+	  "display_name": "Fab Bay Industrial Mk 3",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 14000,
+		"sell_price": 10500,
+		"install_time_s": 60,
+		"remove_time_s": 40,
+		"install_cost": 360,
+		"remove_cost": 170
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "repair_time_multiplier": 0.85,
+	  "repair_cost_multiplier": 0.9
+	},
+	{
+	  "id": "fabricator__nano_mk1",
+	  "type": "fabricator",
+	  "display_name": "Nanofab Mk I",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 14000,
+		"sell_price": 10500,
+		"install_time_s": 60,
+		"remove_time_s": 40,
+		"install_cost": 360,
+		"remove_cost": 170
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "repair_time_multiplier": 0.85,
+	  "repair_cost_multiplier": 0.9
+	},
+	{
+	  "id": "fire_control_matrix_mk2",
+	  "type": "computer",
+	  "display_name": "Fire Control Matrix Mk 2",
+	  "manufacturer": "Heliotronic",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 5,
+	  "heat": 2,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"bridge": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 55,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 6500,
+		"sell_price": 4800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "ai_core": true
+	},
+	{
+	  "id": "fuel_bladders_mk2",
+	  "type": "industrial",
+	  "display_name": "Fuel Bladders Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "grapple_array_mk2",
+	  "type": "industrial",
+	  "display_name": "Grapple Array Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "habitat/agrarium_ring_mk2",
+	  "type": "habitat",
+	  "display_name": "Habitat Agrarium Ring Mk 2",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat/biosphere_ring",
+	  "type": "habitat",
+	  "display_name": "Habitat Biosphere Ring",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 6,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat/colony_mk2",
+	  "type": "habitat",
+	  "display_name": "Habitat Colony Mk 2",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat/habitation_block_mk3",
+	  "type": "habitat",
+	  "display_name": "Habitat Habitation Block Mk 3",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat/longrange_mk2",
+	  "type": "habitat",
+	  "display_name": "Habitat Longrange Mk 2",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat/luxury_suite_block",
+	  "type": "habitat",
+	  "display_name": "Habitat Luxury Suite Block",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 6,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat/standard_berths_mk2",
+	  "type": "habitat",
+	  "display_name": "Habitat Standard Berths Mk 2",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat__life_support_mk1",
+	  "type": "habitat",
+	  "display_name": "Life Support Mk I",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 6,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "habitat__life_support_mk2",
+	  "type": "habitat",
+	  "display_name": "Life Support Mk II",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "hangar/wingbay_mk2",
+	  "type": "hangar",
+	  "display_name": "Hangar Wingbay Mk 2",
+	  "manufacturer": "Orbital Logistics",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 5,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.02,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.3,
+	  "crew_support": 4,
+	  "requires_stations": {
+		"drone_ops": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 14000,
+		"sell_price": 10500,
+		"install_time_s": 60,
+		"remove_time_s": 40,
+		"install_cost": 380,
+		"remove_cost": 180
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "hangar_capacity": 2
+	},
+	{
+	  "id": "hangar__bay_light_mk1",
+	  "type": "hangar",
+	  "display_name": "Light Bay Mk I",
+	  "manufacturer": "Orbital Logistics",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 5,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.02,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.3,
+	  "crew_support": 4,
+	  "requires_stations": {
+		"drone_ops": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 14000,
+		"sell_price": 10500,
+		"install_time_s": 60,
+		"remove_time_s": 40,
+		"install_cost": 380,
+		"remove_cost": 180
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "hangar_capacity": 2
+	},
+	{
+	  "id": "industrial__mining_laser_mk1",
+	  "type": "industrial",
+	  "display_name": "Mining Laser Mk I",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "industrial__tractor_beam_mk1",
+	  "type": "industrial",
+	  "display_name": "Tractor Beam Mk I",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6700,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "tractor_force": 1.0
+	},
+	{
+	  "id": "lab/module_general_mk2",
+	  "type": "lab",
+	  "display_name": "Lab Module General Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 4,
+	  "requires_stations": {
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 230
+	  },
+	  "economy": {
+		"buy_price": 12000,
+		"sell_price": 9000,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 320,
+		"remove_cost": 150
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "science_yield_bonus": 0.15
+	},
+	{
+	  "id": "lab/module_xeno_mk1",
+	  "type": "lab",
+	  "display_name": "Lab Module Xeno Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 4,
+	  "requires_stations": {
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 230
+	  },
+	  "economy": {
+		"buy_price": 12000,
+		"sell_price": 9000,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 320,
+		"remove_cost": 150
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "science_yield_bonus": 0.15
+	},
+	{
+	  "id": "lab__survey_lab_mk1",
+	  "type": "lab",
+	  "display_name": "Survey Lab Mk I",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 4,
+	  "requires_stations": {
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 230
+	  },
+	  "economy": {
+		"buy_price": 12000,
+		"sell_price": 9000,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 320,
+		"remove_cost": 150
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "science_yield_bonus": 0.15
+	},
+	{
+	  "id": "medbay_quarantine_mk1",
+	  "type": "habitat",
+	  "display_name": "Medbay Quarantine Mk 1",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 6,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "medbay_trauma_mk2",
+	  "type": "habitat",
+	  "display_name": "Medbay Trauma Mk 2",
+	  "manufacturer": "Horizon Habitats",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.1,
+	  "crew_support": 10,
+	  "requires_stations": {},
+	  "throttleable": true,
+	  "warmup_time_s": 2.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "life_support": true
+	},
+	{
+	  "id": "mining_laser_heavy_mk2",
+	  "type": "industrial",
+	  "display_name": "Mining Laser Heavy Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "ore_processor_mk2",
+	  "type": "industrial",
+	  "display_name": "Ore Processor Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "point_defense_cluster_mk2",
+	  "type": "weapon",
+	  "display_name": "Point Defense Cluster Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "point_defense_grid_mk3",
+	  "type": "weapon",
+	  "display_name": "Point Defense Grid Mk 3",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "point_defense_node_mk1",
+	  "type": "weapon",
+	  "display_name": "Point Defense Node Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "radiator__panel_mk1",
+	  "type": "radiator",
+	  "display_name": "Radiator Panel Mk I",
+	  "manufacturer": "Blackline Systems",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 4.0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 5000,
+		"sell_price": 3800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "radiator__panel_mk2",
+	  "type": "radiator",
+	  "display_name": "Radiator Panel Mk II",
+	  "manufacturer": "Blackline Systems",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 7.0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 190
+	  },
+	  "economy": {
+		"buy_price": 7500,
+		"sell_price": 5600,
+		"install_time_s": 40,
+		"remove_time_s": 25,
+		"install_cost": 210,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fission_heavy_mk2",
+	  "type": "reactor",
+	  "display_name": "Reactor Fission Heavy Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fission_mk1",
+	  "type": "reactor",
+	  "display_name": "Reactor Fission Mk 1",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 6,
+	  "mass": 12,
+	  "power_output": 60,
+	  "power_draw": 0,
+	  "heat": 8,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.0,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 12000,
+		"sell_price": 9000,
+		"install_time_s": 60,
+		"remove_time_s": 45,
+		"install_cost": 500,
+		"remove_cost": 250
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fission_mk2",
+	  "type": "reactor",
+	  "display_name": "Reactor Fission Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fusion_compact_mk2",
+	  "type": "reactor",
+	  "display_name": "Reactor Fusion Compact Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fusion_compact_mk3",
+	  "type": "reactor",
+	  "display_name": "Reactor Fusion Compact Mk 3",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fusion_mk2",
+	  "type": "reactor",
+	  "display_name": "Reactor Fusion Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fusion_mk3",
+	  "type": "reactor",
+	  "display_name": "Reactor Fusion Mk 3",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor/fusion_mk4",
+	  "type": "reactor",
+	  "display_name": "Reactor Fusion Mk 4",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 4,
+	  "tech_level": 4,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor__fission_mk1",
+	  "type": "reactor",
+	  "display_name": "Fission Reactor Mk I",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 6,
+	  "mass": 12,
+	  "power_output": 60,
+	  "power_draw": 0,
+	  "heat": 8,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.0,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 12000,
+		"sell_price": 9000,
+		"install_time_s": 60,
+		"remove_time_s": 45,
+		"install_cost": 500,
+		"remove_cost": 250
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor__fission_mk1a",
+	  "type": "reactor",
+	  "display_name": "Fission Reactor Mk I-A",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 6,
+	  "mass": 12,
+	  "power_output": 66,
+	  "power_draw": 0,
+	  "heat": 9,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.92,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 230
+	  },
+	  "economy": {
+		"buy_price": 13000,
+		"sell_price": 9500,
+		"install_time_s": 60,
+		"remove_time_s": 45,
+		"install_cost": 550,
+		"remove_cost": 260
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor__fission_mk2",
+	  "type": "reactor",
+	  "display_name": "Fission Reactor Mk II",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 7,
+	  "mass": 14,
+	  "power_output": 90,
+	  "power_draw": 0,
+	  "heat": 10,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 5.0,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 350
+	  },
+	  "economy": {
+		"buy_price": 18000,
+		"sell_price": 13500,
+		"install_time_s": 70,
+		"remove_time_s": 50,
+		"install_cost": 700,
+		"remove_cost": 300
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor__fusion_mk1",
+	  "type": "reactor",
+	  "display_name": "Fusion Reactor Mk I",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 8,
+	  "mass": 16,
+	  "power_output": 130,
+	  "power_draw": 0,
+	  "heat": 12,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.4,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 6.0,
+	  "damage": {
+		"condition_hp_max": 120,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 120,
+		"repair_cost_base": 500
+	  },
+	  "economy": {
+		"buy_price": 26000,
+		"sell_price": 20000,
+		"install_time_s": 80,
+		"remove_time_s": 60,
+		"install_cost": 900,
+		"remove_cost": 400
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "reactor__fusion_mk2",
+	  "type": "reactor",
+	  "display_name": "Fusion Reactor Mk II",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 4,
+	  "tech_level": 5,
+	  "space_cost": 9,
+	  "mass": 18,
+	  "power_output": 180,
+	  "power_draw": 0,
+	  "heat": 14,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.8,
+	  "signature_mult": 1.05,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.5,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 6.0,
+	  "damage": {
+		"condition_hp_max": 130,
+		"repair_difficulty": 4,
+		"repair_time_base_s": 150,
+		"repair_cost_base": 650
+	  },
+	  "economy": {
+		"buy_price": 34000,
+		"sell_price": 26000,
+		"install_time_s": 90,
+		"remove_time_s": 70,
+		"install_cost": 1200,
+		"remove_cost": 500
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  }
+	},
+	{
+	  "id": "refuel_gantry_mk2",
+	  "type": "industrial",
+	  "display_name": "Refuel Gantry Mk 2",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "sensor/civil_longrange_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Civil Longrange Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/colony_survey_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Colony Survey Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/diplomatic_suite_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Diplomatic Suite Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/ew_suite_mk3",
+	  "type": "sensor",
+	  "display_name": "Sensor Ew Suite Mk 3",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/fleet_command_mk3",
+	  "type": "sensor",
+	  "display_name": "Sensor Fleet Command Mk 3",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/intercept_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Intercept Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/law_enforcement_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Law Enforcement Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/longrange_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Longrange Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/longrange_tactical_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Longrange Tactical Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/longrange_tactical_mk3",
+	  "type": "sensor",
+	  "display_name": "Sensor Longrange Tactical Mk 3",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/masked_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Masked Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/medical_triage_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Medical Triage Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/micro_array_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Micro Array Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/mining_array_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Mining Array Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/nav_standard_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Nav Standard Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/pointdef_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Pointdef Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/salvage_scan_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Salvage Scan Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/science_array_mk3",
+	  "type": "sensor",
+	  "display_name": "Sensor Science Array Mk 3",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/secure_comm_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Secure Comm Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/short_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Short Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/survey_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Survey Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/tactical_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Tactical Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/targeting_mk1",
+	  "type": "sensor",
+	  "display_name": "Sensor Targeting Mk 1",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor/targeting_mk2",
+	  "type": "sensor",
+	  "display_name": "Sensor Targeting Mk 2",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor__nav_basic",
+	  "type": "sensor",
+	  "display_name": "Navigation Suite Basic",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 1,
+	  "mass": 1,
+	  "power_output": 0,
+	  "power_draw": 4,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.6,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 40,
+		"repair_cost_base": 100
+	  },
+	  "economy": {
+		"buy_price": 3000,
+		"sell_price": 2200,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 150,
+		"remove_cost": 80
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 1.0,
+	  "sensor_range_au_bonus": 2.0
+	},
+	{
+	  "id": "sensor__survey_mk1",
+	  "type": "sensor",
+	  "display_name": "Survey Suite Mk I",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 7,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.2,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"science": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 160
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 2.0,
+	  "sensor_range_au_bonus": 5.0
+	},
+	{
+	  "id": "sensor__tactical_mk1",
+	  "type": "sensor",
+	  "display_name": "Tactical Suite Mk I",
+	  "manufacturer": "Interlink Sensors",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 9,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.3,
+	  "signature_mult": 1.02,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"sensors": 1,
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 210
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 40,
+		"remove_time_s": 25,
+		"install_cost": 250,
+		"remove_cost": 120
+	  },
+	  "stacking_rules": {
+		"mode": "redundant_primary",
+		"diminishing_return": 1.0
+	  },
+	  "sensor_strength_bonus": 3.0,
+	  "sensor_range_au_bonus": 8.0
+	},
+	{
+	  "id": "shield/basic_mk1",
+	  "type": "shield",
+	  "display_name": "Shield Basic Mk 1",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 18,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 10000,
+		"sell_price": 7500,
+		"install_time_s": 45,
+		"remove_time_s": 35,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 120,
+	  "shield_regen": 2
+	},
+	{
+	  "id": "shield/capital_mk3",
+	  "type": "shield",
+	  "display_name": "Shield Capital Mk 3",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/capital_mk4",
+	  "type": "shield",
+	  "display_name": "Shield Capital Mk 4",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 4,
+	  "tech_level": 4,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/civil_heavy_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Civil Heavy Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/civil_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Civil Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/colony_mk1",
+	  "type": "shield",
+	  "display_name": "Shield Colony Mk 1",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 18,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 10000,
+		"sell_price": 7500,
+		"install_time_s": 45,
+		"remove_time_s": 35,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 120,
+	  "shield_regen": 2
+	},
+	{
+	  "id": "shield/colony_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Colony Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/heavy_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Heavy Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/light_mk1",
+	  "type": "shield",
+	  "display_name": "Shield Light Mk 1",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 18,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 10000,
+		"sell_price": 7500,
+		"install_time_s": 45,
+		"remove_time_s": 35,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 120,
+	  "shield_regen": 2
+	},
+	{
+	  "id": "shield/light_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Light Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/medium_mk1",
+	  "type": "shield",
+	  "display_name": "Shield Medium Mk 1",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 18,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 10000,
+		"sell_price": 7500,
+		"install_time_s": 45,
+		"remove_time_s": 35,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 120,
+	  "shield_regen": 2
+	},
+	{
+	  "id": "shield/medium_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Medium Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/medium_mk3",
+	  "type": "shield",
+	  "display_name": "Shield Medium Mk 3",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield/phase_mk2",
+	  "type": "shield",
+	  "display_name": "Shield Phase Mk 2",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield__bubble_mk1",
+	  "type": "shield",
+	  "display_name": "Bubble Shield Mk I",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 18,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.6,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 10000,
+		"sell_price": 7500,
+		"install_time_s": 45,
+		"remove_time_s": 35,
+		"install_cost": 400,
+		"remove_cost": 200
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 120,
+	  "shield_regen": 2
+	},
+	{
+	  "id": "shield__bubble_mk2",
+	  "type": "shield",
+	  "display_name": "Bubble Shield Mk II",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 4,
+	  "mass": 5,
+	  "power_output": 0,
+	  "power_draw": 26,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.07,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 15000,
+		"sell_price": 11250,
+		"install_time_s": 50,
+		"remove_time_s": 40,
+		"install_cost": 450,
+		"remove_cost": 230
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 200,
+	  "shield_regen": 3
+	},
+	{
+	  "id": "shield__facet_mk1",
+	  "type": "shield",
+	  "display_name": "Facet Shield Mk I",
+	  "manufacturer": "Aquila Dynamics",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 4,
+	  "mass": 6,
+	  "power_output": 0,
+	  "power_draw": 30,
+	  "heat": 7,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.9,
+	  "signature_mult": 1.08,
+	  "reliability": 0.93,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.5,
+	  "damage": {
+		"condition_hp_max": 120,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 320
+	  },
+	  "economy": {
+		"buy_price": 21000,
+		"sell_price": 16000,
+		"install_time_s": 55,
+		"remove_time_s": 40,
+		"install_cost": 500,
+		"remove_cost": 260
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "shield_hp_bonus": 260,
+	  "shield_regen": 4
+	},
+	{
+	  "id": "smuggler_holds_hidden_mk2",
+	  "type": "cargo_module",
+	  "display_name": "Smuggler Holds Hidden Mk 2",
+	  "manufacturer": "Nova Freight",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.1,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.4,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 80,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 30,
+		"repair_cost_base": 80
+	  },
+	  "economy": {
+		"buy_price": 2000,
+		"sell_price": 1500,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 100,
+		"remove_cost": 50
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "cargo_bonus": 60
+	},
+	{
+	  "id": "tow_clamps_mk1",
+	  "type": "industrial",
+	  "display_name": "Tow Clamps Mk 1",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "tractor_array_mk1",
+	  "type": "industrial",
+	  "display_name": "Tractor Array Mk 1",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "tug_docking_hardpoints_mk1",
+	  "type": "industrial",
+	  "display_name": "Tug Docking Hardpoints Mk 1",
+	  "manufacturer": "Prospect Systems",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 3,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 5,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"engineering": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 1.0,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 7000,
+		"sell_price": 5200,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 220,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "mining_rate": 1.0
+	},
+	{
+	  "id": "utility/spa_deck_mk1",
+	  "type": "utility",
+	  "display_name": "Utility Spa Deck Mk 1",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.6,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 5000,
+		"sell_price": 3800,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 200,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "component_space_bonus_pct": 0.1,
+	  "speed_penalty": 0.1
+	},
+	{
+	  "id": "utility__hardpoint_kit_light_mk1",
+	  "type": "utility",
+	  "display_name": "Hardpoint Kit (Light) Mk I",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 2,
+	  "tech_level": 2,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.0,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.8,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 200
+	  },
+	  "economy": {
+		"buy_price": 8000,
+		"sell_price": 6000,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 260,
+		"remove_cost": 120
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "add_hardpoints": {
+		"light": 1
+	  },
+	  "speed_penalty": 0.2
+	},
+	{
+	  "id": "utility__structural_frame_mk1",
+	  "type": "utility",
+	  "display_name": "Structural Frame Mk I",
+	  "manufacturer": "Kovacs Shipworks",
+	  "tier": 1,
+	  "tech_level": 1,
+	  "space_cost": 2,
+	  "mass": 3,
+	  "power_output": 0,
+	  "power_draw": 0,
+	  "heat": 0,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.0,
+	  "reliability": 0.96,
+	  "maintenance_load": 0.6,
+	  "crew_support": 0,
+	  "requires_stations": {},
+	  "throttleable": false,
+	  "warmup_time_s": 0.0,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 5000,
+		"sell_price": 3800,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 200,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "additive",
+		"diminishing_return": 1.0
+	  },
+	  "component_space_bonus_pct": 0.1,
+	  "speed_penalty": 0.1
+	},
+	{
+	  "id": "weapon/autocannon_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Autocannon Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/battery_pulse_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Battery Pulse Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/battery_rail_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Battery Rail Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/dual_pulse_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Dual Pulse Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/flak_grid_mk3",
+	  "type": "weapon",
+	  "display_name": "Weapon Flak Grid Mk 3",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/heavy_battery_mk3",
+	  "type": "weapon",
+	  "display_name": "Weapon Heavy Battery Mk 3",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/light_pulse_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Light Pulse Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/light_pulse_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Light Pulse Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/medium_battery_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Medium Battery Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/missile_rack_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Missile Rack Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/pd_micro_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Point Defense Micro Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/pd_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Point Defense Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/point_defense_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Point Defense Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/point_defense_web_mk3",
+	  "type": "weapon",
+	  "display_name": "Weapon Point Defense Web Mk 3",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/pulse_battery_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Pulse Battery Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/pulse_dual_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Pulse Dual Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/rail_light_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Rail Light Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/rail_light_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Rail Light Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/rocket_pod_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Rocket Pod Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/silent_rail_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Silent Rail Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/spinal_cannon_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Spinal Cannon Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/spinal_cannon_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Spinal Cannon Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/stub_cannon_mk1",
+	  "type": "weapon",
+	  "display_name": "Weapon Stub Cannon Mk 1",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon/torpedo_rack_mk2",
+	  "type": "weapon",
+	  "display_name": "Weapon Torpedo Rack Mk 2",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon/torpedo_tubes_mk3",
+	  "type": "weapon",
+	  "display_name": "Weapon Torpedo Tubes Mk 3",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon__beam_medium_mk1",
+	  "type": "weapon",
+	  "display_name": "Medium Beam Emitter Mk I",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 18,
+	  "heat": 7,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.9,
+	  "signature_mult": 1.05,
+	  "reliability": 0.93,
+	  "maintenance_load": 1.3,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 110,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 80,
+		"repair_cost_base": 300
+	  },
+	  "economy": {
+		"buy_price": 19000,
+		"sell_price": 14500,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 320,
+		"remove_cost": 150
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "medium",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 24.0,
+	  "weapon_range_km": 14.0
+	},
+	{
+	  "id": "weapon__laser_light_mk1",
+	  "type": "weapon",
+	  "display_name": "Light Laser Mk I",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 8,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 50,
+		"repair_cost_base": 150
+	  },
+	  "economy": {
+		"buy_price": 6000,
+		"sell_price": 4500,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 200,
+		"remove_cost": 100
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 12.0,
+	  "weapon_range_km": 8.0
+	},
+	{
+	  "id": "weapon__laser_light_mk2",
+	  "type": "weapon",
+	  "display_name": "Light Laser Mk II",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 10,
+	  "heat": 4,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.5,
+	  "signature_mult": 1.03,
+	  "reliability": 0.95,
+	  "maintenance_load": 1.0,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 95,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 60,
+		"repair_cost_base": 180
+	  },
+	  "economy": {
+		"buy_price": 9000,
+		"sell_price": 6800,
+		"install_time_s": 35,
+		"remove_time_s": 25,
+		"install_cost": 230,
+		"remove_cost": 110
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 16.0,
+	  "weapon_range_km": 9.0
+	},
+	{
+	  "id": "weapon__laser_turret_mk1",
+	  "type": "weapon",
+	  "display_name": "Laser Turret Mk I",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 3,
+	  "tech_level": 4,
+	  "space_cost": 4,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 16,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.8,
+	  "signature_mult": 1.05,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.2,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 105,
+		"repair_difficulty": 3,
+		"repair_time_base_s": 75,
+		"repair_cost_base": 260
+	  },
+	  "economy": {
+		"buy_price": 16000,
+		"sell_price": 12000,
+		"install_time_s": 45,
+		"remove_time_s": 30,
+		"install_cost": 300,
+		"remove_cost": 140
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "turret",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 18.0,
+	  "weapon_range_km": 10.0
+	},
+	{
+	  "id": "weapon__missile_light_mk1",
+	  "type": "weapon",
+	  "display_name": "Light Missile Rack Mk I",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 1,
+	  "tech_level": 2,
+	  "space_cost": 2,
+	  "mass": 2,
+	  "power_output": 0,
+	  "power_draw": 6,
+	  "heat": 3,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.4,
+	  "signature_mult": 1.03,
+	  "reliability": 0.94,
+	  "maintenance_load": 0.9,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 90,
+		"repair_difficulty": 1,
+		"repair_time_base_s": 45,
+		"repair_cost_base": 140
+	  },
+	  "economy": {
+		"buy_price": 5500,
+		"sell_price": 4200,
+		"install_time_s": 30,
+		"remove_time_s": 20,
+		"install_cost": 180,
+		"remove_cost": 90
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "light",
+	  "slot_cost": 1,
+	  "weapon_type": "missile",
+	  "weapon_dps": 10.0,
+	  "weapon_range_km": 18.0
+	},
+	{
+	  "id": "weapon__plasma_heavy_mk1",
+	  "type": "weapon",
+	  "display_name": "Heavy Plasma Cannon Mk I",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 4,
+	  "tech_level": 5,
+	  "space_cost": 5,
+	  "mass": 7,
+	  "power_output": 0,
+	  "power_draw": 30,
+	  "heat": 8,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 1.0,
+	  "signature_mult": 1.06,
+	  "reliability": 0.93,
+	  "maintenance_load": 1.4,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 120,
+		"repair_difficulty": 4,
+		"repair_time_base_s": 90,
+		"repair_cost_base": 340
+	  },
+	  "economy": {
+		"buy_price": 26000,
+		"sell_price": 19000,
+		"install_time_s": 50,
+		"remove_time_s": 35,
+		"install_cost": 350,
+		"remove_cost": 160
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "heavy",
+	  "slot_cost": 1,
+	  "weapon_type": "energy",
+	  "weapon_dps": 40.0,
+	  "weapon_range_km": 15.0
+	},
+	{
+	  "id": "weapon__railgun_medium_mk1",
+	  "type": "weapon",
+	  "display_name": "Medium Railgun Mk I",
+	  "manufacturer": "Marrow Dynamics",
+	  "tier": 2,
+	  "tech_level": 3,
+	  "space_cost": 3,
+	  "mass": 4,
+	  "power_output": 0,
+	  "power_draw": 14,
+	  "heat": 6,
+	  "heat_dissipation_bonus": 0,
+	  "signature_flat": 0.7,
+	  "signature_mult": 1.04,
+	  "reliability": 0.94,
+	  "maintenance_load": 1.1,
+	  "crew_support": 0,
+	  "requires_stations": {
+		"gunnery": 1
+	  },
+	  "throttleable": true,
+	  "warmup_time_s": 0.5,
+	  "damage": {
+		"condition_hp_max": 100,
+		"repair_difficulty": 2,
+		"repair_time_base_s": 70,
+		"repair_cost_base": 220
+	  },
+	  "economy": {
+		"buy_price": 12000,
+		"sell_price": 9000,
+		"install_time_s": 40,
+		"remove_time_s": 30,
+		"install_cost": 260,
+		"remove_cost": 130
+	  },
+	  "stacking_rules": {
+		"mode": "independent",
+		"diminishing_return": 1.0
+	  },
+	  "hardpoint_size": "medium",
+	  "slot_cost": 1,
+	  "weapon_type": "kinetic",
+	  "weapon_dps": 22.0,
+	  "weapon_range_km": 12.0
+	}
+  ]
+}

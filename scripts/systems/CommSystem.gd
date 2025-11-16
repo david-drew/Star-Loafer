@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 
 func _load_data_files() -> void:
 	# Load message templates
-	var templates_path = "res://data/comm_message_templates.json"
+	var templates_path = "res://data/dialogue/comm_message_templates.json"
 	if FileAccess.file_exists(templates_path):
 		var file = FileAccess.open(templates_path, FileAccess.READ)
 		if file:
@@ -77,7 +77,7 @@ func _load_data_files() -> void:
 		push_warning("CommSystem: Message templates file not found at %s" % templates_path)
 	
 	# Load AI profiles
-	var profiles_path = "res://data/comm_ai_profiles.json"
+	var profiles_path = "res://data/dialogue/comm_ai_profiles.json"
 	if FileAccess.file_exists(profiles_path):
 		var file = FileAccess.open(profiles_path, FileAccess.READ)
 		if file:

@@ -1,0 +1,228 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj5bodm1yimw4"]
+
+[ext_resource type="Script" uid="uid://ip8mbmq4krb6" path="res://scripts/ui/ShipSystemsPanel.gd" id="1_wdyah"]
+
+[node name="ShipSystemsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wdyah")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.48235294, 0.48235294, 0.48235294, 0.7294118)
+
+[node name="Frame" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="Frame"]
+custom_minimum_size = Vector2(500, 80)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 50.0
+offset_right = 250.0
+offset_bottom = 130.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="ShipNameLabel" type="Label" parent="Frame/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Name"
+vertical_alignment = 1
+
+[node name="ShiipStatusStrip" type="HBoxContainer" parent="Frame/TopBar"]
+layout_mode = 2
+
+[node name="ModeContextLabel" type="Label" parent="Frame/TopBar"]
+layout_mode = 2
+text = "Mode"
+
+[node name="CloseButton" type="Button" parent="Frame/TopBar"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Close"
+
+[node name="MainContent" type="HBoxContainer" parent="Frame"]
+custom_minimum_size = Vector2(2400, 1180)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1200.0
+offset_top = -590.0
+offset_right = 1200.0
+offset_bottom = 590.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="LeftColumn" type="VBoxContainer" parent="Frame/MainContent"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="FilterPanel" type="Panel" parent="Frame/MainContent/LeftColumn"]
+custom_minimum_size = Vector2(400, 130)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Frame/MainContent/LeftColumn/FilterPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Filters" type="Label" parent="Frame/MainContent/LeftColumn/FilterPanel/VBoxContainer"]
+layout_mode = 2
+text = "Filters"
+
+[node name="CategoryFilter" type="OptionButton" parent="Frame/MainContent/LeftColumn/FilterPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="OfflineOnlyCheck" type="CheckBox" parent="Frame/MainContent/LeftColumn/FilterPanel/VBoxContainer"]
+layout_mode = 2
+text = "Show offline only"
+
+[node name="ShipSummaryPanel" type="Panel" parent="Frame/MainContent/LeftColumn"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SummaryLabel" type="Label" parent="Frame/MainContent/LeftColumn/ShipSummaryPanel"]
+custom_minimum_size = Vector2(100, 300)
+layout_mode = 1
+offset_right = 780.0
+offset_bottom = 300.0
+size_flags_vertical = 1
+text = "Summary"
+
+[node name="CenterColumn" type="VBoxContainer" parent="Frame/MainContent"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterVBox" type="VBoxContainer" parent="Frame/MainContent/CenterColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InstalledHeader" type="HBoxContainer" parent="Frame/MainContent/CenterColumn/CenterVBox"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+alignment = 1
+
+[node name="InstalledListContainer" type="ScrollContainer" parent="Frame/MainContent/CenterColumn/CenterVBox/InstalledHeader"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InstalledList" type="VBoxContainer" parent="Frame/MainContent/CenterColumn/CenterVBox/InstalledHeader/InstalledListContainer"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RightColumn" type="VBoxContainer" parent="Frame/MainContent"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CandidatesPanel" type="Panel" parent="Frame/MainContent/RightColumn"]
+custom_minimum_size = Vector2(150, 300)
+layout_mode = 2
+
+[node name="CandidatesHeader" type="HBoxContainer" parent="Frame/MainContent/RightColumn/CandidatesPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CandidatesListContainer" type="ScrollContainer" parent="Frame/MainContent/RightColumn/CandidatesPanel/CandidatesHeader"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="CandidatesList" type="VBoxContainer" parent="Frame/MainContent/RightColumn/CandidatesPanel/CandidatesHeader/CandidatesListContainer"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="DetailPanel" type="Panel" parent="Frame/MainContent/RightColumn"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailNameLabel" type="Label" parent="Frame/MainContent/RightColumn/DetailPanel"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Name Desc"
+vertical_alignment = 1
+
+[node name="DetailStatsContainer" type="VBoxContainer" parent="Frame/MainContent/RightColumn/DetailPanel"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 120.0
+offset_bottom = 220.0
+grow_horizontal = 2
+
+[node name="DetailDescriptionLabel" type="Label" parent="Frame/MainContent/RightColumn/DetailPanel"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DetailActionsContainer" type="VBoxContainer" parent="Frame/MainContent/RightColumn/DetailPanel"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 62.0
+offset_bottom = 262.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _load_system_archetypes() -> void:
 	"""Load system archetype definitions from JSON"""
-	var path = "res://data/system_archetypes.json"
+	var path = "res://data/procgen/system_archetypes.json"
 	
 	if not FileAccess.file_exists(path):
 		push_warning("GalaxyGenerator: system_archetypes.json not found at %s" % path)

@@ -172,7 +172,7 @@ func place_station(station_data: Dictionary, placement_prefs: Dictionary, bodies
 	Place a station according to its placement preferences
 	Returns updated station_data with final position, or empty dict if failed
 	"""
-	var station_size_px:int = station_data.get("size_px", 300.0)
+	var station_size_px:float = station_data.get("size_px", 300.0)
 	var exclusion_radius:float = station_size_px * 1.5
 	
 	# Get preferred radius range from placement_prefs
@@ -287,7 +287,7 @@ func _is_position_valid_for_planet(position: Vector2, exclusion_radius: float) -
 		if region_kind == "moon":
 			continue  # Planets don't collide with moons (moons orbit planets)
 		
-		var distance:float = position.distance_to(region["position"])
+		var distance := position.distance_to(region["position"])
 		var min_distance:float = exclusion_radius + region["radius"]
 		
 		# Planets need extra separation
@@ -314,7 +314,7 @@ func _is_position_valid_for_moon(position: Vector2, exclusion_radius: float, par
 		if region["position"] == parent_pos and region_kind == "planet":
 			continue
 		
-		var distance:float = position.distance_to(region["position"])
+		var distance := position.distance_to(region["position"])
 		var min_distance:float = exclusion_radius + region["radius"]
 		
 		# Moons can be closer to each other
@@ -338,7 +338,7 @@ func _is_position_valid_for_station(position: Vector2, exclusion_radius: float) 
 	
 	# Check against all occupied regions
 	for region in occupied_regions:
-		var distance:float = position.distance_to(region["position"])
+		var distance := position.distance_to(region["position"])
 		var min_distance:float = exclusion_radius + region["radius"]
 		
 		# Stations need separation from everything

@@ -1,0 +1,473 @@
+{
+  "schema": "star_loafer.comm_message_templates.v1",
+  "notes": "Message templates for NPC communication in Star Loafer",
+  "templates": {
+    "general_acknowledgment": [
+      {
+        "id": "gen_ack_01",
+        "text": "Copy that, signal received.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "gen_ack_02",
+        "text": "We read you loud and clear.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.1
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "gen_ack_03",
+        "text": "Signal received. Go ahead.",
+        "base_weight": 0.9,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.15
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "npc_greeting": [
+      {
+        "id": "npc_greet_neutral_01",
+        "text": "This is %RECIPIENT_NAME%. What can we do for you, traveler?",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "faction_standing": "Neutral"
+        },
+        "personality_modifiers": {
+          "chattiness": 0.4,
+          "helpfulness": 0.2
+        },
+        "reputation_modifiers": {
+          "Friendly": 0.2,
+          "Allied": 0.3
+        },
+        "response_options": []
+      },
+      {
+        "id": "npc_greet_friendly_01",
+        "text": "Good to see you again. Need something?",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "faction_standing": "Friendly"
+        },
+        "personality_modifiers": {
+          "chattiness": 0.3,
+          "helpfulness": 0.4
+        },
+        "reputation_modifiers": {
+          "Friendly": 0.3,
+          "Allied": 0.4
+        },
+        "response_options": []
+      },
+      {
+        "id": "npc_greet_hostile_01",
+        "text": "State your business and make it quick.",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "faction_standing": "Hostile"
+        },
+        "personality_modifiers": {
+          "aggression": 0.4,
+          "paranoia": 0.3
+        },
+        "reputation_modifiers": {
+          "Hostile": 0.4
+        },
+        "response_options": []
+      }
+    ],
+    "station_greeting": [
+      {
+        "id": "station_greet_standard_01",
+        "text": "Traffic control online. Welcome to the system.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.2,
+          "lawfulness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "station_greet_friendly_01",
+        "text": "Docking control here. Always a pleasure to see a familiar transponder.",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "faction_standing": "Friendly"
+        },
+        "personality_modifiers": {
+          "chattiness": 0.3,
+          "helpfulness": 0.3
+        },
+        "reputation_modifiers": {
+          "Friendly": 0.3,
+          "Allied": 0.4
+        },
+        "response_options": []
+      },
+      {
+        "id": "station_greet_suspicious_01",
+        "text": "Unidentified ship, your transponder checks out. Keep it that way.",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "faction_standing": "Neutral"
+        },
+        "personality_modifiers": {
+          "paranoia": 0.3,
+          "lawfulness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "farewell": [
+      {
+        "id": "farewell_01",
+        "text": "Safe travels out there.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "farewell_02",
+        "text": "Comm channel closing. Try not to explode.",
+        "base_weight": 0.8,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.2,
+          "aggression": 0.1
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "farewell_03",
+        "text": "We are clear. Ending transmission.",
+        "base_weight": 0.9,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "lawfulness": 0.1
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "docking_approved": [
+      {
+        "id": "dock_ok_01",
+        "text": "Docking request approved. Proceed to bay three and follow guidance lights.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": 0.3,
+          "lawfulness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": [
+          {
+            "text": "Acknowledged. Beginning docking approach.",
+            "action": "ack_docking",
+            "reputation_change": 0
+          }
+        ]
+      },
+      {
+        "id": "dock_ok_busy_01",
+        "text": "You're cleared to dock, but traffic is heavy. Expect delays in service.",
+        "base_weight": 0.8,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "docking_denied": [
+      {
+        "id": "dock_denied_hostile_01",
+        "text": "Docking request denied. Your reputation here is... problematic.",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "faction_standing": "Hostile"
+        },
+        "personality_modifiers": {
+          "lawfulness": 0.3,
+          "paranoia": 0.3
+        },
+        "reputation_modifiers": {
+          "Hostile": 0.4
+        },
+        "response_options": [
+          {
+            "text": "We just need resupply. Please reconsider.",
+            "leads_to_category": "docking_request"
+          }
+        ]
+      },
+      {
+        "id": "dock_denied_full_01",
+        "text": "Negative. All berths are occupied. Check back later or divert to another port.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": -0.1
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "docking_request": [
+      {
+        "id": "dock_request_ack_01",
+        "text": "Docking request received. Stand by for clearance.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "lawfulness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "threat_initial": [
+      {
+        "id": "threat_init_pirate_01",
+        "text": "Cut your engines and prepare to transfer valuables. No sudden moves.",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "estimated_cargo_valuable": true
+        },
+        "personality_modifiers": {
+          "greed": 0.6,
+          "aggression": 0.4
+        },
+        "reputation_modifiers": {
+          "Hostile": 0.3
+        },
+        "response_options": [
+          {
+            "text": "Easy, we can pay.",
+            "leads_to_category": "pirate_extortion",
+            "reputation_change": -2
+          },
+          {
+            "text": "Over my dead hull.",
+            "leads_to_category": "threat_escalation",
+            "reputation_change": -5
+          }
+        ]
+      },
+      {
+        "id": "threat_init_security_01",
+        "text": "Unknown vessel, you are entering a restricted zone. Alter course immediately.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "lawfulness": 0.5,
+          "aggression": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "threat_escalation": [
+      {
+        "id": "threat_escalate_01",
+        "text": "Last warning. Comply now or we open fire.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "aggression": 0.5,
+          "paranoia": 0.3
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "combat_taunt": [
+      {
+        "id": "combat_taunt_pirate_01",
+        "text": "You should have paid up when you had the chance!",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "aggression": 0.5,
+          "chattiness": 0.3
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "combat_taunt_military_01",
+        "text": "Engaging target. You brought this on yourself.",
+        "base_weight": 0.9,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "lawfulness": 0.4,
+          "aggression": 0.3
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "distress_call": [
+      {
+        "id": "distress_call_01",
+        "text": "Mayday, mayday! This is an independent vessel under attack. Any friendly ships, please respond!",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": 0.4,
+          "chattiness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "distress_call_02",
+        "text": "We are venting atmosphere and losing power. We won't hold together much longer!",
+        "base_weight": 0.9,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": 0.3
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "station_broadcast": [
+      {
+        "id": "station_broadcast_generic_01",
+        "text": "Station control reminder: unauthorized weapons fire inside docking lanes is strictly prohibited.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "lawfulness": 0.4
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "station_broadcast_trade_01",
+        "text": "Attention captains: docking fees are discounted for bulk haulers this cycle.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "greed": 0.2,
+          "chattiness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "news_broadcast": [
+      {
+        "id": "news_broadcast_war_01",
+        "text": "Sector NewsNet: tensions escalate along the frontier. Skirmishes reported between rival factions in neighboring systems.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "chattiness": 0.3
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      },
+      {
+        "id": "news_broadcast_discovery_01",
+        "text": "Exploration update: a survey team reports anomalous energy readings from an uncharted moon on the outer rim.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": 0.2
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "trade_offer": [
+      {
+        "id": "trade_offer_trader_01",
+        "text": "You look like you could use a refuel and some basic supplies. I've got both, for a modest fee.",
+        "base_weight": 1.0,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "greed": 0.4,
+          "chattiness": 0.3
+        },
+        "reputation_modifiers": {
+          "Friendly": 0.2
+        },
+        "response_options": [
+          {
+            "text": "Let's see what you're selling.",
+            "action": "open_trade",
+            "reputation_change": 0
+          },
+          {
+            "text": "Not today.",
+            "reputation_change": 0
+          }
+        ]
+      },
+      {
+        "id": "trade_offer_station_01",
+        "text": "Docking is available along with full resupply and repair services.",
+        "base_weight": 0.9,
+        "context_requirements": {},
+        "personality_modifiers": {
+          "helpfulness": 0.3
+        },
+        "reputation_modifiers": {},
+        "response_options": []
+      }
+    ],
+    "pirate_extortion": [
+      {
+        "id": "pirate_extortion_01",
+        "text": "Here's the deal: transfer a chunk of your credits, and we pretend we never saw you.",
+        "base_weight": 1.0,
+        "context_requirements": {
+          "estimated_cargo_valuable": true
+        },
+        "personality_modifiers": {
+          "greed": 0.6,
+          "aggression": 0.3
+        },
+        "reputation_modifiers": {
+          "Hostile": 0.3
+        },
+        "response_options": [
+          {
+            "text": "Fine. Take the credits.",
+            "action": "pay_extortion",
+            "reputation_change": -3
+          },
+          {
+            "text": "No deal.",
+            "leads_to_category": "threat_escalation",
+            "reputation_change": -5
+          }
+        ]
+      }
+    ]
+  }
+}

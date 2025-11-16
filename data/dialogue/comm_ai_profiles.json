@@ -1,0 +1,419 @@
+{
+  "schema": "star_loafer.comm_ai_profiles.v1",
+  "notes": "Behavioral profiles for comm-capable AI endpoints in Star Loafer",
+  "profiles": [
+    {
+      "id": "default",
+      "description": "Baseline civilian captain with no strong tendencies.",
+      "personality_traits": {
+        "aggression": 0.4,
+        "chattiness": 0.5,
+        "greed": 0.5,
+        "lawfulness": 0.6,
+        "paranoia": 0.4,
+        "helpfulness": 0.5
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.8,
+          "ignore_when": [
+            {
+              "state": "in_combat",
+              "chance": 0.8
+            },
+            {
+              "state": "fleeing",
+              "chance": 0.6
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.4
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.15
+            },
+            {
+              "tier": "Allied",
+              "delta": 0.2
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": false,
+        "warn_before_attack": false,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": true,
+        "share_routes_with_trusted": true,
+        "broadcast_discoveries": false,
+        "max_hail_frequency_per_min": 2
+      }
+    },
+    {
+      "id": "trader_civilian",
+      "description": "Independent merchant captain always looking for a deal.",
+      "personality_traits": {
+        "aggression": 0.25,
+        "chattiness": 0.7,
+        "greed": 0.8,
+        "lawfulness": 0.55,
+        "paranoia": 0.5,
+        "helpfulness": 0.45
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.9,
+          "ignore_when": [
+            {
+              "state": "in_combat",
+              "chance": 0.8
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.5
+            },
+            {
+              "tier": "Neutral",
+              "delta": 0.1
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.2
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": false,
+        "warn_before_attack": false,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": true,
+        "share_routes_with_trusted": true,
+        "broadcast_discoveries": false,
+        "max_hail_frequency_per_min": 4
+      }
+    },
+    {
+      "id": "pirate_raider",
+      "description": "Hostile raider who enjoys intimidation and extortion.",
+      "personality_traits": {
+        "aggression": 0.9,
+        "chattiness": 0.6,
+        "greed": 0.95,
+        "lawfulness": 0.1,
+        "paranoia": 0.6,
+        "helpfulness": 0.1
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.5,
+          "ignore_when": [
+            {
+              "state": "attacking",
+              "chance": 0.9
+            },
+            {
+              "state": "fleeing",
+              "chance": 0.8
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.3
+            },
+            {
+              "tier": "Allied",
+              "delta": 0.1
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": false,
+        "warn_before_attack": false,
+        "taunt_before_attack": true,
+        "extort_when_profitable": true,
+        "offer_deals_when_player_low_fuel": false,
+        "share_routes_with_trusted": false,
+        "broadcast_discoveries": false,
+        "max_hail_frequency_per_min": 5
+      }
+    },
+    {
+      "id": "police_patrol",
+      "description": "System security patrol focused on law and order.",
+      "personality_traits": {
+        "aggression": 0.55,
+        "chattiness": 0.4,
+        "greed": 0.25,
+        "lawfulness": 0.9,
+        "paranoia": 0.6,
+        "helpfulness": 0.55
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.85,
+          "ignore_when": [
+            {
+              "state": "in_combat",
+              "chance": 0.7
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.5
+            },
+            {
+              "tier": "Criminal",
+              "delta": -0.6
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.1
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": true,
+        "warn_before_attack": true,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": false,
+        "share_routes_with_trusted": false,
+        "broadcast_discoveries": false,
+        "max_hail_frequency_per_min": 3
+      }
+    },
+    {
+      "id": "military_frigate",
+      "description": "Disciplined navy ship operating under strict rules of engagement.",
+      "personality_traits": {
+        "aggression": 0.7,
+        "chattiness": 0.35,
+        "greed": 0.2,
+        "lawfulness": 0.95,
+        "paranoia": 0.55,
+        "helpfulness": 0.5
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.75,
+          "ignore_when": [
+            {
+              "state": "in_combat",
+              "chance": 0.9
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.6
+            },
+            {
+              "tier": "Allied",
+              "delta": 0.25
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": true,
+        "warn_before_attack": true,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": false,
+        "share_routes_with_trusted": false,
+        "broadcast_discoveries": false,
+        "max_hail_frequency_per_min": 2
+      }
+    },
+    {
+      "id": "science_vessel",
+      "description": "Curious research vessel more interested in anomalies than combat.",
+      "personality_traits": {
+        "aggression": 0.15,
+        "chattiness": 0.8,
+        "greed": 0.3,
+        "lawfulness": 0.65,
+        "paranoia": 0.45,
+        "helpfulness": 0.8
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.95,
+          "ignore_when": [
+            {
+              "state": "in_combat",
+              "chance": 0.7
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.4
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.2
+            },
+            {
+              "tier": "Allied",
+              "delta": 0.25
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": false,
+        "warn_before_attack": false,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": false,
+        "share_routes_with_trusted": true,
+        "broadcast_discoveries": true,
+        "max_hail_frequency_per_min": 4
+      }
+    },
+    {
+      "id": "free_miner",
+      "description": "Independent miner wary of pirates but happy to talk.",
+      "personality_traits": {
+        "aggression": 0.35,
+        "chattiness": 0.6,
+        "greed": 0.6,
+        "lawfulness": 0.5,
+        "paranoia": 0.7,
+        "helpfulness": 0.45
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.85,
+          "ignore_when": [
+            {
+              "state": "in_combat",
+              "chance": 0.8
+            }
+          ],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.4
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.15
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": false,
+        "warn_before_attack": false,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": false,
+        "share_routes_with_trusted": true,
+        "broadcast_discoveries": false,
+        "max_hail_frequency_per_min": 2
+      }
+    },
+    {
+      "id": "station_civilian",
+      "description": "Port authority for a busy civilian station.",
+      "personality_traits": {
+        "aggression": 0.3,
+        "chattiness": 0.7,
+        "greed": 0.5,
+        "lawfulness": 0.8,
+        "paranoia": 0.5,
+        "helpfulness": 0.75
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.98,
+          "ignore_when": [],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.5
+            },
+            {
+              "tier": "Criminal",
+              "delta": -0.4
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.15
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": true,
+        "warn_before_attack": false,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": true,
+        "share_routes_with_trusted": false,
+        "broadcast_discoveries": true,
+        "max_hail_frequency_per_min": 6
+      }
+    },
+    {
+      "id": "station_military",
+      "description": "Heavily regulated military installation with strict comms.",
+      "personality_traits": {
+        "aggression": 0.6,
+        "chattiness": 0.35,
+        "greed": 0.2,
+        "lawfulness": 0.98,
+        "paranoia": 0.7,
+        "helpfulness": 0.5
+      },
+      "incoming_hail_response": {
+        "from_player": {
+          "base_accept_chance": 0.9,
+          "ignore_when": [],
+          "rep_modifiers": [
+            {
+              "tier": "Hostile",
+              "delta": -0.7
+            },
+            {
+              "tier": "Criminal",
+              "delta": -0.6
+            },
+            {
+              "tier": "Friendly",
+              "delta": 0.1
+            },
+            {
+              "tier": "Allied",
+              "delta": 0.2
+            }
+          ]
+        }
+      },
+      "outgoing_hail_behavior": {
+        "scan_suspects": true,
+        "warn_before_attack": true,
+        "taunt_before_attack": false,
+        "extort_when_profitable": false,
+        "offer_deals_when_player_low_fuel": false,
+        "share_routes_with_trusted": false,
+        "broadcast_discoveries": true,
+        "max_hail_frequency_per_min": 3
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cljapp8pda8g7"]
+[gd_scene load_steps=13 format=3 uid="uid://cljapp8pda8g7"]
 
 [ext_resource type="Script" uid="uid://bfixq1sigteri" path="res://scripts/game_root.gd" id="1_78s5d"]
 [ext_resource type="Script" uid="uid://cnjqsjdc6fsi5" path="res://scripts/world/galaxy_generator.gd" id="2_uebra"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bf8lc4003rgi0" path="res://scenes/ui/system_map.tscn" id="7_ylec3"]
 [ext_resource type="Script" uid="uid://b1bxxrajlbi28" path="res://scripts/systems/DockingManager.gd" id="8_ywsqi"]
 [ext_resource type="Script" uid="uid://djhl8tkua11qy" path="res://scripts/systems/FactionRelations.gd" id="9_i7pw8"]
-[ext_resource type="PackedScene" uid="uid://dj5bodm1yimw4" path="res://scenes/ui/ship_systems_panel.tscn" id="13_ywsqi"]
 
 [node name="GameRoot" type="Node2D"]
 script = ExtResource("1_78s5d")
@@ -146,36 +145,6 @@ layout_mode = 2
 [node name="GalaxyMap" parent="UI" instance=ExtResource("6_j7aru")]
 
 [node name="SystemMap" parent="UI" instance=ExtResource("7_ylec3")]
-
-[node name="ShipSystemsPanel" parent="UI" instance=ExtResource("13_ywsqi")]
-
-[node name="NotifierPanel" type="Control" parent="UI"]
-custom_minimum_size = Vector2(300, 400)
-layout_mode = 3
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="DialoguePanel" type="Control" parent="UI"]
-custom_minimum_size = Vector2(800, 200)
-layout_mode = 3
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -400.0
-offset_right = 150.0
-grow_horizontal = 2
-grow_vertical = 0
 
 [node name="LoadingOverlay" type="CanvasLayer" parent="."]
 

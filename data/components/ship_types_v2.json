@@ -1,0 +1,1552 @@
+{
+  "schema": "star_loafer.ship_types.v2",
+  "notes": "Ship types wired to reusable hull classes plus default stock components. Stats represent factory/default builds; components are fully swappable.",
+  "ships": [
+	{
+	  "id": "scout_firefly",
+	  "name": "Firefly Scout",
+	  "category": "Scout",
+	  "hull_class_id": "hull_scout_light",
+	  "crew_range": [
+		1,
+		3
+	  ],
+	  "size_category": "small",
+	  "description": "Compact recon hull with long-duration life support and efficient drives, popular with freelancers.",
+	  "tags": [
+		"fast",
+		"exploration",
+		"civilian",
+        "scout"
+	  ],
+	  "hull_points": 220,
+	  "shield_strength": 150,
+	  "speed_rating": 3.0,
+	  "maneuverability": 9.0,
+	  "cargo_capacity": 24,
+	  "component_space": 60,
+	  "range_au": 12000,
+	  "sensor_strength": 8.0,
+	  "weapon_slots": 1,
+	  "tech_level": 6,
+	  "base_value": 140000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 4.0,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk1",
+		"drive__chem_booster_mk1",
+		"shield__light_mk1",
+		"sensor__short_mk2",
+		"cargo__rack_20",
+        "weapon__light_pulse_mk1"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 1,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "courier_swiftwind",
+	  "name": "Swiftwind Courier",
+	  "category": "Courier",
+	  "hull_class_id": "hull_courier_fast",
+	  "crew_range": [
+		1,
+		2
+	  ],
+	  "size_category": "small",
+	  "description": "Diplomatic and data courier frame tuned for burst acceleration and secure payload pods.",
+	  "tags": [
+		"courier",
+		"diplomatic",
+        "fast"
+	  ],
+	  "hull_points": 180,
+	  "shield_strength": 130,
+	  "speed_rating": 3.4,
+	  "maneuverability": 8.5,
+	  "cargo_capacity": 16,
+	  "component_space": 50,
+	  "range_au": 15000,
+	  "sensor_strength": 7.0,
+	  "weapon_slots": 0,
+	  "tech_level": 7,
+	  "base_value": 180000,
+	  "manufacturer": "Triarch Lines",
+	  "signature_rating": 3.5,
+	  "crew_comfort": 6,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk2",
+		"drive__vector_mk2",
+		"shield__light_mk2",
+		"sensor__secure_comm_mk1",
+        "cargo__rack_12"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 0,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "corvette_raptor",
+	  "name": "Raptor Corvette",
+	  "category": "Corvette",
+	  "hull_class_id": "hull_corvette_attack",
+	  "crew_range": [
+		6,
+		14
+	  ],
+	  "size_category": "medium",
+	  "description": "Multi-role escort corvette with balanced thrust, armor, and modular hardpoints.",
+	  "tags": [
+		"military",
+		"escort",
+        "combat"
+	  ],
+	  "hull_points": 1400,
+	  "shield_strength": 900,
+	  "speed_rating": 2.1,
+	  "maneuverability": 6.8,
+	  "cargo_capacity": 160,
+	  "component_space": 320,
+	  "range_au": 45000,
+	  "sensor_strength": 10.0,
+	  "weapon_slots": 4,
+	  "tech_level": 6,
+	  "base_value": 900000,
+	  "manufacturer": "Orion Dynamics",
+	  "signature_rating": 6.0,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk2",
+		"drive__military_mk2",
+		"shield__medium_mk2",
+		"sensor__tactical_mk1",
+		"weapon__dual_pulse_mk2",
+		"weapon__rail_light_mk1",
+        "cargo__rack_80"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 4,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "cruiser_hammerfall",
+	  "name": "Hammerfall Cruiser",
+	  "category": "Cruiser",
+	  "hull_class_id": "hull_cruiser_heavy",
+	  "crew_range": [
+		50,
+		200
+	  ],
+	  "size_category": "large",
+	  "description": "Heavy line cruiser built for endurance engagements and siege support.",
+	  "tags": [
+		"military",
+		"heavy_armor",
+        "fleet"
+	  ],
+	  "hull_points": 6200,
+	  "shield_strength": 3200,
+	  "speed_rating": 1.2,
+	  "maneuverability": 3.5,
+	  "cargo_capacity": 1200,
+	  "component_space": 2200,
+	  "range_au": 260000,
+	  "sensor_strength": 18.0,
+	  "weapon_slots": 10,
+	  "tech_level": 6,
+	  "base_value": 18000000,
+	  "manufacturer": "HelioForge Industries",
+	  "signature_rating": 8.5,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk3",
+		"reactor__fusion_mk3",
+		"drive__cruiser_mk2",
+		"shield__heavy_mk2",
+		"sensor__longrange_tactical_mk2",
+		"weapon__spinal_cannon_mk1",
+		"weapon__battery_pulse_mk2",
+		"weapon__battery_rail_mk1",
+		"point_defense_cluster_mk2",
+		"cargo__rack_400",
+        "fire_control_matrix_mk2"
+	  ],
+	  "mass_base": 65,
+	  "hardpoints": {
+		"light": 10,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "destroyer_aurora",
+	  "name": "Aurora Destroyer",
+	  "category": "Destroyer",
+	  "hull_class_id": "hull_destroyer_fastline",
+	  "crew_range": [
+		35,
+		120
+	  ],
+	  "size_category": "large",
+	  "description": "Fast response ship optimized for anti-raider operations and precision strikes.",
+	  "tags": [
+		"military",
+		"interceptor",
+        "fleet"
+	  ],
+	  "hull_points": 4800,
+	  "shield_strength": 2600,
+	  "speed_rating": 1.5,
+	  "maneuverability": 4.0,
+	  "cargo_capacity": 800,
+	  "component_space": 1500,
+	  "range_au": 210000,
+	  "sensor_strength": 16.0,
+	  "weapon_slots": 8,
+	  "tech_level": 6,
+	  "base_value": 12000000,
+	  "manufacturer": "Orion Dynamics",
+	  "signature_rating": 7.8,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk3",
+		"drive__military_mk3",
+		"shield__medium_mk3",
+		"sensor__intercept_mk2",
+		"weapon__battery_pulse_mk2",
+		"weapon__torpedo_rack_mk2",
+		"point_defense_cluster_mk2",
+        "cargo__rack_300"
+	  ],
+	  "mass_base": 65,
+	  "hardpoints": {
+		"light": 8,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "luxury_liner_elysium",
+	  "name": "Elysium Luxury Liner",
+	  "category": "Luxury Liner",
+	  "hull_class_id": "hull_luxury_liner",
+	  "crew_range": [
+		120,
+		450
+	  ],
+	  "size_category": "capital",
+	  "description": "Orbiting palace with biospheres, theaters, and private docks for elite patrons.",
+	  "tags": [
+		"civilian",
+		"luxury",
+        "passenger"
+	  ],
+	  "hull_points": 11000,
+	  "shield_strength": 5000,
+	  "speed_rating": 0.9,
+	  "maneuverability": 2.0,
+	  "cargo_capacity": 6000,
+	  "component_space": 14000,
+	  "range_au": 1500000,
+	  "sensor_strength": 20.0,
+	  "weapon_slots": 2,
+	  "tech_level": 7,
+	  "base_value": 65000000,
+	  "manufacturer": "Triarch Lines",
+	  "signature_rating": 9.5,
+	  "crew_comfort": 10,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk4",
+		"reactor__fusion_mk4",
+		"drive__liner_mk2",
+		"shield__civil_heavy_mk2",
+		"sensor__civil_longrange_mk2",
+		"habitat__luxury_suite_block",
+		"habitat__biosphere_ring",
+		"utility/spa_deck_mk1",
+        "cargo__rack_2000"
+	  ],
+	  "mass_base": 120,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "freighter_oxen",
+	  "name": "Oxen Heavy Freighter",
+	  "category": "Freighter",
+	  "hull_class_id": "hull_freighter_heavy",
+	  "crew_range": [
+		15,
+		60
+	  ],
+	  "size_category": "large",
+	  "description": "Slow, stubborn bulk hauler with modular cargo spines and tug docking ports.",
+	  "tags": [
+		"cargo",
+		"industrial",
+        "slow"
+	  ],
+	  "hull_points": 5200,
+	  "shield_strength": 1500,
+	  "speed_rating": 0.8,
+	  "maneuverability": 2.8,
+	  "cargo_capacity": 8000,
+	  "component_space": 13000,
+	  "range_au": 180000,
+	  "sensor_strength": 9.0,
+	  "weapon_slots": 2,
+	  "tech_level": 4,
+	  "base_value": 8000000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 8.8,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_heavy_mk2",
+		"drive__freighter_mk1",
+		"shield__light_mk2",
+		"sensor__nav_standard_mk1",
+		"cargo__rack_2000",
+		"cargo__rack_2000",
+		"cargo__rack_2000",
+        "tug_docking_hardpoints_mk1"
+	  ],
+	  "mass_base": 65,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "mining_barge_titanite",
+	  "name": "Titanite Mining Barge",
+	  "category": "Mining Barge",
+	  "hull_class_id": "hull_mining_barge_heavy",
+	  "crew_range": [
+		10,
+		40
+	  ],
+	  "size_category": "large",
+	  "description": "Mobile refinery with heavy rigs for belt and rubble-field extraction.",
+	  "tags": [
+		"industrial",
+		"mining",
+        "civilian"
+	  ],
+	  "hull_points": 4800,
+	  "shield_strength": 1400,
+	  "speed_rating": 0.7,
+	  "maneuverability": 2.5,
+	  "cargo_capacity": 7000,
+	  "component_space": 12000,
+	  "range_au": 160000,
+	  "sensor_strength": 12.0,
+	  "weapon_slots": 3,
+	  "tech_level": 4,
+	  "base_value": 9000000,
+	  "manufacturer": "HelioForge Industries",
+	  "signature_rating": 8.2,
+	  "crew_comfort": 3,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_heavy_mk2",
+		"drive__barge_mk1",
+		"shield__light_mk2",
+		"sensor__mining_array_mk2",
+		"mining_laser_heavy_mk2",
+		"ore_processor_mk2",
+		"cargo__rack_2000",
+        "cargo__rack_2000"
+	  ],
+	  "mass_base": 65,
+	  "hardpoints": {
+		"light": 3,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "science_vessel_galatea",
+	  "name": "Galatea Science Vessel",
+	  "category": "Research Ship",
+	  "hull_class_id": "hull_research_medium",
+	  "crew_range": [
+		12,
+		30
+	  ],
+	  "size_category": "medium",
+	  "description": "Deep-survey research craft fitted with advanced labs and sensor masts.",
+	  "tags": [
+		"research",
+		"civilian",
+        "long_range"
+	  ],
+	  "hull_points": 950,
+	  "shield_strength": 700,
+	  "speed_rating": 1.6,
+	  "maneuverability": 5.5,
+	  "cargo_capacity": 280,
+	  "component_space": 560,
+	  "range_au": 90000,
+	  "sensor_strength": 20.0,
+	  "weapon_slots": 1,
+	  "tech_level": 7,
+	  "base_value": 1600000,
+	  "manufacturer": "Astraeus Systems",
+	  "signature_rating": 5.5,
+	  "crew_comfort": 7,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_compact_mk2",
+		"drive__survey_mk2",
+		"shield__light_mk2",
+		"sensor__science_array_mk3",
+		"lab/module_general_mk2",
+		"lab/module_xeno_mk1",
+        "cargo__rack_120"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 1,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "medical_frigate_solace",
+	  "name": "Solace Medical Frigate",
+	  "category": "Medical Ship",
+	  "hull_class_id": "hull_medical_frigate",
+	  "crew_range": [
+		25,
+		90
+	  ],
+	  "size_category": "medium",
+	  "description": "Hospital frigate with triage bays, quarantine rings, and mercy-drop shuttles.",
+	  "tags": [
+		"medical",
+		"rescue",
+        "civilian"
+	  ],
+	  "hull_points": 1100,
+	  "shield_strength": 900,
+	  "speed_rating": 1.4,
+	  "maneuverability": 5.0,
+	  "cargo_capacity": 320,
+	  "component_space": 650,
+	  "range_au": 70000,
+	  "sensor_strength": 12.0,
+	  "weapon_slots": 1,
+	  "tech_level": 6,
+	  "base_value": 2000000,
+	  "manufacturer": "Triarch Lines",
+	  "signature_rating": 6.0,
+	  "crew_comfort": 9,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_compact_mk2",
+		"drive__standard_mk2",
+		"shield__medium_mk2",
+		"sensor__medical_triage_mk1",
+		"medbay_trauma_mk2",
+		"medbay_quarantine_mk1",
+        "cargo__rack_100"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 1,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "patrol_cutter_vigil",
+	  "name": "Vigil Patrol Cutter",
+	  "category": "Cutter",
+	  "hull_class_id": "hull_patrol_cutter",
+	  "crew_range": [
+		4,
+		8
+	  ],
+	  "size_category": "small",
+	  "description": "System authority patrol craft for customs inspections and anti-piracy sweeps.",
+	  "tags": [
+		"security",
+		"fast",
+        "law_enforcement"
+	  ],
+	  "hull_points": 260,
+	  "shield_strength": 180,
+	  "speed_rating": 2.8,
+	  "maneuverability": 8.2,
+	  "cargo_capacity": 30,
+	  "component_space": 70,
+	  "range_au": 10000,
+	  "sensor_strength": 9.0,
+	  "weapon_slots": 2,
+	  "tech_level": 5,
+	  "base_value": 210000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 5.5,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk1",
+		"drive__fast_response_mk1",
+		"shield__light_mk2",
+		"sensor__law_enforcement_mk1",
+		"weapon__light_pulse_mk1",
+        "weapon__stub_cannon_mk1"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "frigate_ironveil",
+	  "name": "Ironveil Frigate",
+	  "category": "Frigate",
+	  "hull_class_id": "hull_frigate_line",
+	  "crew_range": [
+		20,
+		60
+	  ],
+	  "size_category": "medium",
+	  "description": "Shield-heavy frigate that serves as the backbone of many frontier fleets.",
+	  "tags": [
+		"military",
+		"balanced",
+        "escort"
+	  ],
+	  "hull_points": 1800,
+	  "shield_strength": 1400,
+	  "speed_rating": 1.7,
+	  "maneuverability": 5.8,
+	  "cargo_capacity": 360,
+	  "component_space": 720,
+	  "range_au": 60000,
+	  "sensor_strength": 11.0,
+	  "weapon_slots": 5,
+	  "tech_level": 5,
+	  "base_value": 2400000,
+	  "manufacturer": "Orion Dynamics",
+	  "signature_rating": 6.5,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk2",
+		"drive__military_mk2",
+		"shield__medium_mk3",
+		"sensor__tactical_mk1",
+		"weapon__pulse_battery_mk2",
+		"weapon__missile_rack_mk1",
+		"point_defense_node_mk1",
+        "cargo__rack_160"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 5,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "carrier_starfane",
+	  "name": "Starfane Carrier",
+	  "category": "Carrier",
+	  "hull_class_id": "hull_carrier_fleet",
+	  "crew_range": [
+		400,
+		800
+	  ],
+	  "size_category": "capital",
+	  "description": "Fleet carrier with extensive fighter bays and modular command decks.",
+	  "tags": [
+		"capital",
+		"military",
+        "carrier"
+	  ],
+	  "hull_points": 22000,
+	  "shield_strength": 11000,
+	  "speed_rating": 0.7,
+	  "maneuverability": 1.8,
+	  "cargo_capacity": 9000,
+	  "component_space": 22000,
+	  "range_au": 2500000,
+	  "sensor_strength": 30.0,
+	  "weapon_slots": 16,
+	  "tech_level": 7,
+	  "base_value": 90000000,
+	  "manufacturer": "HelioForge Industries",
+	  "signature_rating": 9.2,
+	  "crew_comfort": 7,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk4",
+		"reactor__fusion_mk4",
+		"drive__capital_mk2",
+		"shield__capital_mk3",
+		"sensor__fleet_command_mk3",
+		"hangar/wingbay_mk2",
+		"hangar/wingbay_mk2",
+		"weapon__flak_grid_mk3",
+		"weapon__point_defense_web_mk3",
+		"weapon__medium_battery_mk2",
+		"command_bridge_fleet_mk2",
+        "cargo__rack_3000"
+	  ],
+	  "mass_base": 120,
+	  "hardpoints": {
+		"light": 16,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "battleship_cerberus",
+	  "name": "Cerberus Battleship",
+	  "category": "Battleship",
+	  "hull_class_id": "hull_battleship_heavy",
+	  "crew_range": [
+		600,
+		1200
+	  ],
+	  "size_category": "capital",
+	  "description": "Brutal fortress hull mounting spinal cannons and layered armor belts.",
+	  "tags": [
+		"military",
+		"heavy_armor",
+        "flagship"
+	  ],
+	  "hull_points": 32000,
+	  "shield_strength": 15000,
+	  "speed_rating": 0.6,
+	  "maneuverability": 1.5,
+	  "cargo_capacity": 6000,
+	  "component_space": 18000,
+	  "range_au": 2200000,
+	  "sensor_strength": 28.0,
+	  "weapon_slots": 20,
+	  "tech_level": 7,
+	  "base_value": 110000000,
+	  "manufacturer": "Orion Dynamics",
+	  "signature_rating": 10.0,
+	  "crew_comfort": 6,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk4",
+		"reactor__fusion_mk4",
+		"drive__capital_mk2",
+		"shield__capital_mk4",
+		"sensor__longrange_tactical_mk3",
+		"weapon__spinal_cannon_mk2",
+		"weapon__heavy_battery_mk3",
+		"weapon__torpedo_tubes_mk3",
+		"point_defense_grid_mk3",
+		"armor/belt_reinforced_mk3",
+        "cargo__rack_2000"
+	  ],
+	  "mass_base": 120,
+	  "hardpoints": {
+		"light": 20,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "tug_mule",
+	  "name": "Mule Utility Tug",
+	  "category": "Tug",
+	  "hull_class_id": "hull_tug_utility",
+	  "crew_range": [
+		2,
+		6
+	  ],
+	  "size_category": "small",
+	  "description": "Unpretty but indispensable tug for docking ops, salvage pulls, and station work.",
+	  "tags": [
+		"utility",
+		"industrial",
+        "salvage"
+	  ],
+	  "hull_points": 280,
+	  "shield_strength": 120,
+	  "speed_rating": 1.6,
+	  "maneuverability": 7.0,
+	  "cargo_capacity": 40,
+	  "component_space": 90,
+	  "range_au": 8000,
+	  "sensor_strength": 5.0,
+	  "weapon_slots": 1,
+	  "tech_level": 3,
+	  "base_value": 90000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 6.5,
+	  "crew_comfort": 3,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk1",
+		"drive__workboat_mk1",
+		"shield__basic_mk1",
+		"tractor_array_mk1",
+		"tow_clamps_mk1",
+        "weapon__stub_cannon_mk1"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 1,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "explorer_farreach",
+	  "name": "Farreach Explorer",
+	  "category": "Explorer",
+	  "hull_class_id": "hull_explorer_longrange",
+	  "crew_range": [
+		5,
+		10
+	  ],
+	  "size_category": "medium",
+	  "description": "Self-sufficient survey hull built for multi-year expeditions beyond charted lanes.",
+	  "tags": [
+		"exploration",
+		"civilian",
+        "long_range"
+	  ],
+	  "hull_points": 1000,
+	  "shield_strength": 800,
+	  "speed_rating": 1.8,
+	  "maneuverability": 6.0,
+	  "cargo_capacity": 420,
+	  "component_space": 900,
+	  "range_au": 180000,
+	  "sensor_strength": 22.0,
+	  "weapon_slots": 2,
+	  "tech_level": 7,
+	  "base_value": 2400000,
+	  "manufacturer": "Astraeus Systems",
+	  "signature_rating": 5.0,
+	  "crew_comfort": 8,
+	  "ai_core": true,
+	  "stock_components": [
+		"reactor__fusion_compact_mk3",
+		"drive__longrange_mk2",
+		"shield__medium_mk2",
+		"sensor__science_array_mk3",
+		"habitat__longrange_mk2",
+		"cargo__rack_200",
+        "weapon__light_pulse_mk2"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "diplomatic_cruiser_concord",
+	  "name": "Concord Diplomatic Cruiser",
+	  "category": "Diplomatic Vessel",
+	  "hull_class_id": "hull_luxury_liner",
+	  "crew_range": [
+		60,
+		180
+	  ],
+	  "size_category": "large",
+	  "description": "Ceremonial cruiser emphasizing security, comfort, and redundant comm suites.",
+	  "tags": [
+		"diplomatic",
+		"luxury",
+        "civilian"
+	  ],
+	  "hull_points": 5400,
+	  "shield_strength": 2600,
+	  "speed_rating": 1.1,
+	  "maneuverability": 3.2,
+	  "cargo_capacity": 1200,
+	  "component_space": 2600,
+	  "range_au": 260000,
+	  "sensor_strength": 18.0,
+	  "weapon_slots": 6,
+	  "tech_level": 7,
+	  "base_value": 26000000,
+	  "manufacturer": "Triarch Lines",
+	  "signature_rating": 8.0,
+	  "crew_comfort": 10,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk3",
+		"drive__cruiser_mk2",
+		"shield__heavy_mk2",
+		"sensor__diplomatic_suite_mk2",
+		"habitat__luxury_suite_block",
+		"conference_deck_mk1",
+        "weapon__point_defense_mk2"
+	  ],
+	  "mass_base": 65,
+	  "hardpoints": {
+		"light": 6,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "smuggler_runner_blackfin",
+	  "name": "Blackfin Runner",
+	  "category": "Smuggler",
+	  "hull_class_id": "hull_courier_fast",
+	  "crew_range": [
+		2,
+		5
+	  ],
+	  "size_category": "small",
+	  "description": "Illicit courier hull with baffled drives and configurable voids.",
+	  "tags": [
+		"smuggler",
+		"stealth",
+        "fast"
+	  ],
+	  "hull_points": 210,
+	  "shield_strength": 140,
+	  "speed_rating": 3.2,
+	  "maneuverability": 8.8,
+	  "cargo_capacity": 40,
+	  "component_space": 90,
+	  "range_au": 14000,
+	  "sensor_strength": 7.0,
+	  "weapon_slots": 2,
+	  "tech_level": 6,
+	  "base_value": 260000,
+	  "manufacturer": "Greyline Fabrications",
+	  "signature_rating": 2.5,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk2",
+		"drive__hotrunner_mk2",
+		"shield__light_mk2",
+		"sensor__masked_mk1",
+		"smuggler_holds_hidden_mk2",
+        "weapon__light_pulse_mk1"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "salvager_gallows",
+	  "name": "Gallows Salvager",
+	  "category": "Salvage Ship",
+	  "hull_class_id": "hull_salvager_medium",
+	  "crew_range": [
+		6,
+		15
+	  ],
+	  "size_category": "medium",
+	  "description": "Purpose-built for cutting, grappling, and stripping derelicts in hazardous zones.",
+	  "tags": [
+		"salvage",
+		"industrial",
+        "civilian"
+	  ],
+	  "hull_points": 1300,
+	  "shield_strength": 600,
+	  "speed_rating": 1.3,
+	  "maneuverability": 4.8,
+	  "cargo_capacity": 900,
+	  "component_space": 1600,
+	  "range_au": 50000,
+	  "sensor_strength": 12.0,
+	  "weapon_slots": 3,
+	  "tech_level": 4,
+	  "base_value": 1100000,
+	  "manufacturer": "HelioForge Industries",
+	  "signature_rating": 7.0,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk2",
+		"drive__workboat_mk2",
+		"shield__basic_mk1",
+		"sensor__salvage_scan_mk2",
+		"grapple_array_mk2",
+		"cutting_laser_mk2",
+        "cargo__rack_400"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 3,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "colony_ship_genesis",
+	  "name": "Genesis Colony Ship",
+	  "category": "Colony Vessel",
+	  "hull_class_id": "hull_colony_ship",
+	  "crew_range": [
+		300,
+		1200
+	  ],
+	  "size_category": "capital",
+	  "description": "Colonization ark with biospheres, fabrication decks, and cryo vaults.",
+	  "tags": [
+		"colonization",
+		"civilian",
+        "generation"
+	  ],
+	  "hull_points": 26000,
+	  "shield_strength": 9000,
+	  "speed_rating": 0.5,
+	  "maneuverability": 1.2,
+	  "cargo_capacity": 22000,
+	  "component_space": 48000,
+	  "range_au": 3500000,
+	  "sensor_strength": 24.0,
+	  "weapon_slots": 6,
+	  "tech_level": 6,
+	  "base_value": 95000000,
+	  "manufacturer": "Triarch Lines",
+	  "signature_rating": 9.0,
+	  "crew_comfort": 8,
+	  "ai_core": true,
+	  "stock_components": [
+		"reactor__fusion_mk4",
+		"reactor__fusion_mk4",
+		"drive__colony_mk1",
+		"shield__colony_mk2",
+		"sensor__colony_survey_mk2",
+		"cryo_vault_block_mk2",
+		"fab_bay_industrial_mk2",
+		"habitat__colony_mk2",
+        "cargo__rack_8000"
+	  ],
+	  "mass_base": 120,
+	  "hardpoints": {
+		"light": 6,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "escort_falcon",
+	  "name": "Falcon Escort",
+	  "category": "Escort",
+	  "hull_class_id": "hull_escort_defense",
+	  "crew_range": [
+		8,
+		20
+	  ],
+	  "size_category": "medium",
+	  "description": "Versatile escort hull for convoy defense and customs shows of force.",
+	  "tags": [
+		"military",
+		"escort",
+        "defense"
+	  ],
+	  "hull_points": 1200,
+	  "shield_strength": 800,
+	  "speed_rating": 2.0,
+	  "maneuverability": 6.2,
+	  "cargo_capacity": 260,
+	  "component_space": 520,
+	  "range_au": 50000,
+	  "sensor_strength": 10.0,
+	  "weapon_slots": 4,
+	  "tech_level": 5,
+	  "base_value": 1300000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 6.0,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk2",
+		"drive__escort_mk2",
+		"shield__medium_mk2",
+		"sensor__tactical_mk1",
+		"weapon__pulse_dual_mk2",
+		"weapon__pd_mk1",
+        "cargo__rack_120"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 4,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "gunship_warden",
+	  "name": "Warden Gunship",
+	  "category": "Gunship",
+	  "hull_class_id": "hull_gunship_orbital",
+	  "crew_range": [
+		5,
+		12
+	  ],
+	  "size_category": "medium",
+	  "description": "Orbital support gunship for close air support, boarding cover, and intimidation.",
+	  "tags": [
+		"combat",
+		"military",
+        "short_range"
+	  ],
+	  "hull_points": 1350,
+	  "shield_strength": 700,
+	  "speed_rating": 1.9,
+	  "maneuverability": 6.0,
+	  "cargo_capacity": 180,
+	  "component_space": 400,
+	  "range_au": 30000,
+	  "sensor_strength": 9.0,
+	  "weapon_slots": 5,
+	  "tech_level": 5,
+	  "base_value": 1200000,
+	  "manufacturer": "Orion Dynamics",
+	  "signature_rating": 6.8,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk2",
+		"drive__assault_mk1",
+		"shield__medium_mk1",
+		"sensor__targeting_mk1",
+		"weapon__autocannon_mk2",
+		"weapon__rocket_pod_mk2",
+        "weapon__pd_mk1"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 5,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "recon_probe_drone_swarm",
+	  "name": "Recon Drone Swarm",
+	  "category": "Autonomous Unit",
+	  "hull_class_id": "hull_drone_recon",
+	  "crew_range": [
+		0,
+		0
+	  ],
+	  "size_category": "small",
+	  "description": "Pack of semi-disposable recon drones for wide-area scouting.",
+	  "tags": [
+		"drone",
+		"autonomous",
+        "recon"
+	  ],
+	  "hull_points": 40,
+	  "shield_strength": 0,
+	  "speed_rating": 3.5,
+	  "maneuverability": 10.0,
+	  "cargo_capacity": 2,
+	  "component_space": 6,
+	  "range_au": 6000,
+	  "sensor_strength": 10.0,
+	  "weapon_slots": 0,
+	  "tech_level": 8,
+	  "base_value": 60000,
+	  "manufacturer": "Astraeus Systems",
+	  "signature_rating": 2.0,
+	  "crew_comfort": 0,
+	  "ai_core": true,
+	  "stock_components": [
+		"core_drone_ai_recon_mk2",
+		"sensor__micro_array_mk2",
+        "drive__micro_impulse_mk2"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 0,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "stealth_corvette_shade",
+	  "name": "Shade Stealth Corvette",
+	  "category": "Corvette",
+	  "hull_class_id": "hull_corvette_stealth",
+	  "crew_range": [
+		5,
+		12
+	  ],
+	  "size_category": "medium",
+	  "description": "Black-ops vessel with hull-null cloaking and low-emission drives.",
+	  "tags": [
+		"stealth",
+		"espionage",
+        "military"
+	  ],
+	  "hull_points": 1100,
+	  "shield_strength": 750,
+	  "speed_rating": 2.3,
+	  "maneuverability": 7.0,
+	  "cargo_capacity": 140,
+	  "component_space": 320,
+	  "range_au": 80000,
+	  "sensor_strength": 16.0,
+	  "weapon_slots": 3,
+	  "tech_level": 8,
+	  "base_value": 4200000,
+	  "manufacturer": "Greyline Fabrications",
+	  "signature_rating": 1.5,
+	  "crew_comfort": 5,
+	  "ai_core": true,
+	  "stock_components": [
+		"reactor__fusion_compact_mk3",
+		"drive__stealth_mk2",
+		"shield__phase_mk2",
+		"sensor__ew_suite_mk3",
+		"cloak_field_mk2",
+        "weapon__silent_rail_mk2"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 3,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "refueler_waypost",
+	  "name": "Waypost Refueler",
+	  "category": "Support Vessel",
+	  "hull_class_id": "hull_support_refueler",
+	  "crew_range": [
+		10,
+		25
+	  ],
+	  "size_category": "medium",
+	  "description": "Mobile fuel and provisions tender that shadows long-haul convoys.",
+	  "tags": [
+		"support",
+		"logistics",
+        "fuel"
+	  ],
+	  "hull_points": 1000,
+	  "shield_strength": 500,
+	  "speed_rating": 1.3,
+	  "maneuverability": 4.6,
+	  "cargo_capacity": 1500,
+	  "component_space": 2600,
+	  "range_au": 60000,
+	  "sensor_strength": 8.0,
+	  "weapon_slots": 2,
+	  "tech_level": 4,
+	  "base_value": 1500000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 7.0,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk2",
+		"drive__standard_mk2",
+		"shield__basic_mk1",
+		"fuel_bladders_mk2",
+		"refuel_gantry_mk2",
+        "cargo__rack_600"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "surveyor_helios",
+	  "name": "Helios Surveyor",
+	  "category": "Survey Ship",
+	  "hull_class_id": "hull_survey_small",
+	  "crew_range": [
+		3,
+		8
+	  ],
+	  "size_category": "small",
+	  "description": "Agile survey craft specialized for planetary and resource scanning.",
+	  "tags": [
+		"exploration",
+		"science",
+        "civilian"
+	  ],
+	  "hull_points": 200,
+	  "shield_strength": 160,
+	  "speed_rating": 2.4,
+	  "maneuverability": 8.0,
+	  "cargo_capacity": 40,
+	  "component_space": 90,
+	  "range_au": 12000,
+	  "sensor_strength": 12.0,
+	  "weapon_slots": 1,
+	  "tech_level": 6,
+	  "base_value": 190000,
+	  "manufacturer": "Astraeus Systems",
+	  "signature_rating": 4.5,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_mk1",
+		"drive__survey_mk1",
+		"shield__light_mk1",
+		"sensor__survey_mk2",
+		"cargo__rack_20",
+        "weapon__light_pulse_mk1"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 1,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "transport_pilgrim",
+	  "name": "Pilgrim Transport",
+	  "category": "Transport",
+	  "hull_class_id": "hull_transport_liner",
+	  "crew_range": [
+		20,
+		80
+	  ],
+	  "size_category": "large",
+	  "description": "Workhorse passenger and migrant carrier across stable trade lanes.",
+	  "tags": [
+		"civilian",
+		"transport",
+        "passenger"
+	  ],
+	  "hull_points": 3800,
+	  "shield_strength": 1600,
+	  "speed_rating": 1.0,
+	  "maneuverability": 3.0,
+	  "cargo_capacity": 3000,
+	  "component_space": 5200,
+	  "range_au": 160000,
+	  "sensor_strength": 10.0,
+	  "weapon_slots": 2,
+	  "tech_level": 4,
+	  "base_value": 6000000,
+	  "manufacturer": "Triarch Lines",
+	  "signature_rating": 8.5,
+	  "crew_comfort": 7,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fission_heavy_mk2",
+		"drive__liner_mk1",
+		"shield__civil_mk2",
+		"sensor__nav_standard_mk1",
+		"habitat__standard_berths_mk2",
+        "cargo__rack_1500"
+	  ],
+	  "mass_base": 65,
+	  "hardpoints": {
+		"light": 2,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "escort_drone_keeper",
+	  "name": "Keeper Defense Drone",
+	  "category": "Autonomous Unit",
+	  "hull_class_id": "hull_drone_defense",
+	  "crew_range": [
+		0,
+		0
+	  ],
+	  "size_category": "small",
+	  "description": "Compact guardian drone deployed as point defense around key assets.",
+	  "tags": [
+		"autonomous",
+		"defense",
+        "drone"
+	  ],
+	  "hull_points": 90,
+	  "shield_strength": 60,
+	  "speed_rating": 3.0,
+	  "maneuverability": 10.0,
+	  "cargo_capacity": 1,
+	  "component_space": 4,
+	  "range_au": 4000,
+	  "sensor_strength": 5.0,
+	  "weapon_slots": 1,
+	  "tech_level": 7,
+	  "base_value": 40000,
+	  "manufacturer": "Astraeus Systems",
+	  "signature_rating": 3.0,
+	  "crew_comfort": 0,
+	  "ai_core": true,
+	  "stock_components": [
+		"core_drone_ai_defense_mk2",
+		"sensor__pointdef_mk1",
+        "weapon__pd_micro_mk2"
+	  ],
+	  "mass_base": 30,
+	  "hardpoints": {
+		"light": 1,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "corvette_sabre",
+	  "name": "Sabre Corvette",
+	  "category": "Corvette",
+	  "hull_class_id": "hull_corvette_attack",
+	  "crew_range": [
+		8,
+		16
+	  ],
+	  "size_category": "medium",
+	  "description": "Fast-attack corvette built for slashing raids and pursuit.",
+	  "tags": [
+		"military",
+		"fast_attack",
+        "combat"
+	  ],
+	  "hull_points": 1300,
+	  "shield_strength": 800,
+	  "speed_rating": 2.4,
+	  "maneuverability": 7.0,
+	  "cargo_capacity": 200,
+	  "component_space": 400,
+	  "range_au": 50000,
+	  "sensor_strength": 10.0,
+	  "weapon_slots": 5,
+	  "tech_level": 6,
+	  "base_value": 1600000,
+	  "manufacturer": "Orion Dynamics",
+	  "signature_rating": 6.2,
+	  "crew_comfort": 4,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk2",
+		"drive__military_mk3",
+		"shield__medium_mk2",
+		"sensor__targeting_mk2",
+		"weapon__pulse_battery_mk2",
+		"weapon__rail_light_mk2",
+        "point_defense_node_mk1"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 5,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "frigate_vanguard",
+	  "name": "Vanguard Frigate",
+	  "category": "Frigate",
+	  "hull_class_id": "hull_frigate_line",
+	  "crew_range": [
+		30,
+		70
+	  ],
+	  "size_category": "medium",
+	  "description": "Reliable vanguard hull favored by independent security contractors.",
+	  "tags": [
+		"military",
+		"escort",
+        "fleet"
+	  ],
+	  "hull_points": 1900,
+	  "shield_strength": 1300,
+	  "speed_rating": 1.6,
+	  "maneuverability": 5.4,
+	  "cargo_capacity": 420,
+	  "component_space": 820,
+	  "range_au": 65000,
+	  "sensor_strength": 11.0,
+	  "weapon_slots": 5,
+	  "tech_level": 5,
+	  "base_value": 2100000,
+	  "manufacturer": "Kovacs Shipworks",
+	  "signature_rating": 6.8,
+	  "crew_comfort": 5,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk2",
+		"drive__standard_mk2",
+		"shield__medium_mk2",
+		"sensor__tactical_mk1",
+		"weapon__pulse_battery_mk2",
+		"weapon__missile_rack_mk1",
+		"point_defense_node_mk1",
+        "cargo__rack_200"
+	  ],
+	  "mass_base": 45,
+	  "hardpoints": {
+		"light": 5,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "battlecruiser_zephyr",
+	  "name": "Zephyr Battlecruiser",
+	  "category": "Battlecruiser",
+	  "hull_class_id": "hull_carrier_fleet",
+	  "crew_range": [
+		400,
+		900
+	  ],
+	  "size_category": "capital",
+	  "description": "Mobile flagship that trades some armor for speed and reach.",
+	  "tags": [
+		"military",
+		"capital",
+        "fleet"
+	  ],
+	  "hull_points": 18000,
+	  "shield_strength": 9000,
+	  "speed_rating": 0.8,
+	  "maneuverability": 2.2,
+	  "cargo_capacity": 7000,
+	  "component_space": 16000,
+	  "range_au": 2200000,
+	  "sensor_strength": 26.0,
+	  "weapon_slots": 14,
+	  "tech_level": 7,
+	  "base_value": 80000000,
+	  "manufacturer": "HelioForge Industries",
+	  "signature_rating": 9.0,
+	  "crew_comfort": 7,
+	  "ai_core": false,
+	  "stock_components": [
+		"reactor__fusion_mk4",
+		"reactor__fusion_mk3",
+		"drive__capital_mk2",
+		"shield__capital_mk3",
+		"sensor__fleet_command_mk3",
+		"weapon__heavy_battery_mk3",
+		"weapon__torpedo_tubes_mk3",
+		"point_defense_grid_mk3",
+        "cargo__rack_2500"
+	  ],
+	  "mass_base": 120,
+	  "hardpoints": {
+		"light": 14,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	},
+	{
+	  "id": "ark_exodus",
+	  "name": "Exodus Arkship",
+	  "category": "Generation Ship",
+	  "hull_class_id": "hull_arkship_generation",
+	  "crew_range": [
+		2000,
+		10000
+	  ],
+	  "size_category": "capital",
+	  "description": "Ancient slow-moving ark designed for epoch-spanning migration.",
+	  "tags": [
+		"colonization",
+		"civilian",
+        "ark"
+	  ],
+	  "hull_points": 40000,
+	  "shield_strength": 8000,
+	  "speed_rating": 0.4,
+	  "maneuverability": 1.0,
+	  "cargo_capacity": 40000,
+	  "component_space": 90000,
+	  "range_au": 5000000,
+	  "sensor_strength": 22.0,
+	  "weapon_slots": 4,
+	  "tech_level": 5,
+	  "base_value": 120000000,
+	  "manufacturer": "Old Earth Cooperative",
+	  "signature_rating": 9.8,
+	  "crew_comfort": 8,
+	  "ai_core": true,
+	  "stock_components": [
+		"reactor__fusion_mk3",
+		"reactor__fusion_mk3",
+		"drive__ark_mk1",
+		"shield__colony_mk1",
+		"sensor__longrange_mk2",
+		"habitat__agrarium_ring_mk2",
+		"habitat__habitation_block_mk3",
+		"cryo_vault_block_mk3",
+		"fab_bay_industrial_mk3",
+        "cargo__rack_10000"
+	  ],
+	  "mass_base": 120,
+	  "hardpoints": {
+		"light": 4,
+		"medium": 0,
+		"heavy": 0,
+		"turret": 0
+	  }
+	}
+  ]
+}

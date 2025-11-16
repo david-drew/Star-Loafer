@@ -38,8 +38,8 @@ const MOON_SCALE_MULTIPLIER = 1.0
 # Distance-based scaling (LOD effect)
 const DISTANCE_SCALE_MIN = 0.5
 const DISTANCE_SCALE_MAX = 2.0
-const DISTANCE_SCALE_NEAR = 3000.0
-const DISTANCE_SCALE_FAR = 20000.0
+const DISTANCE_SCALE_NEAR = 2500.0			# default 3000
+const DISTANCE_SCALE_FAR = 18000.0 			# default 20000
 
 # Performance optimization
 const SCALE_UPDATE_INTERVAL = 0.05
@@ -311,7 +311,7 @@ func _update_node_scale(node: Node2D) -> void:
 			
 			# Calculate parent's current scale factor
 			var parent_current_scale:float = parent_sprite.scale.x
-			var parent_scale_factor:float = parent_current_scale / parent_base_scale.x if parent_base_scale.x > 0 else 1.0
+			var parent_scale_factor:float  = parent_current_scale / parent_base_scale.x if parent_base_scale.x > 0 else 1.0
 			
 			# Moon scales proportionally with parent (if parent shrinks, moon shrinks too)
 			final_scale_factor *= parent_scale_factor

@@ -15,6 +15,19 @@ signal credits_changed(new_amount: int)
 # UI & Maps
 signal map_toggled(map_type: String, should_open: bool)
 
+signal player_ship_registered(ship: Node) 						## Emitted when the player ship instance is ready/registered.
+signal ship_stats_updated(ship: Node, stats: Dictionary)		## Emitted when ship stats change in a way that UI should know about.
+
+## loadout: Array of thin entries: { component_id, instance_id, enabled }
+signal ship_loadout_updated(ship: Node, loadout: Array)			## Emitted when a ship's component loadout changes (install/remove/toggle).
+
+## candidates: Array of { component_id: String, count: int }
+signal ship_component_candidates_updated(ship: Node, candidates: Array)		## Emitted when install candidates (from cargo/inventory) change for a ship.
+
+## ship: Ship whose systems should be shown.
+signal ship_screen_toggled(ship: Node, should_open: bool)		## Emitted to open or close the Ship Systems UI for a specific ship.
+
+
 # Travel
 signal fast_travel_requested(target_system_id: String)
 
@@ -76,3 +89,21 @@ signal ship_docked(ship: Node, station: Node)
 ## ship: The ship that undocked
 ## station: The station where undocking occurred
 signal ship_undocked(ship: Node, station: Node)
+
+# Components / Ship Systems
+
+## UI is asking the game to toggle a component on/off.
+## enabled: true = turn on, false = turn off
+signal ship_component_toggle_requested(ship: Node, component_id: String, enabled: bool)
+
+## UI is asking the game to install a component on the ship.
+signal ship_component_install_requested(ship: Node, component_id: String)
+
+## UI is asking the game to remove a component from the ship.
+signal ship_component_remove_requested(ship: Node, component_id: String)
+
+## Emitted when a requested action fails (rules, space, cargo, etc.).
+## action: "install", "remove", "toggle"
+## reason: snake_case reason code ("not_docked", "insufficient_component_space", etc.)
+## data: optional context, e.g. { "component_id": "weapon__dual_pulse_mk2" }
+signal ship_component_action_failed(ship: Node, action: String, reason: String, data: Dictionary)
