@@ -1441,7 +1441,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1487,7 +1487,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1533,7 +1533,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1579,7 +1579,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -1625,7 +1625,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1671,7 +1671,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1717,7 +1717,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -1763,7 +1763,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -1809,7 +1809,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1855,7 +1855,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1901,7 +1901,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -1947,7 +1947,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -1993,7 +1993,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2039,7 +2039,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2085,7 +2085,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2131,7 +2131,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2177,7 +2177,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2223,7 +2223,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2269,7 +2269,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2315,7 +2315,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -2361,7 +2361,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2407,7 +2407,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2453,7 +2453,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -2499,7 +2499,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2545,7 +2545,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 80.0,
-	  "turning_torque": 45.0,
+	  "turning_torque": 270.0,
 	  "speed_bonus": 0.4
 	},
 	{
@@ -2591,7 +2591,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 100.0,
-	  "turning_torque": 55.0,
+	  "turning_torque": 330.0,
 	  "speed_bonus": 0.6
 	},
 	{
@@ -2637,7 +2637,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 120.0,
-	  "turning_torque": 40.0,
+	  "turning_torque": 240.0,
 	  "speed_bonus": 0.7
 	},
 	{
@@ -2683,7 +2683,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 150.0,
-	  "turning_torque": 48.0,
+	  "turning_torque": 288.0,
 	  "speed_bonus": 0.9
 	},
 	{
@@ -2729,7 +2729,7 @@
 		"diminishing_return": 0.8
 	  },
 	  "thrust": 190.0,
-	  "turning_torque": 60.0,
+	  "turning_torque": 360.0,
 	  "speed_bonus": 1.2
 	},
 	{

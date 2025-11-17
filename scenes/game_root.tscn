@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cljapp8pda8g7"]
+[gd_scene load_steps=16 format=3 uid="uid://cljapp8pda8g7"]
 
 [ext_resource type="Script" uid="uid://bfixq1sigteri" path="res://scripts/game_root.gd" id="1_78s5d"]
 [ext_resource type="Script" uid="uid://cnjqsjdc6fsi5" path="res://scripts/world/galaxy_generator.gd" id="2_uebra"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://b1bxxrajlbi28" path="res://scripts/systems/DockingManager.gd" id="8_ywsqi"]
 [ext_resource type="Script" uid="uid://djhl8tkua11qy" path="res://scripts/systems/FactionRelations.gd" id="9_i7pw8"]
 [ext_resource type="PackedScene" uid="uid://dj5bodm1yimw4" path="res://scenes/ui/ship_systems_panel.tscn" id="13_ywsqi"]
+[ext_resource type="PackedScene" uid="uid://nf1wcncatqan" path="res://scenes/ui/comm_panel.tscn" id="14_i7pw8"]
+[ext_resource type="Script" uid="uid://cx88ptknwnlyw" path="res://scripts/ui/notifier_panel.gd" id="14_x5456"]
 
 [node name="GameRoot" type="Node2D"]
 script = ExtResource("1_78s5d")
@@ -157,25 +159,21 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
+offset_left = -300.0
+offset_top = -200.0
+offset_bottom = 200.0
 grow_horizontal = 0
 grow_vertical = 2
+size_flags_horizontal = 8
+script = ExtResource("14_x5456")
 
-[node name="DialoguePanel" type="Control" parent="UI"]
-custom_minimum_size = Vector2(800, 200)
-layout_mode = 3
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -400.0
-offset_right = 150.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="NoticesVBox" type="VBoxContainer" parent="UI/NotifierPanel"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CommPanel" parent="UI" instance=ExtResource("14_i7pw8")]
 
 [node name="LoadingOverlay" type="CanvasLayer" parent="."]
 

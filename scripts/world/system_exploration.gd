@@ -334,6 +334,8 @@ func _spawn_stars_with_formation(stars: Array) -> void:
 	var star_count = stars.size()
 	var rng = RandomNumberGenerator.new()
 	rng.seed = current_system_data.get("seed", 0)
+	var rotation:float
+	var position:Vector2
 	
 	match star_count:
 		1:
@@ -344,17 +346,17 @@ func _spawn_stars_with_formation(stars: Array) -> void:
 			_spawn_star_at_position(stars[1], 1, Vector2(separation / 2, 0))
 		3:
 			var radius = rng.randf_range(1000.0, 2000.0)
-			var rotation = rng.randf() * TAU
+			rotation = rng.randf() * TAU
 			for i in range(3):
 				var angle = (TAU / 3.0) * i + rotation
-				var position = Vector2(cos(angle), sin(angle)) * radius
+				position = Vector2(cos(angle), sin(angle)) * radius
 				_spawn_star_at_position(stars[i], i, position)
 		_:
 			var radius = rng.randf_range(1200.0, 2000.0)
-			var rotation = rng.randf() * TAU
+			rotation = rng.randf() * TAU
 			for i in range(stars.size()):
 				var angle = (TAU / stars.size()) * i + rotation
-				var position = Vector2(cos(angle), sin(angle)) * radius
+				position = Vector2(cos(angle), sin(angle)) * radius
 				_spawn_star_at_position(stars[i], i, position)
 
 func _spawn_star_at_position(star_data: Dictionary, index: int, position: Vector2) -> void:

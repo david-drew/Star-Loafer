@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c8y8hrq7hchps"]
+
+[node name="AiTestHarness" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="AiDebugPanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Node" type="Node" parent="."]

@@ -11,8 +11,16 @@ var system_archetypes: Dictionary = {}
 var sector_profiles: Dictionary = {}
 var travel_lanes: Dictionary = {}
 
+# Ship data
+var ship_types: Dictionary = {}          # raw JSON
+var ship_types_by_id: Dictionary = {}    # id -> ship dict
+var hull_visuals: Dictionary = {}        # raw JSON
+var hull_visuals_by_id: Dictionary = {}  # hull_class_id -> hull visual dict
+
 # Asset validation
 var missing_assets: Array = []
+
+const SHIP_SPRITE_PATTERN := "res://assets/images/actors/ships/{type}_{variant}.png"
 
 func _ready() -> void:
 	_load_all_schemas()
@@ -27,12 +35,18 @@ func _load_all_schemas() -> void:
 	planet_types   = _load_json("res://data/procgen/planet_types.json")
 	moon_types     = _load_json("res://data/procgen/moon_types.json")
 	asteroid_types = _load_json("res://data/procgen/asteroid_types.json")
-	biomes = _load_json("res://data/procgen/biomes.json")
-	phenomena = _load_json("res://data/procgen/phenomena.json")
+	biomes         = _load_json("res://data/procgen/biomes.json")
+	phenomena      = _load_json("res://data/procgen/phenomena.json")
 	system_archetypes = _load_json("res://data/procgen/system_archetypes.json")
 	sector_profiles = _load_json("res://data/procgen/sector_profiles.json")
-	travel_lanes = _load_json("res://data/procgen/travel_lanes.json")
+	travel_lanes   = _load_json("res://data/procgen/travel_lanes.json")
 	
+	ship_types     = _load_json("res://data/components/ship_types_v2.json")
+	hull_visuals   = _load_json("res://data/components/hull_visuals.json")
+
+	_build_ship_type_index()
+	_build_hull_visual_index()
+
 	print("ContentDB: All schemas loaded")
 
 func _load_json(path: String) -> Dictionary:
@@ -55,6 +69,122 @@ func _load_json(path: String) -> Dictionary:
 		return {}
 	
 	return json.data
+
+func _build_ship_type_index() -> void:
+	ship_types_by_id.clear()
+	for st in ship_types.get("ships", []):
+		if typeof(st) != TYPE_DICTIONARY:
+			continue
+		var id := str(st.get("id", ""))
+		if id == "":
+			continue
+		ship_types_by_id[id] = st
+
+
+func _build_hull_visual_index() -> void:
+	hull_visuals_by_id.clear()
+	for hv in hull_visuals.get("hulls", []):
+		if typeof(hv) != TYPE_DICTIONARY:
+			continue
+		var id := str(hv.get("id", ""))
+		if id == "":
+			continue
+		hull_visuals_by_id[id] = hv
+
+
+func _derive_sprite_type_from_hull_id(hull_id: String) -> String:
+	if hull_id.begins_with("hull_"):
+		return hull_id.substr(5, hull_id.length() - 5)
+	return hull_id
+
+func get_ship_sprite_info(ship_type_id: String, variant: int = -1) -> Dictionary:
+	var st: Dictionary = ship_types_by_id.get(ship_type_id, {})
+	if st.is_empty():
+		return _build_fallback_ship_sprite_info(ship_type_id, variant)
+
+	var hull_id: String = str(st.get("hull_class_id", ""))
+	if hull_id == "":
+		return _build_fallback_ship_sprite_info(ship_type_id, variant)
+
+	var hv: Dictionary = hull_visuals_by_id.get(hull_id, {})
+	var defaults: Dictionary = hull_visuals.get("defaults", {})
+
+	var sprite_type: String = ""
+	if hv.is_empty():
+		sprite_type = _derive_sprite_type_from_hull_id(hull_id)
+	else:
+		sprite_type = str(hv.get("sprite_type", ""))
+		if sprite_type == "":
+			sprite_type = _derive_sprite_type_from_hull_id(hull_id)
+
+	var num_variants: int = 1
+	if hv.is_empty():
+		num_variants = int(defaults.get("num_variants", 1))
+	else:
+		num_variants = int(hv.get("num_variants", defaults.get("num_variants", 1)))
+
+	if num_variants < 1:
+		num_variants = 1
+
+	var v: int = int(variant)
+	if v <= 0:
+		var rng := RandomNumberGenerator.new()
+		rng.randomize()
+		v = rng.randi_range(1, num_variants)
+	if v < 1:
+		v = 1
+	if v > num_variants:
+		v = num_variants
+
+	var path := SHIP_SPRITE_PATTERN.format({
+		"type": sprite_type,
+		"variant": "%02d" % v,
+	})
+
+	return {
+		"ship_type_id": ship_type_id,
+		"hull_class_id": hull_id,
+		"sprite_type": sprite_type,
+		"variant": v,
+		"path": path,
+	}
+
+
+func _build_fallback_ship_sprite_info(ship_type_id: String, variant: int) -> Dictionary:
+	var defaults: Dictionary = hull_visuals.get("defaults", {})
+	var num_variants: int = int(defaults.get("num_variants", 1))
+	if num_variants < 1:
+		num_variants = 1
+
+	var v: int = int(variant)
+	if v <= 0:
+		var rng := RandomNumberGenerator.new()
+		rng.randomize()
+		v = rng.randi_range(1, num_variants)
+	if v < 1:
+		v = 1
+	if v > num_variants:
+		v = num_variants
+
+	var sprite_type := ship_type_id
+	var path := SHIP_SPRITE_PATTERN.format({
+		"type": sprite_type,
+		"variant": "%02d" % v,
+	})
+
+	return {
+		"ship_type_id": ship_type_id,
+		"hull_class_id": "",
+		"sprite_type": sprite_type,
+		"variant": v,
+		"path": path,
+	}
+
+
+func get_ship_sprite_path(ship_type_id: String, variant: int = -1) -> String:
+	var info := get_ship_sprite_info(ship_type_id, variant)
+	return str(info.get("path", ""))
+
 
 func _validate_assets() -> void:
 	# Validate star sprites
@@ -81,6 +211,38 @@ func _validate_assets() -> void:
 		var path = pattern.format({"nn": "%02d" % i})
 		if !ResourceLoader.exists(path):
 			missing_assets.append(path)
+
+	# Validate ship hull sprites if hull_visuals is present
+	if !hull_visuals.is_empty():
+		var defaults: Dictionary = hull_visuals.get("defaults", {})
+		var default_variants: int = int(defaults.get("num_variants", 1))
+		if default_variants < 1:
+			default_variants = 1
+
+		for hv in hull_visuals.get("hulls", []):
+			if typeof(hv) != TYPE_DICTIONARY:
+				continue
+
+			var hull_id: String = str(hv.get("id", ""))
+			if hull_id == "":
+				continue
+
+			var sprite_type: String = str(hv.get("sprite_type", ""))
+			if sprite_type == "":
+				sprite_type = _derive_sprite_type_from_hull_id(hull_id)
+
+			var num_variants: int = int(hv.get("num_variants", default_variants))
+			if num_variants < 1:
+				num_variants = 1
+
+			for v in range(1, num_variants + 1):
+				var path := SHIP_SPRITE_PATTERN.format({
+					"type": sprite_type,
+					"variant": "%02d" % v,
+				})
+				if !ResourceLoader.exists(path):
+					missing_assets.append(path)
+
 
 func get_star_sprite(spectral_class: String, rng: RandomNumberGenerator) -> String:
 	var color = star_types.get("class_to_color", {}).get(spectral_class, "white")

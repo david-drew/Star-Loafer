@@ -66,7 +66,10 @@ signal fast_travel_requested(target_system_id: String)
 ##   "response_options": Array (optional player responses),
 ##   "message_type": String (optional: "docking_approved", "docking_denied", etc.)
 ## }
+signal hail_received(sender:Node, recipient:Node, context:Dictionary)
 signal comm_message_received(message_data: Dictionary)
+signal comm_response_chosen(conversation_id, response_index: int, response: Dictionary)
+signal comm_conversation_closed(conversation_id)
 
 ## Emitted when a station approves docking for a ship
 ## station: The station granting permission

@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Star Loafer Economy Schema (Unified)",
+  "type": "object",
+
+  "definitions": {
+    "commodity": {
+      "type": "object",
+      "required": ["id", "name", "category", "base_price", "rarity", "tags", "legality"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "base_price": { "type": "number", "minimum": 0 },
+        "rarity": { "type": "string", "enum": ["common", "uncommon", "rare", "very_rare", "legendary"] },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "legality": { "type": "string", "enum": ["legal", "restricted", "illegal"] }
+      }
+    },
+
+    "econ_profile": {
+      "type": "object",
+      "required": ["id", "name", "category_modifiers"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category_modifiers": {
+          "type": "object",
+          "patternProperties": {
+            ".*": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+
+    "station_market": {
+      "type": "object",
+      "required": ["station_id", "econ_profile", "owner_faction", "inventory_bias", "v2_overrides"],
+      "properties": {
+        "station_id": { "type": "string" },
+        "econ_profile": { "type": "string" },
+        "owner_faction": { "type": "string" },
+        "inventory_bias": {
+          "type": "object",
+          "properties": {
+            "common": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "rare": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "illegal_focus": { "type": "boolean" }
+          },
+          "required": ["common", "rare", "illegal_focus"]
+        },
+        "v2_overrides": {
+          "type": "object",
+          "properties": {
+            "shortages": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "surpluses": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["shortages", "surpluses"]
+        }
+      }
+    },
+
+    "black_market_profile": {
+      "type": "object",
+      "required": ["id", "name", "description", "category_modifiers", "tags", "reputation_effects"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category_modifiers": {
+          "type": "object",
+          "patternProperties": {
+            ".*": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "reputation_effects": {
+          "type": "object",
+          "properties": {
+            "criminal_positive": { "type": "number" },
+            "criminal_negative": { "type": "number" }
+          },
+          "required": ["criminal_positive", "criminal_negative"]
+        }
+      }
+    }
+  },
+
+  "oneOf": [
+    {
+      "description": "Commodities file",
+      "required": ["schema", "version", "commodities"],
+      "properties": {
+        "schema": { "const": "star_loafer.economy.commodities" },
+        "version": { "type": "number" },
+        "commodities": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/commodity" }
+        }
+      }
+    },
+    {
+      "description": "Economic profiles file",
+      "required": ["schema", "version", "profiles"],
+      "properties": {
+        "schema": { "const": "star_loafer.economy.econ_profiles" },
+        "version": { "type": "number" },
+        "profiles": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/econ_profile" }
+        }
+      }
+    },
+    {
+      "description": "Station markets file",
+      "required": ["schema", "version", "stations"],
+      "properties": {
+        "schema": { "const": "star_loafer.economy.station_markets" },
+        "version": { "type": "number" },
+        "stations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/station_market" }
+        }
+      }
+    },
+    {
+      "description": "Black market profiles file",
+      "required": ["schema", "version", "profiles"],
+      "properties": {
+        "schema": { "const": "star_loafer.economy.black_market_profiles" },
+        "version": { "type": "number" },
+        "profiles": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/black_market_profile" }
+        }
+      }
+    }
+  ]
+}

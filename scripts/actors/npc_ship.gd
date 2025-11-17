@@ -173,22 +173,34 @@ func _configure_ship_type(type: String) -> void:
 	shields_current = shields_max
 
 func _map_to_component_ship_type(npc_type: String) -> String:
-	"""Map NPC ship types to component system ship type IDs"""
-	# This maps your NPC ship_type strings to ship_types_v2.json IDs
+	"""Map NPC ship types to ship_types_v2.json IDs for the component system."""
 	match npc_type:
+		# Patrol / light combat
 		"patrol_corvette", "customs_frigate":
-			return "corvette_raptor"  # Use Raptor corvette from ship_types_v2.json
+			return "corvette_raptor"  # From ship_types_v2.json
+
+		"raider", "pirate_corvette":
+			return "corvette_sabre"
+
+		"merc_fighter":
+			return "scout_firefly"
+
+		"survey_ship":
+			return "surveyor_helios"
+
+		"scout_corvette":
+			return "scout_firefly"
+
+		# Heavier combatants
 		"military_destroyer", "assault_frigate":
 			return "destroyer_aurora"
-		"corporate_freighter", "hauler", "generic_freighter":
-			return "freighter_bulwark"  # Verify this exists
-		"raider", "pirate_corvette":
-			return "corvette_sabre"  # Fast attack variant
-		"merc_fighter":
-			return "scout_firefly"  # Closest equivalent
-		"survey_ship", "scout_corvette":
-			return "scout_firefly"
+
+		# Freight / hauler types
+		"corporate_freighter", "hauler", "generic_freighter", "independent_hauler":
+			return "freighter_oxen"
+
 		_:
+			print("WARN: NPC Type %s not mapped to hull, using generic stats", npc_type)
 			return ""  # No mapping - will use hardcoded stats
 
 func _set_ai_behavior(behavior: String) -> void:
@@ -205,30 +217,61 @@ func _set_ai_behavior(behavior: String) -> void:
 		_:
 			ai_state = AIState.PATROL
 
+func _get_content_db() -> Node:
+	if has_node("/root/ContentDb"):
+		return get_node("/root/ContentDb")
+	if has_node("/root/ContentDB"):
+		return get_node("/root/ContentDB")
+	return null
+
+
 func _load_ship_sprite() -> void:
-	"""Load ship sprite based on type and faction"""
+	"""Load ship sprite using ship_data and ContentDb/hull_visuals"""
 	if sprite == null:
 		return
-	
-	# Try to load faction-specific sprite
-	var sprite_path = "res://assets/ships/%s/%s.png" % [faction_id, ship_type]
-	
-	if !ResourceLoader.exists(sprite_path):
-		# Fallback to generic ship sprite
-		sprite_path = "res://assets/ships/generic/%s.png" % ship_type
-		print("\tError: Failed sprite path: ", sprite_path)
-		sprite_path = "res://assets/images/actors/ships/junker_corsair.png"
-	
+
+	var sprite_path: String = ""
+
+	# 1) Prefer explicit sprite_path from ship_data (set by NPCSpawner or other factories)
+	if ship_data.has("sprite_path"):
+		sprite_path = str(ship_data["sprite_path"])
+
+	# 2) If no explicit path, try ContentDb based on ship_type and optional variant
+	if sprite_path == "":
+		var content_db := _get_content_db()
+		if content_db != null and content_db.has_method("get_ship_sprite_info"):
+			var requested_variant := int(ship_data.get("sprite_variant", -1))
+			var info: Dictionary = content_db.get_ship_sprite_info(ship_type, requested_variant)
+			sprite_path = str(info.get("path", ""))
+			ship_data["sprite_type"] = info.get("sprite_type", ship_type)
+			ship_data["sprite_variant"] = info.get("variant", 1)
+
+	# 3) Last-resort fallback: build a path from ship_type and variant
+	if sprite_path == "":
+		var sprite_type := ship_type
+		if ship_data.has("sprite_type"):
+			sprite_type = str(ship_data["sprite_type"])
+
+		var variant := int(ship_data.get("sprite_variant", 1))
+		if variant < 1:
+			variant = 1
+		if variant > 99:
+			variant = 99
+
+		sprite_path = "res://assets/images/actors/ships/{type}_{variant}.png".format({
+			"type": sprite_type,
+			"variant": "%02d" % variant,
+		})
+
+	# Final load
 	if ResourceLoader.exists(sprite_path):
 		sprite.texture = load(sprite_path)
 	else:
-		# Placeholder
 		var placeholder = PlaceholderTexture2D.new()
 		placeholder.size = Vector2(64, 64)
 		sprite.texture = placeholder
-		
-		# Color by faction type
 		sprite.modulate = _get_faction_color()
+
 
 func _get_faction_color() -> Color:
 	"""Get color tint for faction (placeholder visual)"""

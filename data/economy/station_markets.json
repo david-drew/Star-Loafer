@@ -1,0 +1,62 @@
+{
+  "schema": "star_loafer.economy.station_markets",
+  "version": 1,
+  "stations": [
+    {
+      "station_id": "st_alpha_prime",
+      "econ_profile": "industrial",
+      "owner_faction": "federation",
+      "inventory_bias": {
+        "common": ["microchips", "ore_iron", "ore_titanium"],
+        "rare": ["weapons_smallarms"],
+        "illegal_focus": false
+      },
+      "v2_overrides": {
+        "shortages": [],
+        "surpluses": []
+      }
+    },
+    {
+      "station_id": "st_mine_vesta",
+      "econ_profile": "mining",
+      "owner_faction": "mining_guild",
+      "inventory_bias": {
+        "common": ["ore_iron", "ore_titanium"],
+        "rare": ["medkits"],
+        "illegal_focus": false
+      },
+      "v2_overrides": {
+        "shortages": ["medkits"],
+        "surpluses": ["ore_iron"]
+      }
+    },
+    {
+      "station_id": "st_greenharbor",
+      "econ_profile": "agri",
+      "owner_faction": "frontier_union",
+      "inventory_bias": {
+        "common": ["grain_bulk", "food_basic"],
+        "rare": ["luxury_spirits"],
+        "illegal_focus": false
+      },
+      "v2_overrides": {
+        "shortages": [],
+        "surpluses": ["grain_bulk", "food_basic"]
+      }
+    },
+    {
+      "station_id": "st_black_sun_den",
+      "econ_profile": "frontier",
+      "owner_faction": "black_sun_cartel",
+      "inventory_bias": {
+        "common": ["medkits", "microchips"],
+        "rare": ["weapons_smallarms"],
+        "illegal_focus": true
+      },
+      "v2_overrides": {
+        "shortages": ["narcotics_a"],
+        "surpluses": ["weapons_smallarms"]
+      }
+    }
+  ]
+}

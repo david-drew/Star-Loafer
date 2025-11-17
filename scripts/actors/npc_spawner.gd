@@ -110,22 +110,47 @@ func spawn_npcs_for_system(system_data: Dictionary, system_seed: int) -> void:
 
 func _spawn_single_npc(faction_id: String, ship_types: Array, rng: RandomNumberGenerator, index: int) -> void:
 	"""Spawn a single NPC ship"""
-	
+
 	# Select random ship type
 	var ship_type = ship_types[rng.randi_range(0, ship_types.size() - 1)]
-	
+
 	# Generate spawn position (random orbit around center)
 	var spawn_position = _generate_spawn_position(rng)
-	
+
 	# Generate patrol route
 	var patrol_route = _generate_patrol_route(spawn_position, rng)
-	
+
 	# Generate ship name
 	var ship_name = _generate_ship_name(faction_id, ship_type, index)
-	
+
 	# Determine AI behavior
 	var ai_behavior = _determine_ai_behavior(faction_id, ship_type, rng)
-	
+
+	# Resolve sprite info via ContentDb + hull_visuals
+	var sprite_type:String = ship_type
+	var sprite_variant := 1
+	var sprite_path := ""
+
+	var content_db := _get_content_db()
+	if content_db != null and content_db.has_method("get_ship_sprite_info"):
+		var info: Dictionary = content_db.get_ship_sprite_info(ship_type, -1)
+		sprite_type = str(info.get("sprite_type", ship_type))
+		sprite_variant = int(info.get("variant", 1))
+		sprite_path = str(info.get("path", ""))
+	else:
+		# Fallback: simple pattern with default variant
+		sprite_variant = rng.randi_range(1, 3)
+
+	if sprite_variant < 1:
+		sprite_variant = 1
+
+	if sprite_path == "":
+		var vars = {
+			"type": sprite_type,
+			"variant": "%02d" % sprite_variant,
+		}
+		sprite_path = "res://assets/images/actors/ships/{type}_{variant}.png".format(vars)
+
 	# Create ship data
 	var ship_data = {
 		"id": "npc:%s:%d" % [faction_id, index],
@@ -134,15 +159,19 @@ func _spawn_single_npc(faction_id: String, ship_types: Array, rng: RandomNumberG
 		"name": ship_name,
 		"spawn_position": spawn_position,
 		"patrol_route": patrol_route,
-		"ai_behavior": ai_behavior
+		"ai_behavior": ai_behavior,
+		"sprite_type": sprite_type,
+		"sprite_variant": sprite_variant,
+		"sprite_path": sprite_path,
 	}
-	
+
 	# Instance and initialize ship
 	var npc_ship = npc_ship_scene.instantiate()
 	npc_container.add_child(npc_ship)
 	npc_ship.initialize(ship_data)
-	
+
 	spawned_npcs.append(npc_ship)
+
 
 func _generate_spawn_position(rng: RandomNumberGenerator) -> Vector2:
 	"""Generate a random spawn position in the system"""
@@ -312,3 +341,10 @@ func get_npcs_by_faction(faction_id: String) -> Array:
 			faction_npcs.append(npc)
 	
 	return faction_npcs
+
+func _get_content_db() -> Node:
+	if has_node("/root/ContentDb"):
+		return get_node("/root/ContentDb")
+	if has_node("/root/ContentDB"):
+		return get_node("/root/ContentDB")
+	return null

@@ -1,0 +1,96 @@
+{
+  "schema": "star_loafer.economy.commodities",
+  "version": 1,
+  "commodities": [
+    {
+      "id": "food_basic",
+      "name": "Basic Foodstuffs",
+      "category": "agri",
+      "base_price": 45,
+      "rarity": "common",
+      "tags": ["perishable"],
+      "legality": "legal"
+    },
+    {
+      "id": "grain_bulk",
+      "name": "Bulk Grain",
+      "category": "agri",
+      "base_price": 25,
+      "rarity": "common",
+      "tags": ["perishable", "bulk"],
+      "legality": "legal"
+    },
+    {
+      "id": "ore_iron",
+      "name": "Iron Ore",
+      "category": "mineral",
+      "base_price": 55,
+      "rarity": "common",
+      "tags": ["raw_material"],
+      "legality": "legal"
+    },
+    {
+      "id": "ore_titanium",
+      "name": "Titanium Ore",
+      "category": "mineral",
+      "base_price": 120,
+      "rarity": "uncommon",
+      "tags": ["raw_material"],
+      "legality": "legal"
+    },
+    {
+      "id": "microchips",
+      "name": "Microchips",
+      "category": "tech",
+      "base_price": 280,
+      "rarity": "uncommon",
+      "tags": ["refined", "high_value"],
+      "legality": "legal"
+    },
+    {
+      "id": "medkits",
+      "name": "Medical Supplies",
+      "category": "medical",
+      "base_price": 160,
+      "rarity": "uncommon",
+      "tags": ["consumable"],
+      "legality": "legal"
+    },
+    {
+      "id": "luxury_spirits",
+      "name": "Luxury Spirits",
+      "category": "luxury",
+      "base_price": 450,
+      "rarity": "rare",
+      "tags": ["luxury"],
+      "legality": "legal"
+    },
+    {
+      "id": "weapons_smallarms",
+      "name": "Small Arms",
+      "category": "weapons",
+      "base_price": 700,
+      "rarity": "rare",
+      "tags": ["restricted"],
+      "legality": "restricted"
+    },
+    {
+      "id": "narcotics_a",
+      "name": "Synth Narcotics A",
+      "category": "contraband",
+      "base_price": 850,
+      "rarity": "rare",
+      "tags": ["illegal", "high_risk"],
+      "legality": "illegal"
+    },
+    {
+      "id": "ancient_artifact_minor",
+      "name": "Minor Ancient Artifact",
+      "category": "artifact",
+      "base_price": 1200,
+      "rarity": "very_rare",
+      "tags": ["artifact", "dangerous"],
+      "legality": "illegal"
+    }
+  ]
+}

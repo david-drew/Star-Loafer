@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://nf1wcncatqan"]
+
+[ext_resource type="Script" uid="uid://c1varecc28eyh" path="res://scripts/ui/comm_panel.gd" id="1_q2fpo"]
+
+[node name="CommPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+script = ExtResource("1_q2fpo")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -80.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="HeaderBar" type="HBoxContainer" parent="Panel/VBox"]
+custom_minimum_size = Vector2(1000, 80)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="FromLabel" type="Label" parent="Panel/VBox/HeaderBar"]
+layout_mode = 2
+text = "From"
+
+[node name="ChannelLabel" type="Label" parent="Panel/VBox/HeaderBar"]
+layout_mode = 2
+text = "Channel"
+
+[node name="CloseButton" type="Button" parent="Panel/VBox/HeaderBar"]
+layout_mode = 2
+text = "Close"
+
+[node name="MessageText" type="RichTextLabel" parent="Panel/VBox"]
+custom_minimum_size = Vector2(800, 100)
+layout_mode = 2
+
+[node name="ResponsesContainer" type="VBoxContainer" parent="Panel/VBox"]
+custom_minimum_size = Vector2(800, 100)
+layout_mode = 2
+
+[node name="DebugLabel" type="Label" parent="Panel/VBox"]
+custom_minimum_size = Vector2(800, 50)
+layout_mode = 2
+text = "Debug"

@@ -36,17 +36,7 @@ var retrofit_hardpoint_caps: Dictionary = {
 	"per_class": 1
 }
 
-var warmup_defaults_s: Dictionary = {
-	"reactor": 5.0,
-	"drive": 2.0,
-	"shield": 1.5,
-	"weapon": 0.5,
-	"cloaking": 3.0,
-	"sensor": 0.5,
-	"computer": 0.5
-}
-
-var turn_inertia_factor: float = 1.0
+var turn_inertia_factor: float = 0.5		# TODO: DEBUG: 1.0
 
 var _current_stats: Dictionary = {}
 
@@ -71,8 +61,6 @@ func setup(db_ref: ComponentDB, hull_data: Dictionary, ship_db_ref: ShipTypeDB =
 			diminishing_returns = db.defaults["diminishing_returns"]
 		if db.defaults.has("retrofit_hardpoint_caps"):
 			retrofit_hardpoint_caps = db.defaults["retrofit_hardpoint_caps"]
-		if db.defaults.has("warmup_defaults_s"):
-			warmup_defaults_s = db.defaults["warmup_defaults_s"]
 		if db.defaults.has("turn_inertia_factor"):
 			turn_inertia_factor = float(db.defaults["turn_inertia_factor"])
 
@@ -381,6 +369,7 @@ func _recompute() -> void:
 	var sensor_strength := float(hull.get("sensor_strength", 0.0))
 	var cargo_capacity := int(hull.get("cargo_capacity", 0))
 	var speed_rating := float(hull.get("speed_rating", 0.0))
+	var maneuverability := float(hull.get("maneuverability", 5.0))  # Read maneuverability from hull
 	var range_au := float(hull.get("range_au", 0.0))
 
 	var signature := 0.0
@@ -548,6 +537,11 @@ func _recompute() -> void:
 		inertia = 1.0
 	if total_mass > 0.0:
 		turn_rate = torque / (total_mass * inertia)
+		# Apply maneuverability multiplier (normalized around 5.0)
+		turn_rate *= (maneuverability / 5.0)
+		# Safety clamp - ensure minimum playability
+		if turn_rate < 0.4:
+			turn_rate = 0.4
 
 	# Signature / stealth
 	if signature < 1.0:

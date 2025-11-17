@@ -1,0 +1,144 @@
+{
+  "schema": "star_loafer.hull_visuals.v1",
+  "defaults": {
+	"sprite_path_template": "res://assets/images/actors/ships/{type}_{variant}.png",
+	"num_variants": 3
+  },
+  "hulls": [
+	{
+	  "id": "hull_arkship_generation",
+	  "sprite_type": "arkship_generation",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_battleship_heavy",
+	  "sprite_type": "battleship_heavy",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_carrier_fleet",
+	  "sprite_type": "carrier_fleet",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_colony_ship",
+	  "sprite_type": "colony_ship",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_corvette_attack",
+	  "sprite_type": "corvette_attack",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_corvette_stealth",
+	  "sprite_type": "corvette_stealth",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_courier_fast",
+	  "sprite_type": "courier_fast",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_cruiser_heavy",
+	  "sprite_type": "cruiser_heavy",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_destroyer_fastline",
+	  "sprite_type": "destroyer_fastline",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_drone_defense",
+	  "sprite_type": "drone_defense",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_drone_recon",
+	  "sprite_type": "drone_recon",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_escort_defense",
+	  "sprite_type": "escort_defense",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_explorer_longrange",
+	  "sprite_type": "explorer_longrange",
+	  "num_variants": 1	
+	},
+	{
+	  "id": "hull_freighter_heavy",
+	  "sprite_type": "freighter_heavy",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_frigate_line",
+	  "sprite_type": "frigate_line",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_gunship_orbital",
+	  "sprite_type": "gunship_orbital",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_luxury_liner",
+	  "sprite_type": "luxury_liner",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_medical_frigate",
+	  "sprite_type": "medical_frigate",
+	  "num_variants": 1
+	},
+	{
+	  "id": "hull_mining_barge_heavy",
+	  "sprite_type": "mining_barge_heavy",
+	  "num_variants": 4
+	},
+	{
+	  "id": "hull_patrol_cutter",
+	  "sprite_type": "patrol_cutter",
+	  "num_variants": 2
+	},
+	{
+	  "id": "hull_research_medium",
+	  "sprite_type": "research_medium",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_salvager_medium",
+	  "sprite_type": "salvager_medium",
+	  "num_variants": 4
+	},
+	{
+	  "id": "hull_scout_light",
+	  "sprite_type": "scout_light",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_support_refueler",
+	  "sprite_type": "support_refueler",	
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_survey_small",
+	  "sprite_type": "survey_small",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_transport_liner",
+	  "sprite_type": "transport_liner",
+	  "num_variants": 3
+	},
+	{
+	  "id": "hull_tug_utility",
+	  "sprite_type": "tug_utility",
+	  "num_variants": 1
+	}
+  ]
+}

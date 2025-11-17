@@ -14,6 +14,8 @@ func initialize(data: Dictionary, index: int = 0) -> void:
 	star_id = data.get("id", "star:A")
 	name = star_id
 	
+	sprite = get_node("Sprite2D")
+	
 	# Position stars with offset if multiple (binary/trinary systems)
 	if index > 0:
 		position = Vector2(index * 1500, 0)  # Offset for binary/trinary
@@ -34,7 +36,6 @@ func initialize(data: Dictionary, index: int = 0) -> void:
 	])
 
 func _setup_sprite(data: Dictionary) -> void:
-	sprite = get_node("Sprite2D")
 	var sprite_path = data.get("sprite", "")
 	
 	# Try to load sprite asset
@@ -48,7 +49,6 @@ func _setup_sprite(data: Dictionary) -> void:
 	sprite.scale = Vector2.ONE * 1.5
 
 func _create_placeholder(star_class: String) -> void:
-	var sprite = get_node("Sprite2D")
 	# Create colored placeholder texture based on star class
 	sprite.texture = PlaceholderTexture2D.new()
 	sprite.texture.size = Vector2(1024, 1024)  # Stars are large
@@ -72,7 +72,6 @@ func _create_placeholder(star_class: String) -> void:
 		sprite.modulate = Color.YELLOW
 
 func _setup_light(data: Dictionary) -> void:
-	var sprite = get_node("Sprite2D")
 	var light = get_node("PointLight2D")
 	# Add glow effect
 	light.texture_scale = 5.0
@@ -81,7 +80,6 @@ func _setup_light(data: Dictionary) -> void:
 
 func set_lod_scale(scale_factor: float) -> void:
 	# Called by centralized LOD system
-	var sprite = get_node("Sprite2D")
 	sprite.scale = base_scale * scale_factor
 
 func get_star_data() -> Dictionary:

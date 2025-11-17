@@ -105,23 +105,34 @@ func _handle_input(delta: float) -> void:
 		velocity = velocity.normalized() * move_stats["max_speed"]
 
 func _get_movement_stats() -> Dictionary:
-	"""Get movement stats from component system or fallback to constants"""
+	"""Get movement stats from component system or fallback to constants."""
 	if use_component_stats and component_system != null:
 		var stats = component_system.get_current_stats()
+
+		var max_speed:float    = stats.get("speed_rating", 1.0) * 800.0
+		var acceleration:float = stats.get("acceleration", 0.1) * 1500.0
+		var turn_rate:float = stats.get("turn_rate", 2.0)
+		var mass:float = stats.get("mass_total", 40.0)
+
 		return {
-			"max_speed": stats.get("speed_rating", 1.0) * 800.0,  # Convert rating to pixels/sec
-			"acceleration": stats.get("acceleration", 0.1) * 1500.0,  # Scale to feel good
-			"turn_rate": stats.get("turn_rate", 2.0),
-			"mass": stats.get("mass_total", 40.0)
+			"max_speed": max_speed,
+			"acceleration": acceleration,
+			"turn_rate": turn_rate,
+			"mass": mass
 		}
 	else:
 		# Fallback to hardcoded constants
+		var fallback_turn_rate := ROTATION_SPEED
+		if fallback_turn_rate < 0.4:
+			fallback_turn_rate = 0.4
+
 		return {
 			"max_speed": MAX_SPEED,
 			"acceleration": ACCELERATION,
-			"turn_rate": ROTATION_SPEED,
+			"turn_rate": fallback_turn_rate,
 			"mass": 40.0  # Default mass
 		}
+
 
 func _apply_drag(delta: float) -> void:
 	# Proper drag: remove velocity proportional to current velocity
@@ -220,16 +231,20 @@ func get_ship_stats() -> Dictionary:
 			"turn_rate": ROTATION_SPEED
 		}
 
-
 func swap_ship_type(new_ship_type_id: String) -> void:
-	"""Change to a different ship type (for buying/selling ships)"""
+	"""Change to a different ship type (for buying/selling ships)."""
 	if component_system == null:
 		push_warning("PlayerShip: Cannot swap ship - no component system")
 		return
 	
 	ship_type_id = new_ship_type_id
-	component_system.init_from_ship_type(ship_type_id)
-	print("PlayerShip: Swapped to ship type '%s'" % ship_type_id)
+	var ok := component_system.init_from_ship_type(ship_type_id)
+	use_component_stats = ok
+
+	if ok:
+		print("PlayerShip: Swapped to ship type '%s' (component stats active)" % ship_type_id)
+	else:
+		push_warning("PlayerShip: Failed to init components for '%s', using hardcoded stats" % ship_type_id)
 
 
 func install_component(component_id: String) -> bool:

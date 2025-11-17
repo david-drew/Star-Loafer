@@ -53,6 +53,18 @@ func _ready() -> void:
 	_load_data_files()
 	set_process(true)
 
+	if Engine.is_editor_hint():
+		return
+
+	# Listen for docking events so we can speak when docking is approved/denied.
+	if EventBus.docking_approved.is_connected(_on_docking_approved) == false:
+		EventBus.docking_approved.connect(_on_docking_approved)
+	if EventBus.docking_denied.is_connected(_on_docking_denied) == false:
+		EventBus.docking_denied.connect(_on_docking_denied)
+
+	# Listen for player dialogue choices.
+	if EventBus.comm_response_chosen.is_connected(_on_comm_response_chosen) == false:
+		EventBus.comm_response_chosen.connect(_on_comm_response_chosen)
 
 func _process(delta: float) -> void:
 	_check_hail_timeouts(delta)
@@ -96,32 +108,59 @@ func _load_data_files() -> void:
 		push_warning("CommSystem: AI profiles file not found at %s" % profiles_path)
 
 
-## Initiate a hail from one entity to another
 func initiate_hail(initiator: Node, recipient: Node, hail_type: String = "general") -> int:
 	# Check if initiator can hail (cooldown check)
 	if not _can_initiate_hail(initiator):
 		return -1
-	
+
 	# Check if recipient can accept
 	if not _can_accept_hail(recipient):
 		_queue_hail(initiator, recipient, hail_type)
 		return -1
-	
+
 	# Build context
-	var context = build_comm_context(initiator, recipient)
-	context.hail_type = hail_type
-	
+	var context: Dictionary = build_comm_context(initiator, recipient)
+	context["hail_type"] = hail_type
+
 	# Create conversation
 	var conversation_id = _create_conversation(initiator, recipient, context)
-	
+	context["conversation_id"] = conversation_id
+	context["turn_index"] = 0
+
 	# Update cooldown
 	var initiator_id = _get_entity_id(initiator)
 	recent_hails[initiator_id] = Time.get_ticks_msec()
-	
-	# Emit signal
+
+	# Emit hail signal (gameplay can react if needed)
 	hail_received.emit(initiator, recipient, context)
-	
+
+	# Auto-generate an initial greeting from the recipient
+	var response_type: String = ""
+	var recipient_type: String = _get_entity_type(recipient)
+
+	if recipient_type == "station":
+		response_type = "station_greeting"
+	elif recipient_type == "player":
+		response_type = ""
+	else:
+		# Ships, NPCs, etc.
+		response_type = "npc_greeting"
+
+	if response_type != "":
+		var template: Dictionary = generate_response(recipient, context, response_type)
+		_emit_comm_message(
+			recipient,
+			initiator,
+			context,
+			template,
+			response_type,
+			conversation_id,
+			response_type,
+			"hail"
+		)
+
 	return conversation_id
+
 
 
 ## Build comprehensive context for a comm interaction
@@ -629,3 +668,194 @@ func _generate_fallback_response(response_type: String) -> Dictionary:
 		"options": [],
 		"context": {}
 	}
+
+func _build_message_data(
+	sender: Node,
+	recipient: Node,
+	context: Dictionary,
+	template: Dictionary,
+	template_category: String,
+	conversation_id,
+	message_type: String,
+	channel: String
+) -> Dictionary:
+	var msg: Dictionary = {}
+
+	# Conversation/thread
+	msg["conversation_id"] = conversation_id
+	msg["turn_index"] = context.get("turn_index", 0)
+
+	# Sender/recipient labels and ids
+	msg["from_label"] = _get_entity_name(sender)
+	msg["from_type"] = _get_entity_type(sender)
+	msg["from_id"] = _get_entity_id(sender)
+	msg["from_faction_id"] = context.get("sender_faction_id", "")
+
+	msg["to_label"] = _get_entity_name(recipient)
+	msg["to_type"] = _get_entity_type(recipient)
+	msg["to_id"] = _get_entity_id(recipient)
+	msg["to_faction_id"] = context.get("recipient_faction_id", "")
+
+	# Message classification
+	msg["channel"] = channel            # e.g. "hail", "docking", "threat", "broadcast"
+	msg["message_type"] = message_type  # e.g. "npc_greeting", "docking_approved"
+
+	msg["template_id"] = template.get("id", "")
+	msg["template_category"] = template_category
+
+	# Text & options
+	msg["text"] = template.get("text", "...")
+	msg["response_options"] = template.get("response_options", [])
+
+	# Simple UI hints (optional)
+	msg["icon_hint"] = context.get("icon_hint", msg["from_type"])
+	msg["importance"] = context.get("importance", "info")
+
+	# Timeout / ignore behavior (optional)
+	msg["timeout_seconds"] = template.get("timeout_seconds", 0.0)
+	msg["can_be_ignored"] = template.get("can_be_ignored", true)
+	msg["ignore_consequences"] = template.get("ignore_consequences", {})
+
+	# Attach context snapshot for debugging/future use
+	msg["context"] = context.duplicate(true)
+
+	return msg
+
+func _emit_comm_message(
+	sender: Node,
+	recipient: Node,
+	context: Dictionary,
+	template: Dictionary,
+	template_category: String,
+	conversation_id,
+	message_type: String,
+	channel: String
+) -> void:
+	if template.is_empty():
+		return
+
+	var message_data := _build_message_data(
+		sender,
+		recipient,
+		context,
+		template,
+		template_category,
+		conversation_id,
+		message_type,
+		channel
+	)
+
+	EventBus.comm_message_received.emit(message_data)
+
+	# If you still use CommSystem's own signal, mirror it here.
+	if has_signal("response_generated"):
+		response_generated.emit(conversation_id, message_data)
+
+func _on_docking_approved(station: Node, ship: Node, bay_id) -> void:
+	var context: Dictionary = build_comm_context(station, ship)
+	context["docking_result"] = "approved"
+	context["docking_bay_id"] = bay_id
+	context["conversation_id"] = -1
+	context["turn_index"] = 0
+
+	var category := "docking_approved"
+	var template: Dictionary = generate_response(station, context, category)
+
+	_emit_comm_message(
+		station,
+		ship,
+		context,
+		template,
+		category,
+		-1,
+		category,
+		"docking"
+	)
+
+
+func _on_docking_denied(station: Node, ship: Node, reason: String) -> void:
+	var context: Dictionary = build_comm_context(station, ship)
+	context["docking_result"] = "denied"
+	context["docking_denial_reason"] = reason
+	context["conversation_id"] = -1
+	context["turn_index"] = 0
+
+	var category := "docking_denied"
+	var template: Dictionary = generate_response(station, context, category)
+
+	_emit_comm_message(
+		station,
+		ship,
+		context,
+		template,
+		category,
+		-1,
+		category,
+		"docking"
+	)
+
+func _get_conversation_by_id(conversation_id: int) -> Dictionary:
+	for conv in active_conversations:
+		if conv.id == conversation_id:
+			return conv
+	return {}
+
+func _on_comm_response_chosen(conversation_id, response_index: int, response: Dictionary) -> void:
+	# If the response doesn't define any follow-up, there's nothing to do.
+	if not response.has("leads_to_category") and not response.has("leads_to_template_id"):
+		return
+
+	# Normalize conversation_id to int if it's coming in as a string
+	if typeof(conversation_id) != TYPE_INT:
+		conversation_id = int(conversation_id)
+
+	if conversation_id < 0:
+		return
+
+	# Look up the conversation in active_conversations
+	var conv: Dictionary = _get_conversation_by_id(conversation_id)
+	if conv.is_empty():
+		return
+
+	var initiator: Node = conv.initiator
+	var recipient: Node = conv.recipient
+	var context: Dictionary = conv.context
+
+	# Bump turn index and keep it in context
+	var turn_index: int = 0
+	if context.has("turn_index"):
+		turn_index = int(context["turn_index"])
+	context["turn_index"] = turn_index + 1
+	context["conversation_id"] = conversation_id
+
+	# Decide what category/template to go to next
+	var follow_category: String = ""
+	if response.has("leads_to_category"):
+		follow_category = str(response["leads_to_category"])
+
+	# (Optional) direct template id support if you add that later:
+	# if follow_category == "" and response.has("leads_to_template_id"):
+	#     follow_category = str(response["leads_to_template_id"])
+
+	if follow_category == "":
+		return
+
+	# Generate a follow-up from the same responder (recipient speaks again)
+	var template: Dictionary = generate_response(recipient, context, follow_category)
+
+	_emit_comm_message(
+		recipient,
+		initiator,
+		context,
+		template,
+		follow_category,      # template_category
+		conversation_id,
+		follow_category,      # message_type
+		"hail"                # channel
+	)
+
+	# Optional: write updated context back into the active_conversations array
+	for i in range(active_conversations.size()):
+		if active_conversations[i].id == conversation_id:
+			active_conversations[i].context = context
+			break

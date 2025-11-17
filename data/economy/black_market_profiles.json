@@ -1,0 +1,53 @@
+{
+  "schema": "star_loafer.economy.black_market_profiles",
+  "version": 1,
+  "profiles": [
+    {
+      "id": "cartel_standard",
+      "name": "Cartel Standard Market",
+      "description": "Common criminal syndicate pricing. High prices for illegal goods, slightly lower buy prices for the player.",
+      "category_modifiers": {
+        "contraband": 0.8,
+        "weapons": 0.9,
+        "luxury": 1.1,
+        "artifact": 1.0
+      },
+      "tags": ["smuggling", "criminal"],
+      "reputation_effects": {
+        "criminal_positive": 0.9,
+        "criminal_negative": 1.4
+      }
+    },
+    {
+      "id": "cartel_premium",
+      "name": "Cartel Premium Exchange",
+      "description": "High-risk, high-reward smuggler hub. Very high prices for rare illegal goods.",
+      "category_modifiers": {
+        "contraband": 0.6,
+        "weapons": 0.8,
+        "luxury": 1.0,
+        "artifact": 0.7
+      },
+      "tags": ["smuggling", "high_value", "dangerous"],
+      "reputation_effects": {
+        "criminal_positive": 0.7,
+        "criminal_negative": 1.8
+      }
+    },
+    {
+      "id": "artifact_shadow_market",
+      "name": "Shadow Artifact Market",
+      "description": "Secretive network dealing in ancient artifacts. High sale value, extremely risky.",
+      "category_modifiers": {
+        "artifact": 0.4,
+        "contraband": 1.1,
+        "luxury": 1.2
+      },
+      "tags": ["artifact", "dangerous", "illegal", "secret"],
+      "reputation_effects": {
+        "criminal_positive": 0.8,
+        "criminal_negative": 1.6
+      }
+    }
+  ]
+}

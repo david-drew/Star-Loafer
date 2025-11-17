@@ -14,13 +14,14 @@ const ROTATION_ALIGN_SPEED = 2.0  # Radians per second for alignment
 
 # Signals
 signal docking_requested(ship: Node, station: Node)
-signal docking_approved(ship: Node, station: Node, bay_id: int)
-signal docking_denied(ship: Node, station: Node, reason: String)
+signal docking_approved(station: Node, ship: Node, bay_id: int)
+signal docking_denied(station: Node, ship: Node, reason: String)
 signal docking_started(ship: Node, station: Node)
 signal docking_complete(ship: Node, station: Node)
 signal docking_cancelled(ship: Node, station: Node, reason: String)
 signal undocking_started(ship: Node, station: Node)
 signal undocking_complete(ship: Node, station: Node)
+
 
 
 func _ready() -> void:

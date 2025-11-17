@@ -37,6 +37,13 @@ var _by_id: Dictionary = {}
 var _aliases: Dictionary = {}
 var defaults: Dictionary = {}
 
+const COMPONENT_SPRITE_PATH_TEMPLATE := "res://assets/images/ui/components/{type}_{variant}.png"
+
+var _sprite_defaults: Dictionary = {
+	"path_template": COMPONENT_SPRITE_PATH_TEMPLATE,
+	"num_variants": 1,
+}
+
 
 func _ready() -> void:
 	load_all("res://data/components/components.json")
@@ -78,6 +85,14 @@ static func _canonicalize_id(id: String) -> String:
 	# Fallback: unknown format, return as-is
 	return s
 
+static func _derive_sprite_type_from_id(canon_id: String) -> String:
+	# Convert canonical id like "reactor__fission_mk1" into "reactor_fission_mk1"
+	var s := canon_id
+	s = s.replace("/", "_")
+	s = s.replace("__", "_")
+	return s
+
+
 func load_all(json_path: String) -> void:
 	_by_id.clear()
 	_aliases.clear()
@@ -99,6 +114,23 @@ func load_all(json_path: String) -> void:
 	# Load defaults if present
 	if data.has("defaults") and typeof(data["defaults"]) == TYPE_DICTIONARY:
 		defaults = data["defaults"]
+
+	# Load defaults if present
+	if data.has("defaults") and typeof(data["defaults"]) == TYPE_DICTIONARY:
+		defaults = data["defaults"]
+
+	# Load sprite defaults if present
+	if data.has("sprite_defaults") and typeof(data["sprite_defaults"]) == TYPE_DICTIONARY:
+		var sd: Dictionary = data["sprite_defaults"]
+		_sprite_defaults = {
+			"path_template": str(sd.get("path_template", COMPONENT_SPRITE_PATH_TEMPLATE)),
+			"num_variants": int(sd.get("num_variants", 1)),
+		}
+	else:
+		_sprite_defaults = {
+			"path_template": COMPONENT_SPRITE_PATH_TEMPLATE,
+			"num_variants": 1,
+		}
 
 	# Resolve component array key: new 'components' or legacy 'component_types'
 	var comp_array: Array = []
@@ -359,6 +391,65 @@ func get_random_component(filters: Dictionary, rng: RandomNumberGenerator = null
 	var idx := local_rng.randi_range(0, candidates.size() - 1)
 	var comp: Dictionary = candidates[idx]
 	return comp
+
+func get_component_sprite_info(id_in: String, variant: int = 1) -> Dictionary:
+	# Returns:
+	# {
+	#   "type": "reactor_fission_mk1",
+	#   "variant": 1,
+	#   "path": "res://assets/images/ui/components/reactor_fission_mk1_01.png"
+	# }
+	var def := get_def(id_in)
+	if def.is_empty():
+		return {}
+
+	var canon_id: String = str(def.get("id", ""))
+	var sprite_data: Dictionary = {}
+	if def.has("sprite") and typeof(def["sprite"]) == TYPE_DICTIONARY:
+		sprite_data = def["sprite"]
+
+	var sprite_type := ""
+	if sprite_data.has("type"):
+		sprite_type = str(sprite_data["type"])
+	else:
+		sprite_type = _derive_sprite_type_from_id(canon_id)
+
+	var num_variants: int = 1
+	if sprite_data.has("num_variants"):
+		num_variants = int(sprite_data["num_variants"])
+	else:
+		num_variants = int(_sprite_defaults.get("num_variants", 1))
+
+	if num_variants < 1:
+		num_variants = 1
+
+	var v := int(variant)
+	if v < 1:
+		v = 1
+	if v > num_variants:
+		v = num_variants
+
+	var pattern: String = COMPONENT_SPRITE_PATH_TEMPLATE
+	if sprite_data.has("path_template"):
+		pattern = str(sprite_data["path_template"])
+	else:
+		pattern = str(_sprite_defaults.get("path_template", COMPONENT_SPRITE_PATH_TEMPLATE))
+
+	var path := pattern.format({
+		"type": sprite_type,
+		"variant": "%02d" % v,
+	})
+
+	return {
+		"type": sprite_type,
+		"variant": v,
+		"path": path,
+	}
+
+
+func get_component_sprite_path(id_in: String, variant: int = 1) -> String:
+	var info := get_component_sprite_info(id_in, variant)
+	return info.get("path", "")
 
 
 # -------------------------------------------------------------------
