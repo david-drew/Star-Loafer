@@ -218,5 +218,252 @@
       "type": "hazard_collection",
       "summary": "Collect stellar material during flares."
     }
+  ],
+
+  "ashen_crown_missions": [
+    {
+      "id": "ac_smuggler_corridor_run",
+      "type": "smuggling",
+      "summary": "Run a high-risk cargo through a contested smuggler corridor while evading patrols."
+    },
+    {
+      "id": "ac_outlaw_dispute_mediation",
+      "type": "diplomacy",
+      "summary": "Broker a tense ceasefire between rival Ashen Crown captains before the confederacy fractures."
+    },
+    {
+      "id": "ac_frontier_convoy_guard",
+      "type": "escort",
+      "summary": "Escort a mixed convoy of outlaw-friendly traders through pirate-prone routes."
+    },
+    {
+      "id": "ac_clean_slate_repossession",
+      "type": "strike",
+      "summary": "Hit a corrupt creditor's depot to recover seized ships and wipe local debts."
+    },
+    {
+      "id": "ac_ghost_port_supply_drop",
+      "type": "delivery",
+      "summary": "Deliver emergency supplies to a hidden Crown-friendly port cut off by major faction blockades."
+    }
+  ],
+
+  "bioforge_syndicate_missions": [
+    {
+      "id": "bf_specimen_retrieval_run",
+      "type": "research",
+      "summary": "Secure and transport volatile bio-specimens from a hazardous site to a Bioforge lab."
+    },
+    {
+      "id": "bf_quiet_clinical_trial",
+      "type": "covert_support",
+      "summary": "Protect an unregistered field trial of experimental augmentations from regulators and saboteurs."
+    },
+    {
+      "id": "bf_outbreak_containment",
+      "type": "hazard_control",
+      "summary": "Respond to a biotech spill on a frontier station before it mutates out of control."
+    },
+    {
+      "id": "bf_supply_chain_cleanse",
+      "type": "investigation",
+      "summary": "Trace and neutralize a counterfeit bio-product ring damaging the Syndicate’s reputation."
+    },
+    {
+      "id": "bf_gene_seed_smuggling",
+      "type": "smuggling",
+      "summary": "Slip restricted gene-seed packages past customs for a desperate colony in famine."
+    }
+  ],
+
+  "wandering_cicada_fleet_missions": [
+    {
+      "id": "wc_fleet_resupply_run",
+      "type": "delivery",
+      "summary": "Acquire fuel, food, and spare parts for the flotilla and deliver them across shifting rendezvous points."
+    },
+    {
+      "id": "wc_child_of_the_fleet_escort",
+      "type": "escort",
+      "summary": "Escort an unarmed generation-ship segment through pirate-haunted space."
+    },
+    {
+      "id": "wc_drift_salvage_contract",
+      "type": "salvage",
+      "summary": "Help recover valuable scrap and relics from a wreck drifting near dangerous anomalies."
+    },
+    {
+      "id": "wc_customs_complication",
+      "type": "diplomacy",
+      "summary": "Smooth over a docking dispute where port authorities are refusing entry to key fleet vessels."
+    },
+    {
+      "id": "wc_oral_history_retrieval",
+      "type": "exploration",
+      "summary": "Visit former fleet-friendly ports and recover lost stories, logs, and keepsakes for the elders."
+    }
+  ],
+
+  "helios_academic_league_missions": [
+    {
+      "id": "ha_anomaly_survey",
+      "type": "research",
+      "summary": "Scout and scan a newly detected spatial anomaly so Helios teams can study it safely."
+    },
+    {
+      "id": "ha_scholar_ship_escort",
+      "type": "escort",
+      "summary": "Guard a lightly armed research vessel en route to a contested relic site."
+    },
+    {
+      "id": "ha_data_archive_recovery",
+      "type": "salvage",
+      "summary": "Recover damaged data cores from an abandoned university outpost before scavengers strip it."
+    },
+    {
+      "id": "ha_peer_review_dispute",
+      "type": "diplomacy",
+      "summary": "Mediate a bitter conflict between rival research teams over ownership of key findings."
+    },
+    {
+      "id": "ha_field_lab_setup",
+      "type": "logistics",
+      "summary": "Deliver specialized equipment and help establish a temporary field lab on a hazardous world."
+    }
+  ],
+
+  "emberline_credit_union_missions": [
+    {
+      "id": "ec_debt_restructuring_run",
+      "type": "diplomacy",
+      "summary": "Negotiate with a struggling colony to restructure debts without handing them to predatory lenders."
+    },
+    {
+      "id": "ec_loan_collateral_inspection",
+      "type": "inspection",
+      "summary": "Inspect a remote mining operation to verify its assets before Emberline approves a major loan."
+    },
+    {
+      "id": "ec_convoy_insurance_escort",
+      "type": "escort",
+      "summary": "Escort a high-value insured cargo convoy through a region known for 'accidental' losses."
+    },
+    {
+      "id": "ec_fraudulent_ledger_hunt",
+      "type": "investigation",
+      "summary": "Uncover and stop a fraud ring falsifying manifests and policy claims against Emberline."
+    }
+  ],
+
+  "auric_nomad_clade_missions": [
+    {
+      "id": "anc_luxury_caravan_guard",
+      "type": "escort",
+      "summary": "Guard a gleaming caravan of luxury barges crossing a volatile trade spur."
+    },
+    {
+      "id": "anc_exclusive_contract_negotiation",
+      "type": "diplomacy",
+      "summary": "Secure exclusive shipping rights to a new rich system before rival cartels move in."
+    },
+    {
+      "id": "anc_counterfeit_crackdown",
+      "type": "investigation",
+      "summary": "Track down counterfeit luxury goods undermining the Clade’s brand and profits."
+    },
+    {
+      "id": "anc_auction_delivery",
+      "type": "delivery",
+      "summary": "Deliver rare artifacts and high-end tech in time for a high-stakes auction at a neutral port."
+    },
+    {
+      "id": "anc_caravan_festival_support",
+      "type": "logistics",
+      "summary": "Help set up a roaming market-festival, managing docking, stalls, and security for the event."
+    }
+  ],
+
+  "okeanos_tidekin_missions": [
+    {
+      "id": "ok_subsea_salvage_contract",
+      "type": "salvage",
+      "summary": "Assist Tidekin divers in recovering wreckage from the crushing depths of an ocean world."
+    },
+    {
+      "id": "ok_pollution_response",
+      "type": "hazard_control",
+      "summary": "Contain and clean an orbital spill before it contaminates Okeanos waters below."
+    },
+    {
+      "id": "ok_pressure_hab_deployment",
+      "type": "logistics",
+      "summary": "Deliver and help install pressure-rated habitat modules on a storm-wracked sea colony."
+    },
+    {
+      "id": "ok_poacher_interdiction",
+      "type": "patrol",
+      "summary": "Track and drive off deep-sea poachers targeting protected biota."
+    },
+    {
+      "id": "ok_surface_treaty_mediation",
+      "type": "diplomacy",
+      "summary": "Mediate a tense dispute between surface administrators and Tidekin enclaves over mining rights."
+    }
+  ],
+
+  "chromewarden_collective_missions": [
+    {
+      "id": "cw_emergency_response_callout",
+      "type": "rescue",
+      "summary": "Respond to a distress call where a station’s defenses and life support are failing simultaneously."
+    },
+    {
+      "id": "cw_secure_implant_chain",
+      "type": "investigation",
+      "summary": "Hunt down compromised cybernetic implants before a hostile actor can activate them."
+    },
+    {
+      "id": "cw_perimeter_shield_contract",
+      "type": "defense_setup",
+      "summary": "Deploy and calibrate defensive systems to protect a vulnerable community from incoming threats."
+    },
+    {
+      "id": "cw_hive_link_extension",
+      "type": "logistics",
+      "summary": "Transport and defend relay nodes that will extend the Collective’s secure comms mesh."
+    },
+    {
+      "id": "cw_rogue_augmented_apprehension",
+      "type": "bounty",
+      "summary": "Help subdue a dangerously unstable augmented fighter without lethal force if possible."
+    }
+  ],
+
+  "violet_mosaic_order_missions": [
+    {
+      "id": "vm_artifact_authentication",
+      "type": "investigation",
+      "summary": "Verify the provenance of artifacts at a shady auction and flag items tied to cultural theft."
+    },
+    {
+      "id": "vm_memory_caravan",
+      "type": "escort",
+      "summary": "Escort a convoy carrying irreplaceable records and artworks out of a conflict zone."
+    },
+    {
+      "id": "vm_heritage_site_evacuate",
+      "type": "rescue",
+      "summary": "Evacuate curators and key artifacts from a heritage site threatened by war or disaster."
+    },
+    {
+      "id": "vm_false_history_exposure",
+      "type": "covert_support",
+      "summary": "Gather evidence to expose a faction’s falsified historical narrative without triggering open conflict."
+    },
+    {
+      "id": "vm_culture_bridge_mediation",
+      "type": "diplomacy",
+      "summary": "Act as neutral intermediaries in a dispute rooted in cultural misunderstanding between two factions."
+    }
   ]
 }

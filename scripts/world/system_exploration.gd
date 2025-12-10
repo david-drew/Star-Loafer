@@ -259,6 +259,10 @@ func _spawn_station(station_data: Dictionary) -> void:
 	station_data["position"] = position
 	stellar_bodies.add_child(station)
 	station.initialize(station_data)
+	if !station.has_meta("base_scale"):
+		var sprite: Sprite2D = station.get_node_or_null("Sprite2D")
+		if sprite:
+			station.set_meta("base_scale", sprite.scale)
 
 func _spawn_npcs() -> void:
 	if npc_spawner == null:

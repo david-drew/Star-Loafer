@@ -1,0 +1,28 @@
+# ~/.codex/config.toml
+
+model = "gpt-5-codex"
+
+# Let Codex read core project docs first
+project_doc_max_bytes = 32768
+project_doc_fallback_filenames = [
+  "docs/PROJECT_OVERVIEW.md",
+  "docs/ARCHITECTURE.md",
+  "docs/SYSTEMS_Time_and_Ticks.md",
+  "docs/SYSTEMS_Economy_and_Trade.md",
+  "docs/SYSTEMS_Procgen_and_Streaming.md",
+  "docs/SYSTEMS_Ship_Components_and_Ship_Types.md",
+  "docs/SYSTEMS_Comms_and_Docking.md",
+  "docs/SYSTEMS_Factions_and_Reputation.md",
+  "docs/SYSTEMS_AI_and_Agents.md",
+  "docs/SYSTEMS_UI_and_Input.md",
+  "docs/SYSTEMS_Save_and_Scene_Flow.md",
+  "docs/DATA_SCHEMAS.md",
+  "docs/WORKFLOWS_Adding_a_New_Ship_Type.md",
+  "docs/WORKFLOWS_Adding_or_Modifying_Ship_Components.md",
+  "docs/WORKFLOWS_Adding_a_New_Mission.md",
+  "docs/CONTRIBUTING_OR_CODING_STANDARDS.md"
+]
+
+# Mark the current project as trusted for Codex CLI
+[projects."C:/Users/David/Documents/Godot4/star_loafer_v6"]
+trust_level = "trusted"

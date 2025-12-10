@@ -66,13 +66,13 @@ func _exit_tree() -> void:
 		ai_manager.call("unregister_agent", self)
 
 func _load_configs() -> void:
-	if RoleDB != null and RoleDB.has_role(role_id):
-		_role_config = RoleDB.get_role(role_id)
+	if get_tree().root.has_node("RoleDb") and RoleDb.has_role(role_id):
+		_role_config = RoleDb.get_role(role_id)
 	else:
 		_role_config = {}
 
-	if PersonalityDB != null and PersonalityDB.has_profile(personality_id):
-		_personality = PersonalityDB.get_profile(personality_id)
+	if PersonalityDb != null and PersonalityDb.has_profile(personality_id):
+		_personality = PersonalityDb.get_profile(personality_id)
 	else:
 		_personality = {}
 
@@ -228,7 +228,7 @@ func _do_guard(delta: float) -> void:
 	# Stay near a guard center; maybe orbit.
 	if ship_agent == null:
 		return
-	var center_node := blackboard.get("guard_target", null)
+	var center_node:Variant = blackboard.get("guard_target", null)
 	if center_node != null and center_node is Node2D:
 		ship_agent.set_orbit_target(center_node, 300.0)
 	else:
@@ -246,7 +246,7 @@ func _do_hunt(delta: float) -> void:
 func _do_escort(delta: float) -> void:
 	if ship_agent == null:
 		return
-	var leader := blackboard.get("escort_leader", null)
+	var leader:Variant = blackboard.get("escort_leader", null)
 	if leader == null or not (leader is Node2D):
 		ship_agent.clear_movement()
 		return
@@ -257,11 +257,11 @@ func _do_escort(delta: float) -> void:
 func _do_engage(delta: float) -> void:
 	if ship_agent == null:
 		return
-	var target := blackboard.get("current_target", null)
+	var target:Variant = blackboard.get("current_target", null)
 	if target == null or not (target is Node2D):
 		return
 
-	var preferred_ranges := _role_config.get("preferred_ranges", {"min": 200, "max": 600})
+	var preferred_ranges:Dictionary = _role_config.get("preferred_ranges", {"min": 200, "max": 600})
 	var min_range: float = float(preferred_ranges.get("min", 200))
 	var max_range: float = float(preferred_ranges.get("max", 600))
 
@@ -269,7 +269,7 @@ func _do_engage(delta: float) -> void:
 	if owner_node == null:
 		return
 
-	var distance := owner_node.global_position.distance_to(target.global_position)
+	var distance:float = owner_node.global_position.distance_to(target.global_position)
 
 	if distance > max_range:
 		ship_agent.set_move_target(target.global_position)
@@ -285,7 +285,7 @@ func _do_engage(delta: float) -> void:
 func _do_flee(delta: float) -> void:
 	if ship_agent == null:
 		return
-	var threat_target := _pick_main_threat()
+	var threat_target:Variant = _pick_main_threat()
 	var owner_node := owner
 	if owner_node == null:
 		return
@@ -299,7 +299,7 @@ func _do_flee(delta: float) -> void:
 			ship_agent.set_move_target(escape_point)
 		else:
 			# Default: move along +X.
-			var pos := owner_node.global_position
+			var pos:Vector2 = owner_node.global_position
 			ship_agent.set_move_target(pos + Vector2.RIGHT * flee_distance)
 
 func _do_call_for_help(delta: float) -> void:
@@ -338,7 +338,7 @@ func _do_wander(delta: float) -> void:
 func _do_study_anomaly(delta: float) -> void:
 	if ship_agent == null:
 		return
-	var anomaly := blackboard.get("anomaly_target", null)
+	var anomaly:Variant = blackboard.get("anomaly_target", null)
 	if anomaly != null and anomaly is Node2D:
 		ship_agent.set_orbit_target(anomaly, 500.0)
 	else:
@@ -417,6 +417,25 @@ func _pick_main_threat() -> Dictionary:
 func _blackboard_has_threat() -> bool:
 	var threats: Array = blackboard.get("threat_targets", [])
 	return not threats.is_empty()
+
+func _has_route_assignment() -> bool:
+	if not blackboard.has("route"):
+		return false
+	if not (blackboard["route"] is Array):
+		return false
+
+	var route: Array = blackboard["route"]
+	if route.is_empty():
+		return false
+
+	if not blackboard.has("route_index"):
+		return false
+
+	var idx: int = int(blackboard["route_index"])
+	if idx < 0 or idx >= route.size():
+		return false
+
+	return true
 
 func _wants_to_engage() -> bool:
 	var aggression: float = float(_personality.get("aggression", 0.5))

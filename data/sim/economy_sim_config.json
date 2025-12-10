@@ -1,0 +1,152 @@
+{
+  "_comment": "Economy Simulator Configuration",
+  "_description": "Controls production, consumption, and random economic events",
+  
+  "production_multiplier": 1.0,
+  "consumption_multiplier": 1.0,
+  "enable_random_events": true,
+  "event_chance_per_tick": 0.05,
+  
+  "production_profiles": {
+    "mining": {
+      "ore_iron": 50.0,
+      "ore_titanium": 25.0,
+      "ore_copper": 30.0,
+      "ore_rare": 5.0
+    },
+    "agricultural": {
+      "food_basic": 100.0,
+      "grain_bulk": 60.0,
+      "water": 80.0
+    },
+    "industrial": {
+      "components_basic": 40.0,
+      "microchips": 30.0,
+      "alloys": 35.0
+    },
+    "high_tech": {
+      "microchips": 60.0,
+      "components_advanced": 25.0,
+      "nanotech": 10.0
+    },
+    "refining": {
+      "alloys": 50.0,
+      "fuel_deuterium": 40.0,
+      "chemicals": 30.0
+    }
+  },
+  
+  "consumption_profiles": {
+    "mining": {
+      "food_basic": 30.0,
+      "water": 25.0,
+      "components_basic": 15.0
+    },
+    "agricultural": {
+      "food_basic": 10.0,
+      "water": 15.0,
+      "components_basic": 20.0
+    },
+    "industrial": {
+      "food_basic": 25.0,
+      "water": 20.0,
+      "ore_iron": 30.0,
+      "ore_copper": 15.0
+    },
+    "high_tech": {
+      "food_basic": 20.0,
+      "water": 18.0,
+      "components_basic": 25.0,
+      "alloys": 20.0
+    },
+    "refining": {
+      "food_basic": 20.0,
+      "water": 20.0,
+      "ore_iron": 40.0,
+      "ore_titanium": 20.0
+    }
+  },
+  
+  "random_events": [
+    {
+      "id": "bountiful_harvest",
+      "weight": 10,
+      "profiles": ["agricultural"],
+      "effects": {
+        "food_basic": {"type": "supply", "amount": 500},
+        "grain_bulk": {"type": "supply", "amount": 300}
+      },
+      "message": "Bountiful harvest increases food production"
+    },
+    {
+      "id": "mining_accident",
+      "weight": 5,
+      "profiles": ["mining"],
+      "effects": {
+        "ore_iron": {"type": "demand", "amount": -200},
+        "ore_titanium": {"type": "demand", "amount": -100}
+      },
+      "message": "Mining accident reduces ore output"
+    },
+    {
+      "id": "equipment_shortage",
+      "weight": 8,
+      "profiles": ["industrial", "high_tech"],
+      "effects": {
+        "components_basic": {"type": "demand", "amount": 300},
+        "microchips": {"type": "demand", "amount": 200}
+      },
+      "message": "Equipment shortage increases demand for components"
+    },
+    {
+      "id": "refinery_breakthrough",
+      "weight": 3,
+      "profiles": ["refining"],
+      "effects": {
+        "alloys": {"type": "supply", "amount": 400},
+        "fuel_deuterium": {"type": "supply", "amount": 300}
+      },
+      "message": "Refinery breakthrough boosts production"
+    },
+    {
+      "id": "plague_outbreak",
+      "weight": 2,
+      "profiles": ["agricultural", "mining", "industrial"],
+      "effects": {
+        "medkits": {"type": "demand", "amount": 400},
+        "food_basic": {"type": "demand", "amount": -150}
+      },
+      "message": "Disease outbreak increases medical demand and reduces food production"
+    },
+    {
+      "id": "tech_innovation",
+      "weight": 4,
+      "profiles": ["high_tech"],
+      "effects": {
+        "microchips": {"type": "supply", "amount": 350},
+        "nanotech": {"type": "supply", "amount": 150}
+      },
+      "message": "Technological breakthrough boosts high-tech production"
+    },
+    {
+      "id": "ore_vein_discovered",
+      "weight": 6,
+      "profiles": ["mining"],
+      "effects": {
+        "ore_rare": {"type": "supply", "amount": 200},
+        "ore_titanium": {"type": "supply", "amount": 300}
+      },
+      "message": "New ore vein discovered increases mining output"
+    },
+    {
+      "id": "crop_failure",
+      "weight": 4,
+      "profiles": ["agricultural"],
+      "effects": {
+        "food_basic": {"type": "demand", "amount": -250},
+        "grain_bulk": {"type": "demand", "amount": -200}
+      },
+      "message": "Crop failure reduces agricultural output"
+    }
+  ]
+}

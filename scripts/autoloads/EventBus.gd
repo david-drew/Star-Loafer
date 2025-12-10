@@ -1,6 +1,10 @@
 extends Node
 
-# === PHASE 0: CORE SIGNALS ===
+# Time Management
+signal time_sim_tick(hours_elapsed: float, ticks: int)
+signal time_big_jump(jump_hours: float, source: String)
+signal time_mode_changed(old_mode: String, new_mode: String)
+signal time_day_changed(year: int, day_of_year: int)
 
 # System & Navigation
 signal system_entered(system_id: String)
@@ -10,7 +14,11 @@ signal location_discovered(scope: String, id: String)
 signal ship_position_changed(position: Vector2)
 
 # Economy
-signal credits_changed(new_amount: int)
+signal credits_changed(new_amount: int)				# might be deprecated
+signal trade_completed(trade_data: Dictionary)
+signal market_prices_updated(station_id: String, price_changes: Dictionary)
+signal commodity_shortage(station_id: String, commodity_id: String, severity: float)
+signal commodity_surplus(station_id: String, commodity_id: String, amount: float)
 
 # UI & Maps
 signal map_toggled(map_type: String, should_open: bool)

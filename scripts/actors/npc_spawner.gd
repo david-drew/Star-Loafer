@@ -17,8 +17,19 @@ var npc_container: Node2D = null
 var spawned_npcs: Array = []
 var npc_name_counter: Dictionary = {}  # Track ship name numbers per faction
 
+const SHIP_SPAWN_RULES_PATH := "res://data/procgen/ship_spawn_rules.json"
+
+var _ship_spawn_rules: Dictionary = {}
+var _spawn_rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var _fallback_role: String = "neutral_civilian"
+var _role_inference_rules: Array = []
+var _role_base_weights: Dictionary = {}
+var _tag_base_weights: Dictionary = {}
+
 func _ready() -> void:
 	print("NPCSpawner: Ready")
+	_spawn_rng.randomize()
+	_load_ship_spawn_rules()
 	
 	# Try to find FactionManager automatically if not set
 	if faction_manager == null:
@@ -80,7 +91,7 @@ func spawn_npcs_for_system(system_data: Dictionary, system_seed: int) -> void:
 	clear_all_npcs()
 	
 	var faction_id = system_data.get("faction_id", "")
-	if faction_id == ""  or faction_id == "independent":
+	if faction_id == "" or faction_id == "independent":
 		faction_id = "independent"  # Treat empty as independent
 		print("NPCSpawner: Spawning independent ships in neutral system")
 	
@@ -108,29 +119,163 @@ func spawn_npcs_for_system(system_data: Dictionary, system_seed: int) -> void:
 	for i in range(npc_count):
 		_spawn_single_npc(faction_id, ship_types, rng, i)
 
+func _load_ship_spawn_rules() -> void:
+	var path := SHIP_SPAWN_RULES_PATH
+	if not FileAccess.file_exists(path):
+		push_warning("NPCSpawner: Ship spawn rules file not found at %s" % path)
+		_ship_spawn_rules = {}
+		_role_inference_rules = []
+		_fallback_role = "neutral_civilian"
+		_role_base_weights = {}
+		_tag_base_weights = {}
+		return
+	
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_warning("NPCSpawner: Failed to open ship spawn rules file at %s" % path)
+		_ship_spawn_rules = {}
+		_role_inference_rules = []
+		_fallback_role = "neutral_civilian"
+		_role_base_weights = {}
+		_tag_base_weights = {}
+		return
+	
+	var text := file.get_as_text()
+	file.close()
+	
+	var parsed:Variant = JSON.parse_string(text)
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_warning("NPCSpawner: Failed to parse ship spawn rules JSON at %s" % path)
+		_ship_spawn_rules = {}
+		_role_inference_rules = []
+		_fallback_role = "neutral_civilian"
+		_role_base_weights = {}
+		_tag_base_weights = {}
+		return
+	
+	_ship_spawn_rules = parsed
+	
+	var role_inference:Dictionary = _ship_spawn_rules.get("role_inference", {})
+	_fallback_role = String(role_inference.get("fallback_role", "neutral_civilian"))
+	_role_inference_rules = role_inference.get("rules", [])
+	
+	var globals:Dictionary = _ship_spawn_rules.get("globals", {})
+	_role_base_weights = globals.get("role_base_weights", {})
+	_tag_base_weights = globals.get("tag_base_weights", {})
+
+func infer_role_from_tags(tags: Array) -> String:
+	var best_role := _fallback_role
+	var best_priority := -9999
+	
+	for rule in _role_inference_rules:
+		if not (rule is Dictionary):
+			continue
+		var match:Dictionary = rule.get("match", {})
+		var include_any: Array = match.get("include_tags_any", [])
+		var exclude_any: Array = match.get("exclude_tags_any", [])
+		if not _tags_match_rule(tags, include_any, exclude_any):
+			continue
+		var priority := int(rule.get("priority", 0))
+		if priority > best_priority:
+			best_priority = priority
+			best_role = String(rule.get("role", _fallback_role))
+	
+	return best_role
+
+func _tags_match_rule(tags: Array, include_any: Array, exclude_any: Array) -> bool:
+	if not include_any.is_empty():
+		var found := false
+		for t in include_any:
+			if tags.has(t):
+				found = true
+				break
+		if not found:
+			return false
+	
+	if not exclude_any.is_empty():
+		for t in exclude_any:
+			if tags.has(t):
+				return false
+	
+	return true
+
+func _choose_ship_type_for_faction(faction_id: String, ship_types: Array, rng: RandomNumberGenerator) -> String:
+	if ship_types.is_empty():
+		return ""
+	
+	if _ship_spawn_rules.is_empty():
+		return ship_types[rng.randi_range(0, ship_types.size() - 1)]
+	
+	var content_db := _get_content_db()
+	var candidates: Array = []
+	
+	for ship_id_value in ship_types:
+		var ship_id := String(ship_id_value)
+		var tags: Array = []
+		if content_db != null and content_db.has_method("get_ship_type"):
+			var def:Variant = content_db.get_ship_type(ship_id)
+			if typeof(def) == TYPE_DICTIONARY:
+				tags = def.get("tags", [])
+		
+		var role := infer_role_from_tags(tags)
+		var weight := 1.0
+		if _role_base_weights.has(role):
+			weight *= float(_role_base_weights[role])
+		
+		if not _tag_base_weights.is_empty():
+			for t in tags:
+				if _tag_base_weights.has(t):
+					weight *= float(_tag_base_weights[t])
+		
+		if weight <= 0.0:
+			continue
+		
+		candidates.append({"ship_id": ship_id, "weight": weight})
+	
+	if candidates.is_empty():
+		return ship_types[rng.randi_range(0, ship_types.size() - 1)]
+	
+	var total_weight := 0.0
+	for c in candidates:
+		total_weight += float(c["weight"])
+	
+	if total_weight <= 0.0:
+		return ship_types[rng.randi_range(0, ship_types.size() - 1)]
+	
+	var pick_value := rng.randf() * total_weight
+	var accumulator := 0.0
+	for c in candidates:
+		accumulator += float(c["weight"])
+		if pick_value <= accumulator:
+			return String(c["ship_id"])
+	
+	return String(candidates.back()["ship_id"])
+
 func _spawn_single_npc(faction_id: String, ship_types: Array, rng: RandomNumberGenerator, index: int) -> void:
 	"""Spawn a single NPC ship"""
-
-	# Select random ship type
-	var ship_type = ship_types[rng.randi_range(0, ship_types.size() - 1)]
-
+	
+	# Select ship type using ship_spawn_rules.json weighting
+	var ship_type := _choose_ship_type_for_faction(faction_id, ship_types, rng)
+	if ship_type == "":
+		return
+	
 	# Generate spawn position (random orbit around center)
 	var spawn_position = _generate_spawn_position(rng)
-
+	
 	# Generate patrol route
 	var patrol_route = _generate_patrol_route(spawn_position, rng)
-
+	
 	# Generate ship name
 	var ship_name = _generate_ship_name(faction_id, ship_type, index)
-
+	
 	# Determine AI behavior
 	var ai_behavior = _determine_ai_behavior(faction_id, ship_type, rng)
-
+	
 	# Resolve sprite info via ContentDb + hull_visuals
 	var sprite_type:String = ship_type
 	var sprite_variant := 1
 	var sprite_path := ""
-
+	
 	var content_db := _get_content_db()
 	if content_db != null and content_db.has_method("get_ship_sprite_info"):
 		var info: Dictionary = content_db.get_ship_sprite_info(ship_type, -1)
@@ -140,17 +285,17 @@ func _spawn_single_npc(faction_id: String, ship_types: Array, rng: RandomNumberG
 	else:
 		# Fallback: simple pattern with default variant
 		sprite_variant = rng.randi_range(1, 3)
-
+	
 	if sprite_variant < 1:
 		sprite_variant = 1
-
+	
 	if sprite_path == "":
 		var vars = {
 			"type": sprite_type,
 			"variant": "%02d" % sprite_variant,
 		}
 		sprite_path = "res://assets/images/actors/ships/{type}_{variant}.png".format(vars)
-
+	
 	# Create ship data
 	var ship_data = {
 		"id": "npc:%s:%d" % [faction_id, index],
@@ -164,14 +309,13 @@ func _spawn_single_npc(faction_id: String, ship_types: Array, rng: RandomNumberG
 		"sprite_variant": sprite_variant,
 		"sprite_path": sprite_path,
 	}
-
+	
 	# Instance and initialize ship
 	var npc_ship = npc_ship_scene.instantiate()
 	npc_container.add_child(npc_ship)
 	npc_ship.initialize(ship_data)
-
+	
 	spawned_npcs.append(npc_ship)
-
 
 func _generate_spawn_position(rng: RandomNumberGenerator) -> Vector2:
 	"""Generate a random spawn position in the system"""
@@ -277,8 +421,11 @@ func _determine_ai_behavior(faction_id: String, ship_type: String, rng: RandomNu
 	var faction_type = faction_manager.get_faction_type(faction_id)
 	
 	# Pirates and criminals are aggressive
+	
 	if faction_type in ["smuggler_network", "pirate_confederacy"]:
-		return "aggressive" if rng.randf() < 0.7 else "patrol"
+		if rng.randf() < 0.7:
+			return "aggressive"
+		return "patrol"
 	
 	# Military ships patrol
 	if ship_type.contains("military") or ship_type.contains("patrol"):

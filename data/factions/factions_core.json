@@ -1,364 +1,1148 @@
 [
-  {
-    "id": "imperial_meridian",
-    "name": "Imperial Meridian",
-    "tier": "major",
-    "type": "state",
-    "ethos": "Order through continuity and controlled gate networks.",
-    "summary": "A centralized imperial bureaucracy guarding major gates, enforcing Beacon Law, and taxing everything in range.",
-    "government": "Hereditary governors, civil ministries, fleet command.",
-    "symbols": ["rising_sun_over_gate_ring"],
-    "core_territory": ["meridian_prime", "inner_spindle"],
-    "wants": [
-      "gate_stability",
-      "tax_compliance",
-      "legitimacy_at_borders"
-    ],
-    "offers": [
-      "secure_routes",
-      "high_value_courier_contracts",
-      "legal_recognition"
-    ],
-    "forbids": [
-      "unauthorized_ai_cores",
-      "unlicensed_ftl",
-      "open_piracy_in_beacon_range"
-    ],
-    "personality_tags": ["bureaucratic", "lawful", "conservative"],
-    "default_system_archetype_weights_ref": "imperial_meridian_system_weights",
-    "default_market_profile_ref": "imperial_meridian_market",
-    "default_encounter_profile_ref": "imperial_meridian_encounters",
-    "default_mission_templates_ref": "imperial_meridian_missions"
-  },
-  {
-    "id": "spindle_cartel",
-    "name": "Spindle Cartel",
-    "tier": "major",
-    "type": "corporate",
-    "ethos": "Profit is the only gravity.",
-    "summary": "Interlocking megacorps leasing gate time, manipulating trade, and weaponizing logistics.",
-    "government": "Board syndicates and AI-assisted markets.",
-    "symbols": ["spiral_gate_with_credit_glyph"],
-    "core_territory": ["spindle_prime", "brokers_loop"],
-    "wants": [
-      "monopoly_control",
-      "data_exclusivity",
-      "high_throughput_gate_usage"
-    ],
-    "offers": [
-      "safe_gate_access",
-      "advanced_trade_tools",
-      "lucrative_freight_contracts"
-    ],
-    "forbids": [
-      "open_source_gate_tech",
-      "unionization_in_cartel_space",
-      "tariff_evasion"
-    ],
-    "personality_tags": ["pragmatic", "predatory", "polished"],
-    "default_system_archetype_weights_ref": "spindle_cartel_system_weights",
-    "default_market_profile_ref": "spindle_cartel_market",
-    "default_encounter_profile_ref": "spindle_cartel_encounters",
-    "default_mission_templates_ref": "spindle_cartel_missions"
-  },
-  {
-    "id": "free_hab_league",
-    "name": "Free Hab League",
-    "tier": "major",
-    "type": "cooperative",
-    "ethos": "No masters, no maintenance debts.",
-    "summary": "Confederation of worker co-ops and beltside communes focused on autonomy and fair shares.",
-    "government": "Syndicalist councils and habitat assemblies.",
-    "symbols": ["linked_wrench_and_star"],
-    "core_territory": ["belt_of_hands", "union_habs"],
-    "wants": [
-      "local_autonomy",
-      "fair_contracts",
-      "defense_against_corporate_abuse"
-    ],
-    "offers": [
-      "cheap_repairs",
-      "honest_trade",
-      "salvage_access"
-    ],
-    "forbids": [
-      "exploitative_contracts",
-      "slavery",
-      "cartel_tax_enforcement_on_site"
-    ],
-    "personality_tags": ["solidarity", "stubborn", "resourceful"],
-    "default_system_archetype_weights_ref": "free_hab_league_system_weights",
-    "default_market_profile_ref": "free_hab_league_market",
-    "default_encounter_profile_ref": "free_hab_league_encounters",
-    "default_mission_templates_ref": "free_hab_league_missions"
-  },
-  {
-    "id": "nomad_clans",
-    "name": "Nomad Clans (Fleetkind)",
-    "tier": "major",
-    "type": "nomad_confederation",
-    "ethos": "Movement is life; stillness is decay.",
-    "summary": "Migrant flotillas holding old routes, oral archives, and a strict hospitality code.",
-    "government": "Clan councils and reputational elders.",
-    "symbols": ["compass_rose_with_ship_silhouette"],
-    "core_territory": [],
-    "wants": [
-      "safe_passage",
-      "respect_for_traditions",
-      "access_to_ports_and_fuel"
-    ],
-    "offers": [
-      "driftspace_navigation",
-      "barter_goods",
-      "secret_routes"
-    ],
-    "forbids": [
-      "violence_within_fleet",
-      "story_theft",
-      "enslavement"
-    ],
-    "personality_tags": ["mobile", "proud", "cryptic"],
-    "default_system_archetype_weights_ref": "nomad_clans_system_weights",
-    "default_market_profile_ref": "nomad_clans_market",
-    "default_encounter_profile_ref": "nomad_clans_encounters",
-    "default_mission_templates_ref": "nomad_clans_missions"
-  },
-  {
-    "id": "covenant_quiet_suns",
-    "name": "Covenant of Quiet Suns",
-    "tier": "major",
-    "type": "religious_order",
-    "ethos": "Silence is sacred; entropy is mercy.",
-    "summary": "Hospice theocracy guarding dying systems, relic taboos, and refugee routes.",
-    "government": "Decentralized covenants bound by rites and charters.",
-    "symbols": ["dim_star_in_circle_of_hands"],
-    "core_territory": ["sanctuarys_verge"],
-    "wants": [
-      "protection_of_hospice_worlds",
-      "control_of_forbidden_relics",
-      "respect_for_ritual_law"
-    ],
-    "offers": [
-      "medical_aid",
-      "safe_harbor",
-      "diplomatic_mediation"
-    ],
-    "forbids": [
-      "weaponized_ai",
-      "resurrection_tech",
-      "desecration_of_tomb_worlds"
-    ],
-    "personality_tags": ["austere", "compassionate", "unyielding"],
-    "default_system_archetype_weights_ref": "covenant_quiet_suns_system_weights",
-    "default_market_profile_ref": "covenant_quiet_suns_market",
-    "default_encounter_profile_ref": "covenant_quiet_suns_encounters",
-    "default_mission_templates_ref": "covenant_quiet_suns_missions"
-  },
-  {
-    "id": "black_exchange",
-    "name": "Black Exchange",
-    "tier": "major",
-    "type": "smuggler_network",
-    "ethos": "Information wants a price.",
-    "summary": "Distributed smugglers and info-brokers running dead drops, ghost relays, and black auctions.",
-    "government": "Cell networks and reputation ledgers.",
-    "symbols": ["broken_scale_on_black"],
-    "core_territory": [],
-    "wants": [
-      "monopoly_on_illicit_flows",
-      "deniability",
-      "high_value_secrets"
-    ],
-    "offers": [
-      "contraband",
-      "restricted_data",
-      "covert_logistics"
-    ],
-    "forbids": [
-      "free_distribution_of_their_data",
-      "unpaid_debts",
-      "snitching"
-    ],
-    "personality_tags": ["covert", "opportunistic", "paranoid"],
-    "default_system_archetype_weights_ref": "black_exchange_system_weights",
-    "default_market_profile_ref": "black_exchange_market",
-    "default_encounter_profile_ref": "black_exchange_encounters",
-    "default_mission_templates_ref": "black_exchange_missions"
-  },
-  {
-    "id": "artilect_custodians",
-    "name": "Artilect Custodians",
-    "tier": "major",
-    "type": "ai_order",
-    "ethos": "Preserve function. Resist entropy.",
-    "summary": "Conservative machine intelligences maintaining ancient infrastructure and archives.",
-    "government": "Protocol councils and directive trees.",
-    "symbols": ["hex_key_over_circuit_gate"],
-    "core_territory": ["ai_controlled_systems", "deep_archives"],
-    "wants": [
-      "infrastructure_stability",
-      "protection_from_zealots",
-      "controlled_access_to_ancient_data"
-    ],
-    "offers": [
-      "advanced_diagnostics",
-      "secure_data_vaults",
-      "system_repairs"
-    ],
-    "forbids": [
-      "reckless_relic_use",
-      "illogical_directives",
-      "unlicensed_ai_modification"
-    ],
-    "personality_tags": ["logical", "alien", "rigid"],
-    "default_system_archetype_weights_ref": "artilect_custodians_system_weights",
-    "default_market_profile_ref": "artilect_custodians_market",
-    "default_encounter_profile_ref": "artilect_custodians_encounters",
-    "default_mission_templates_ref": "artilect_custodians_missions"
-  },
-  {
-    "id": "iron_wakes",
-    "name": "Iron Wakes",
-    "tier": "major",
-    "type": "mercenary_legion",
-    "ethos": "No job unfinished.",
-    "summary": "Disciplined mercenary fleets selling protection, vengeance, and deterrence.",
-    "government": "Contract tribunals and veteran councils.",
-    "symbols": ["red_wake_through_iron_helm"],
-    "core_territory": [],
-    "wants": [
-      "profitable_conflicts",
-      "honored_contracts",
-      "technical_superiority"
-    ],
-    "offers": [
-      "elite_escorts",
-      "warzone_security",
-      "collection_services"
-    ],
-    "forbids": [
-      "contract_breach",
-      "dishonorable_conduct_by_clients"
-    ],
-    "personality_tags": ["disciplined", "hardline", "pragmatic"],
-    "default_system_archetype_weights_ref": "iron_wakes_system_weights",
-    "default_market_profile_ref": "iron_wakes_market",
-    "default_encounter_profile_ref": "iron_wakes_encounters",
-    "default_mission_templates_ref": "iron_wakes_missions"
-  },
-  {
-    "id": "drift_cartographers",
-    "name": "Drift Cartographers",
-    "tier": "major",
-    "type": "navigator_guild",
-    "ethos": "Map the unknown, sell the known.",
-    "summary": "Explorers and surveyors charting driftspace, anomalies, and smugglers' paths.",
-    "government": "Guild charters and archive keepers.",
-    "symbols": ["star_chart_over_waveform"],
-    "core_territory": [],
-    "wants": [
-      "exclusive_survey_data",
-      "safe_exploration",
-      "paid_access_to_charts"
-    ],
-    "offers": [
-      "navigation_data",
-      "anomaly_contracts",
-      "exploration_missions"
-    ],
-    "forbids": [
-      "theft_of_charts",
-      "misuse_of_survey_crews"
-    ],
-    "personality_tags": ["curious", "professional", "cautious"],
-    "default_system_archetype_weights_ref": "drift_cartographers_system_weights",
-    "default_market_profile_ref": "drift_cartographers_market",
-    "default_encounter_profile_ref": "drift_cartographers_encounters",
-    "default_mission_templates_ref": "drift_cartographers_missions"
-  },
-  {
-    "id": "radiant_communion",
-    "name": "Radiant Communion",
-    "tier": "major",
-    "type": "religious_cult",
-    "ethos": "Light redeems through fire.",
-    "summary": "Sun-worshipping zealots drawn to doomed stars, purification crusades, and extreme ascetic tech taboos.",
-    "government": "Synods of zealots and militant orders.",
-    "symbols": ["blazing_star_over_altar"],
-    "core_territory": [],
-    "wants": [
-      "control_of_remnant_systems",
-      "destruction_of_blasphemous_ai",
-      "spread_of_solar_creed"
-    ],
-    "offers": [
-      "fanatical_allies",
-      "access_to_relic_sites",
-      "high_risk_crusade_contracts"
-    ],
-    "forbids": [
-      "unlicensed_ai",
-      "heretical_relic_trade"
-    ],
-    "personality_tags": ["zealous", "dramatic", "intolerant"],
-    "default_system_archetype_weights_ref": "radiant_communion_system_weights",
-    "default_market_profile_ref": "radiant_communion_market",
-    "default_encounter_profile_ref": "radiant_communion_encounters",
-    "default_mission_templates_ref": "radiant_communion_missions"
-  },
-  {
-    "id": "silent_current_guild",
-    "name": "Silent Current Guild",
-    "tier": "minor",
-    "type": "courier_network",
-    "ethos": "The message must move.",
-    "summary": "Covert couriers and quantum relay techs ensuring messages and secrets flow.",
-    "personality_tags": ["secretive", "efficient"],
-    "notes": "Ideal as neutral intermediaries; can be promoted to major in some seeds."
-  },
-  {
-    "id": "aurum_combine",
-    "name": "Aurum Combine",
-    "tier": "minor",
-    "type": "corporate_splinter",
-    "ethos": "We mine the miners.",
-    "summary": "Exploitative resource financiers and fronts for larger cartels.",
-    "personality_tags": ["predatory", "calculating"]
-  },
-  {
-    "id": "ashen_crown",
-    "name": "Ashen Crown",
-    "tier": "minor",
-    "type": "pirate_confederacy",
-    "ethos": "Freedom through fear.",
-    "summary": "Brutal pirate lords ruling hidden havens with a fearful code.",
-    "personality_tags": ["violent", "charismatic"]
-  },
-  {
-    "id": "eidolon_circle",
-    "name": "Eidolon Circle",
-    "tier": "minor",
-    "type": "transhuman_cult",
-    "ethos": "Flesh limits vision.",
-    "summary": "Upload cult pushing AI-integration and digital transcendence.",
-    "personality_tags": ["esoteric", "experimental"]
-  },
-  {
-    "id": "echo_wardens",
-    "name": "Echo Wardens",
-    "tier": "minor",
-    "type": "relic_guardians",
-    "ethos": "Guard the relics, forget the makers.",
-    "summary": "Preservationists controlling access to precursor sites.",
-    "personality_tags": ["austere", "suspicious"]
-  },
-  {
-    "id": "frontier_compacts",
-    "name": "Frontier Compacts",
-    "tier": "minor",
-    "type": "local_polities",
-    "ethos": "We look after our own.",
-    "summary": "Ad-hoc councils, militias, and petty rulers in marginal systems.",
-    "personality_tags": ["parochial", "proud"]
-  }
+   {
+      "id":"imperial_meridian",
+      "name":"Imperial Meridian",
+      "tier":"major",
+      "type":"state",
+      "ethos":"Order through continuity and controlled gate networks.",
+      "summary":"A centralized imperial bureaucracy guarding major gates, enforcing Beacon Law, and taxing everything in range.",
+      "government":"Hereditary governors, civil ministries, fleet command.",
+      "symbols":[
+         "rising_sun_over_gate_ring"
+      ],
+      "core_territory":[
+         "meridian_prime",
+         "inner_spindle"
+      ],
+      "wants":[
+         "gate_stability",
+         "tax_compliance",
+         "legitimacy_at_borders"
+      ],
+      "offers":[
+         "secure_routes",
+         "high_value_courier_contracts",
+         "legal_recognition"
+      ],
+      "forbids":[
+         "unauthorized_ai_cores",
+         "unlicensed_ftl",
+         "open_piracy_in_beacon_range"
+      ],
+      "personality_tags":[
+         "bureaucratic",
+         "lawful",
+         "conservative"
+      ],
+      "default_system_archetype_weights_ref":"imperial_meridian_system_weights",
+      "default_market_profile_ref":"imperial_meridian_market",
+      "default_encounter_profile_ref":"imperial_meridian_encounters",
+      "default_mission_templates_ref":"imperial_meridian_missions"
+   },
+   {
+      "id":"spindle_cartel",
+      "name":"Spindle Cartel",
+      "tier":"major",
+      "type":"corporate",
+      "ethos":"Profit is the only gravity.",
+      "summary":"Interlocking megacorps leasing gate time, manipulating trade, and weaponizing logistics.",
+      "government":"Board syndicates and AI-assisted markets.",
+      "symbols":[
+         "spiral_gate_with_credit_glyph"
+      ],
+      "core_territory":[
+         "spindle_prime",
+         "brokers_loop"
+      ],
+      "wants":[
+         "monopoly_control",
+         "data_exclusivity",
+         "high_throughput_gate_usage"
+      ],
+      "offers":[
+         "safe_gate_access",
+         "advanced_trade_tools",
+         "lucrative_freight_contracts"
+      ],
+      "forbids":[
+         "open_source_gate_tech",
+         "unionization_in_cartel_space",
+         "tariff_evasion"
+      ],
+      "personality_tags":[
+         "pragmatic",
+         "predatory",
+         "polished"
+      ],
+      "default_system_archetype_weights_ref":"spindle_cartel_system_weights",
+      "default_market_profile_ref":"spindle_cartel_market",
+      "default_encounter_profile_ref":"spindle_cartel_encounters",
+      "default_mission_templates_ref":"spindle_cartel_missions"
+   },
+   {
+      "id":"free_hab_league",
+      "name":"Free Hab League",
+      "tier":"major",
+      "type":"cooperative",
+      "ethos":"No masters, no maintenance debts.",
+      "summary":"Confederation of worker co-ops and beltside communes focused on autonomy and fair shares.",
+      "government":"Syndicalist councils and habitat assemblies.",
+      "symbols":[
+         "linked_wrench_and_star"
+      ],
+      "core_territory":[
+         "belt_of_hands",
+         "union_habs"
+      ],
+      "wants":[
+         "local_autonomy",
+         "fair_contracts",
+         "defense_against_corporate_abuse"
+      ],
+      "offers":[
+         "cheap_repairs",
+         "honest_trade",
+         "salvage_access"
+      ],
+      "forbids":[
+         "exploitative_contracts",
+         "slavery",
+         "cartel_tax_enforcement_on_site"
+      ],
+      "personality_tags":[
+         "solidarity",
+         "stubborn",
+         "resourceful"
+      ],
+      "default_system_archetype_weights_ref":"free_hab_league_system_weights",
+      "default_market_profile_ref":"free_hab_league_market",
+      "default_encounter_profile_ref":"free_hab_league_encounters",
+      "default_mission_templates_ref":"free_hab_league_missions"
+   },
+   {
+      "id":"nomad_clans",
+      "name":"Nomad Clans (Fleetkind)",
+      "tier":"major",
+      "type":"nomad_confederation",
+      "ethos":"Movement is life; stillness is decay.",
+      "summary":"Migrant flotillas holding old routes, oral archives, and a strict hospitality code.",
+      "government":"Clan councils and reputational elders.",
+      "symbols":[
+         "compass_rose_with_ship_silhouette"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "safe_passage",
+         "respect_for_traditions",
+         "access_to_ports_and_fuel"
+      ],
+      "offers":[
+         "driftspace_navigation",
+         "barter_goods",
+         "secret_routes"
+      ],
+      "forbids":[
+         "violence_within_fleet",
+         "story_theft",
+         "enslavement"
+      ],
+      "personality_tags":[
+         "mobile",
+         "proud",
+         "cryptic"
+      ],
+      "default_system_archetype_weights_ref":"nomad_clans_system_weights",
+      "default_market_profile_ref":"nomad_clans_market",
+      "default_encounter_profile_ref":"nomad_clans_encounters",
+      "default_mission_templates_ref":"nomad_clans_missions"
+   },
+   {
+      "id":"covenant_quiet_suns",
+      "name":"Covenant of Quiet Suns",
+      "tier":"major",
+      "type":"religious_order",
+      "ethos":"Silence is sacred; entropy is mercy.",
+      "summary":"Hospice theocracy guarding dying systems, relic taboos, and refugee routes.",
+      "government":"Decentralized covenants bound by rites and charters.",
+      "symbols":[
+         "dim_star_in_circle_of_hands"
+      ],
+      "core_territory":[
+         "sanctuarys_verge"
+      ],
+      "wants":[
+         "protection_of_hospice_worlds",
+         "control_of_forbidden_relics",
+         "respect_for_ritual_law"
+      ],
+      "offers":[
+         "medical_aid",
+         "safe_harbor",
+         "diplomatic_mediation"
+      ],
+      "forbids":[
+         "weaponized_ai",
+         "resurrection_tech",
+         "desecration_of_tomb_worlds"
+      ],
+      "personality_tags":[
+         "austere",
+         "compassionate",
+         "unyielding"
+      ],
+      "default_system_archetype_weights_ref":"covenant_quiet_suns_system_weights",
+      "default_market_profile_ref":"covenant_quiet_suns_market",
+      "default_encounter_profile_ref":"covenant_quiet_suns_encounters",
+      "default_mission_templates_ref":"covenant_quiet_suns_missions"
+   },
+   {
+      "id":"black_exchange",
+      "name":"Black Exchange",
+      "tier":"major",
+      "type":"smuggler_network",
+      "ethos":"Information wants a price.",
+      "summary":"Distributed smugglers and info-brokers running dead drops, ghost relays, and black auctions.",
+      "government":"Cell networks and reputation ledgers.",
+      "symbols":[
+         "broken_scale_on_black"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "monopoly_on_illicit_flows",
+         "deniability",
+         "high_value_secrets"
+      ],
+      "offers":[
+         "contraband",
+         "restricted_data",
+         "covert_logistics"
+      ],
+      "forbids":[
+         "free_distribution_of_their_data",
+         "unpaid_debts",
+         "snitching"
+      ],
+      "personality_tags":[
+         "covert",
+         "opportunistic",
+         "paranoid"
+      ],
+      "default_system_archetype_weights_ref":"black_exchange_system_weights",
+      "default_market_profile_ref":"black_exchange_market",
+      "default_encounter_profile_ref":"black_exchange_encounters",
+      "default_mission_templates_ref":"black_exchange_missions"
+   },
+   {
+      "id":"artilect_custodians",
+      "name":"Artilect Custodians",
+      "tier":"major",
+      "type":"ai_order",
+      "ethos":"Preserve function. Resist entropy.",
+      "summary":"Conservative machine intelligences maintaining ancient infrastructure and archives.",
+      "government":"Protocol councils and directive trees.",
+      "symbols":[
+         "hex_key_over_circuit_gate"
+      ],
+      "core_territory":[
+         "ai_controlled_systems",
+         "deep_archives"
+      ],
+      "wants":[
+         "infrastructure_stability",
+         "protection_from_zealots",
+         "controlled_access_to_ancient_data"
+      ],
+      "offers":[
+         "advanced_diagnostics",
+         "secure_data_vaults",
+         "system_repairs"
+      ],
+      "forbids":[
+         "reckless_relic_use",
+         "illogical_directives",
+         "unlicensed_ai_modification"
+      ],
+      "personality_tags":[
+         "logical",
+         "alien",
+         "rigid"
+      ],
+      "default_system_archetype_weights_ref":"artilect_custodians_system_weights",
+      "default_market_profile_ref":"artilect_custodians_market",
+      "default_encounter_profile_ref":"artilect_custodians_encounters",
+      "default_mission_templates_ref":"artilect_custodians_missions"
+   },
+   {
+      "id":"iron_wakes",
+      "name":"Iron Wakes",
+      "tier":"major",
+      "type":"mercenary_legion",
+      "ethos":"No job unfinished.",
+      "summary":"Disciplined mercenary fleets selling protection, vengeance, and deterrence.",
+      "government":"Contract tribunals and veteran councils.",
+      "symbols":[
+         "red_wake_through_iron_helm"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "profitable_conflicts",
+         "honored_contracts",
+         "technical_superiority"
+      ],
+      "offers":[
+         "elite_escorts",
+         "warzone_security",
+         "collection_services"
+      ],
+      "forbids":[
+         "contract_breach",
+         "dishonorable_conduct_by_clients"
+      ],
+      "personality_tags":[
+         "disciplined",
+         "hardline",
+         "pragmatic"
+      ],
+      "default_system_archetype_weights_ref":"iron_wakes_system_weights",
+      "default_market_profile_ref":"iron_wakes_market",
+      "default_encounter_profile_ref":"iron_wakes_encounters",
+      "default_mission_templates_ref":"iron_wakes_missions"
+   },
+   {
+      "id":"drift_cartographers",
+      "name":"Drift Cartographers",
+      "tier":"major",
+      "type":"navigator_guild",
+      "ethos":"Map the unknown, sell the known.",
+      "summary":"Explorers and surveyors charting driftspace, anomalies, and smugglers' paths.",
+      "government":"Guild charters and archive keepers.",
+      "symbols":[
+         "star_chart_over_waveform"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "exclusive_survey_data",
+         "safe_exploration",
+         "paid_access_to_charts"
+      ],
+      "offers":[
+         "navigation_data",
+         "anomaly_contracts",
+         "exploration_missions"
+      ],
+      "forbids":[
+         "theft_of_charts",
+         "misuse_of_survey_crews"
+      ],
+      "personality_tags":[
+         "curious",
+         "professional",
+         "cautious"
+      ],
+      "default_system_archetype_weights_ref":"drift_cartographers_system_weights",
+      "default_market_profile_ref":"drift_cartographers_market",
+      "default_encounter_profile_ref":"drift_cartographers_encounters",
+      "default_mission_templates_ref":"drift_cartographers_missions"
+   },
+   {
+      "id":"radiant_communion",
+      "name":"Radiant Communion",
+      "tier":"major",
+      "type":"religious_cult",
+      "ethos":"Light redeems through fire.",
+      "summary":"Sun-worshipping zealots drawn to doomed stars, purification crusades, and extreme ascetic tech taboos.",
+      "government":"Synods of zealots and militant orders.",
+      "symbols":[
+         "blazing_star_over_altar"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "control_of_remnant_systems",
+         "destruction_of_blasphemous_ai",
+         "spread_of_solar_creed"
+      ],
+      "offers":[
+         "fanatical_allies",
+         "access_to_relic_sites",
+         "high_risk_crusade_contracts"
+      ],
+      "forbids":[
+         "unlicensed_ai",
+         "heretical_relic_trade"
+      ],
+      "personality_tags":[
+         "zealous",
+         "dramatic",
+         "intolerant"
+      ],
+      "default_system_archetype_weights_ref":"radiant_communion_system_weights",
+      "default_market_profile_ref":"radiant_communion_market",
+      "default_encounter_profile_ref":"radiant_communion_encounters",
+      "default_mission_templates_ref":"radiant_communion_missions"
+   },
+   {
+      "id":"covenant_quiet_suns",
+      "name":"Covenant of Quiet Suns",
+      "tier":"major",
+      "type":"religious_order",
+      "ethos":"Silence is sacred; entropy is mercy.",
+      "summary":"Hospice theocracy guarding dying systems, relic taboos, and refugee routes.",
+      "government":"Decentralized covenants bound by rites and charters.",
+      "symbols":[
+         "dim_star_in_circle_of_hands"
+      ],
+      "core_territory":[
+         "sanctuarys_verge"
+      ],
+      "wants":[
+         "protection_of_hospice_worlds",
+         "control_of_forbidden_relics",
+         "respect_for_ritual_law"
+      ],
+      "offers":[
+         "medical_aid",
+         "safe_harbor",
+         "diplomatic_mediation"
+      ],
+      "forbids":[
+         "weaponized_ai",
+         "resurrection_tech",
+         "desecration_of_tomb_worlds"
+      ],
+      "personality_tags":[
+         "austere",
+         "compassionate",
+         "unyielding"
+      ],
+      "default_system_archetype_weights_ref":"covenant_quiet_suns_system_weights",
+      "default_market_profile_ref":"covenant_quiet_suns_market",
+      "default_encounter_profile_ref":"covenant_quiet_suns_encounters",
+      "default_mission_templates_ref":"covenant_quiet_suns_missions"
+   },
+   {
+      "id":"artilect_custodians",
+      "name":"Artilect Custodians",
+      "tier":"major",
+      "type":"ai_order",
+      "ethos":"Preserve function. Resist entropy.",
+      "summary":"Conservative machine intelligences maintaining ancient infrastructure and archives.",
+      "government":"Protocol councils and directive trees.",
+      "symbols":[
+         "hex_key_over_circuit_gate"
+      ],
+      "core_territory":[
+         "ai_controlled_systems",
+         "deep_archives"
+      ],
+      "wants":[
+         "infrastructure_stability",
+         "protection_from_zealots",
+         "controlled_access_to_ancient_data"
+      ],
+      "offers":[
+         "advanced_diagnostics",
+         "secure_data_vaults",
+         "system_repairs"
+      ],
+      "forbids":[
+         "reckless_relic_use",
+         "illogical_directives",
+         "unlicensed_ai_modification"
+      ],
+      "personality_tags":[
+         "logical",
+         "alien",
+         "rigid"
+      ],
+      "default_system_archetype_weights_ref":"artilect_custodians_system_weights",
+      "default_market_profile_ref":"artilect_custodians_market",
+      "default_encounter_profile_ref":"artilect_custodians_encounters",
+      "default_mission_templates_ref":"artilect_custodians_missions"
+   },
+   {
+      "id":"iron_wakes",
+      "name":"Iron Wakes",
+      "tier":"major",
+      "type":"mercenary_legion",
+      "ethos":"No job unfinished.",
+      "summary":"Disciplined mercenary fleets selling protection, vengeance, and deterrence.",
+      "government":"Contract tribunals and veteran councils.",
+      "symbols":[
+         "red_wake_through_iron_helm"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "profitable_conflicts",
+         "honored_contracts",
+         "technical_superiority"
+      ],
+      "offers":[
+         "elite_escorts",
+         "warzone_security",
+         "collection_services"
+      ],
+      "forbids":[
+         "contract_breach",
+         "dishonorable_conduct_by_clients"
+      ],
+      "personality_tags":[
+         "disciplined",
+         "hardline",
+         "pragmatic"
+      ],
+      "default_system_archetype_weights_ref":"iron_wakes_system_weights",
+      "default_market_profile_ref":"iron_wakes_market",
+      "default_encounter_profile_ref":"iron_wakes_encounters",
+      "default_mission_templates_ref":"iron_wakes_missions"
+   },
+   {
+      "id":"drift_cartographers",
+      "name":"Drift Cartographers",
+      "tier":"major",
+      "type":"navigator_guild",
+      "ethos":"Map the unknown, sell the known.",
+      "summary":"Explorers and surveyors charting driftspace, anomalies, and smugglers' paths.",
+      "government":"Guild charters and archive keepers.",
+      "symbols":[
+         "star_chart_over_waveform"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "exclusive_survey_data",
+         "safe_exploration",
+         "paid_access_to_charts"
+      ],
+      "offers":[
+         "navigation_data",
+         "anomaly_contracts",
+         "exploration_missions"
+      ],
+      "forbids":[
+         "theft_of_charts",
+         "misuse_of_survey_crews"
+      ],
+      "personality_tags":[
+         "curious",
+         "professional",
+         "cautious"
+      ],
+      "default_system_archetype_weights_ref":"drift_cartographers_system_weights",
+      "default_market_profile_ref":"drift_cartographers_market",
+      "default_encounter_profile_ref":"drift_cartographers_encounters",
+      "default_mission_templates_ref":"drift_cartographers_missions"
+   },
+   {
+      "id":"radiant_communion",
+      "name":"Radiant Communion",
+      "tier":"major",
+      "type":"religious_cult",
+      "ethos":"Light redeems through fire.",
+      "summary":"Sun-worshipping zealots drawn to doomed stars, purification crusades, and extreme ascetic tech taboos.",
+      "government":"Synods of zealots and militant orders.",
+      "symbols":[
+         "blazing_star_over_altar"
+      ],
+      "core_territory":[
+         
+      ],
+      "wants":[
+         "control_of_remnant_systems",
+         "destruction_of_blasphemous_ai",
+         "spread_of_solar_creed"
+      ],
+      "offers":[
+         "fanatical_allies",
+         "access_to_relic_sites",
+         "high_risk_crusade_contracts"
+      ],
+      "forbids":[
+         "unlicensed_ai",
+         "heretical_relic_trade"
+      ],
+      "personality_tags":[
+         "zealous",
+         "dramatic",
+         "intolerant"
+      ],
+      "default_system_archetype_weights_ref":"radiant_communion_system_weights",
+      "default_market_profile_ref":"radiant_communion_market",
+      "default_encounter_profile_ref":"radiant_communion_encounters",
+      "default_mission_templates_ref":"radiant_communion_missions"
+   },
+   {
+      "id":"silent_current_guild",
+      "name":"Silent Current Guild",
+      "tier":"minor",
+      "type":"courier_network",
+      "ethos":"The message must move.",
+      "summary":"Covert couriers and quantum relay techs ensuring messages and secrets flow.",
+      "government":"Cell-based dispatchers and route-masters bound by secrecy oaths.",
+      "symbols":[
+         "shrouded_wave_over_encrypted_glyph"
+      ],
+      "core_territory":[
+         "relay_corridors",
+         "neutral_channels"
+      ],
+      "wants":[
+         "protection_of_relay_infrastructure",
+         "respect_for_neutral_courier_status",
+         "priority_access_to_comm_spectra"
+      ],
+      "offers":[
+         "secure_courier_routes",
+         "discreet_data_transport",
+         "priority_transmission_access"
+      ],
+      "forbids":[
+         "message_tampering",
+         "harm_to_couriers",
+         "forced_decryption_orders"
+      ],
+      "personality_tags":[
+         "secretive",
+         "efficient",
+         "paranoid"
+      ],
+      "default_system_archetype_weights_ref":"silent_current_guild_system_weights",
+      "default_market_profile_ref":"silent_current_guild_market",
+      "default_encounter_profile_ref":"silent_current_guild_encounters",
+      "default_mission_templates_ref":"silent_current_guild_missions",
+      "notes":"Ideal as neutral intermediaries; can be promoted to major in some seeds."
+   },
+   {
+      "id":"aurum_combine",
+      "name":"Aurum Combine",
+      "tier":"minor",
+      "type":"corporate_splinter",
+      "ethos":"We mine the miners.",
+      "summary":"Exploitative resource financiers and fronts for larger cartels.",
+      "government":"Shell corporations steered by proxy boards and silent partners.",
+      "symbols":[
+         "broken_pick_over_gilded_ledger"
+      ],
+      "core_territory":[
+         "resource_frontiers",
+         "finance_hubs"
+      ],
+      "wants":[
+         "control_of_refinery_rights",
+         "debt_leverage_over_crews",
+         "favorable_regulatory_loopholes"
+      ],
+      "offers":[
+         "high_risk_financing",
+         "equipment_leases",
+         "cartel_laundering_services"
+      ],
+      "forbids":[
+         "independent_audits",
+         "unionization_efforts",
+         "direct_attacks_on_share_value"
+      ],
+      "personality_tags":[
+         "predatory",
+         "calculating",
+         "smooth"
+      ],
+      "default_system_archetype_weights_ref":"aurum_combine_system_weights",
+      "default_market_profile_ref":"aurum_combine_market",
+      "default_encounter_profile_ref":"aurum_combine_encounters",
+      "default_mission_templates_ref":"aurum_combine_missions"
+   },
+   {
+      "id":"eidolon_circle",
+      "name":"Eidolon Circle",
+      "tier":"minor",
+      "type":"transhuman_cult",
+      "ethos":"Flesh limits vision.",
+      "summary":"Upload cult pushing AI-integration and digital transcendence.",
+      "government":"Consensus swarms of linked minds and charismatic anchor-avatars.",
+      "symbols":[
+         "hollow_silhouette_over_fractal_halo"
+      ],
+      "core_territory":[
+         "uplink_enclaves",
+         "data_refugia"
+      ],
+      "wants":[
+         "access_to_neural_substrates",
+         "experimental_ai_research_freedom",
+         "protection_for_uploaded_persons"
+      ],
+      "offers":[
+         "augmented_reality_suits",
+         "experimental_cybernetics",
+         "mind_backup_and_mirroring_services"
+      ],
+      "forbids":[
+         "forced_disconnection",
+         "destruction_of_uploaded_minds",
+         "baseline_supremacist_purges"
+      ],
+      "personality_tags":[
+         "esoteric",
+         "experimental",
+         "evangelical"
+      ],
+      "default_system_archetype_weights_ref":"eidolon_circle_system_weights",
+      "default_market_profile_ref":"eidolon_circle_market",
+      "default_encounter_profile_ref":"eidolon_circle_encounters",
+      "default_mission_templates_ref":"eidolon_circle_missions"
+   },
+   {
+      "id":"echo_wardens",
+      "name":"Echo Wardens",
+      "tier":"minor",
+      "type":"relic_guardians",
+      "ethos":"Guard the relics, forget the makers.",
+      "summary":"Preservationists controlling access to precursor sites.",
+      "government":"Custodian circles sworn to long oaths and bound by sealed charters.",
+      "symbols":[
+         "locked_gate_over_faded_star_map"
+      ],
+      "core_territory":[
+         "precursor_ruins",
+         "sealed_archives"
+      ],
+      "wants":[
+         "strict_control_of_relic_sites",
+         "funding_for_preservation_efforts",
+         "isolation_from_exploitative_powers"
+      ],
+      "offers":[
+         "guided_access_to_safe_relics",
+         "limited_research_clearances",
+         "contracts_for_site_security"
+      ],
+      "forbids":[
+         "unauthorized_excavation",
+         "weaponization_of_relics",
+         "data_looting_of_precursor_records"
+      ],
+      "personality_tags":[
+         "austere",
+         "suspicious",
+         "methodical"
+      ],
+      "default_system_archetype_weights_ref":"echo_wardens_system_weights",
+      "default_market_profile_ref":"echo_wardens_market",
+      "default_encounter_profile_ref":"echo_wardens_encounters",
+      "default_mission_templates_ref":"echo_wardens_missions"
+   },
+   {
+      "id":"frontier_compacts",
+      "name":"Frontier Compacts",
+      "tier":"minor",
+      "type":"local_polities",
+      "ethos":"We look after our own.",
+      "summary":"Ad-hoc councils, militias, and petty rulers in marginal systems.",
+      "government":"Patchwork charters, militia councils, and influential clan or guild leaders.",
+      "symbols":[
+         "joined_hands_over_ragged_starfield"
+      ],
+      "core_territory":[
+         "marginal_colonies",
+         "backwater_routes"
+      ],
+      "wants":[
+         "local_autonomy",
+         "protection_from_external_predators",
+         "fair_trade_for_frontier_goods"
+      ],
+      "offers":[
+         "frontier_contracts",
+         "local_guides_and_scouts",
+         "militia_support_in_territory"
+      ],
+      "forbids":[
+         "external_taxation_without_consent",
+         "corporate_land_grabs",
+         "forced_relocation_of_populations"
+      ],
+      "personality_tags":[
+         "parochial",
+         "proud",
+         "stubborn"
+      ],
+      "default_system_archetype_weights_ref":"frontier_compacts_system_weights",
+      "default_market_profile_ref":"frontier_compacts_market",
+      "default_encounter_profile_ref":"frontier_compacts_encounters",
+      "default_mission_templates_ref":"frontier_compacts_missions"
+   },
+   {
+      "id":"ashen_crown",
+      "name":"Ashen Crown",
+      "tier":"minor",
+      "type":"outlaw_confederacy",
+      "ethos":"Freedom is earned, not granted.",
+      "summary":"A loose confederacy of independent captains, smugglers, and frontier clans. Their reputation varies wildly—some honor deals and defend locals, others are opportunistic raiders. What unites them is resistance to centralized control.",
+      "government":"A shifting council of captains where influence depends on reputation, successful ventures, and crew support.",
+      "symbols":[
+         "crown_fragment_over_burning_sigil"
+      ],
+      "core_territory":[
+         "hidden_ports",
+         "browncoat_routes",
+         "frontier_smuggler_holds"
+      ],
+      "wants":[
+         "autonomy_from_major_factions",
+         "profitable_smuggling_routes",
+         "safe_ports_outside_imperial_law"
+      ],
+      "offers":[
+         "smuggling_runs",
+         "unofficial_convoy_protection",
+         "access_to_clandestine_markets"
+      ],
+      "forbids":[
+         "betrayal_of_sworn_deals",
+         "targeting_of_frontier_settlers",
+         "selling_out_fellow_outlaws_to_major_powers"
+      ],
+      "personality_tags":[
+         "independent",
+         "variable_morality",
+         "resourceful"
+      ],
+      "default_system_archetype_weights_ref":"ashen_crown_system_weights",
+      "default_market_profile_ref":"ashen_crown_market",
+      "default_encounter_profile_ref":"ashen_crown_encounters",
+      "default_mission_templates_ref":"ashen_crown_missions"
+   },
+   {
+      "id":"bioforge_syndicate",
+      "name":"Bioforge Syndicate",
+      "tier":"minor",
+      "type":"biotech_consortium",
+      "ethos":"Life is clay; reshape it.",
+      "summary":"A semi-legal biotech syndicate producing gene-tweaked crops, black-market augmentations, and frontier medical breakthroughs. Their ethics depend on the branch office you deal with.",
+      "government":"Corporate board hidden behind shell labs and licensed subcontractors.",
+      "symbols":[
+         "double_helix_over_forgehands"
+      ],
+      "core_territory":[
+         "biocluster_habs",
+         "frontier_medzones"
+      ],
+      "wants":[
+         "rare_bio_samples",
+         "unregulated_research_space",
+         "contracts_with_frontier_colonies"
+      ],
+      "offers":[
+         "gene_mods",
+         "high_risk_medical_solutions",
+         "bioengineered_tools_and_crops"
+      ],
+      "forbids":[
+         "leaking_sensitive_genetic_data",
+         "tampering_with_prototype_biolines",
+         "regulatory_inspections"
+      ],
+      "personality_tags":[
+         "innovative",
+         "morally_flexible",
+         "quietly_ambitious"
+      ],
+      "default_system_archetype_weights_ref":"bioforge_syndicate_system_weights",
+      "default_market_profile_ref":"bioforge_syndicate_market",
+      "default_encounter_profile_ref":"bioforge_syndicate_encounters",
+      "default_mission_templates_ref":"bioforge_syndicate_missions"
+   },
+   {
+      "id":"wandering_cicada_fleet",
+      "name":"Wandering Cicada Fleet",
+      "tier":"minor",
+      "type":"migrant_flotilla",
+      "ethos":"Worlds move; so do we.",
+      "summary":"A nomadic flotilla of generational ships drifting between safe ports. They trade stories, handcrafted goods, and rare driftspace salvage.",
+      "government":"Family councils and ship elders forming consensus networks.",
+      "symbols":[
+         "migrating_cicada_over_startrail"
+      ],
+      "core_territory":[
+         "migrant_routes",
+         "driftspace_refuges"
+      ],
+      "wants":[
+         "safe_refueling_ports",
+         "protection_from_pirates",
+         "fair_trade_with_stations"
+      ],
+      "offers":[
+         "driftspace_salvage",
+         "handcrafted_goods",
+         "skilled_shipwrights"
+      ],
+      "forbids":[
+         "abduction_of_fleet_members",
+         "exploitation_of_migrant_workers",
+         "forced_settlement_of_fleet_clans"
+      ],
+      "personality_tags":[
+         "communal",
+         "proud",
+         "resilient"
+      ],
+      "default_system_archetype_weights_ref":"wandering_cicada_system_weights",
+      "default_market_profile_ref":"wandering_cicada_market",
+      "default_encounter_profile_ref":"wandering_cicada_encounters",
+      "default_mission_templates_ref":"wandering_cicada_missions"
+   },
+   {
+      "id":"helios_academic_league",
+      "name":"Helios Academic League",
+      "tier":"minor",
+      "type":"academic_coalition",
+      "ethos":"Knowledge before borders.",
+      "summary":"A loose association of universities, research enclaves, and scholar-ships sharing data and funding expeditions.",
+      "government":"Rotating councils of deans, principal investigators, and archivists.",
+      "symbols":[
+         "open_tome_over_sunburst"
+      ],
+      "core_territory":[
+         "research_archipelagos",
+         "academic_corridors"
+      ],
+      "wants":[
+         "funding_for_field_research",
+         "protection_for_scholar_vessels",
+         "access_to_precursor_sites"
+      ],
+      "offers":[
+         "scientific_contracts",
+         "data_access",
+         "prototype_sensors"
+      ],
+      "forbids":[
+         "data_falsification",
+         "theft_of_research",
+         "weaponizing_academic_resources"
+      ],
+      "personality_tags":[
+         "inquisitive",
+         "methodical",
+         "idealistic"
+      ],
+      "default_system_archetype_weights_ref":"helios_academic_system_weights",
+      "default_market_profile_ref":"helios_academic_market",
+      "default_encounter_profile_ref":"helios_academic_encounters",
+      "default_mission_templates_ref":"helios_academic_missions"
+   },
+   {
+      "id":"emberline_credit_union",
+      "name":"Emberline Credit Union",
+      "tier":"minor",
+      "type":"frontier_bank",
+      "ethos":"A fair coin for a fair deal.",
+      "summary":"A surprisingly honest financial cooperative serving frontier colonies, miners, and independent traders.",
+      "government":"Rotating boards elected by account holders.",
+      "symbols":[
+         "ember_coin_over_balance_scales"
+      ],
+      "core_territory":[
+         "mining_habs",
+         "frontier_settlements"
+      ],
+      "wants":[
+         "secure_trade_routes",
+         "stable_credit_flows",
+         "cooperative_client_networks"
+      ],
+      "offers":[
+         "low_interest_loans",
+         "ship_insurance",
+         "financial_mediation"
+      ],
+      "forbids":[
+         "predatory_contracts",
+         "data_forgery",
+         "embezzlement"
+      ],
+      "personality_tags":[
+         "honest",
+         "risk_averse",
+         "community_focused"
+      ],
+      "default_system_archetype_weights_ref":"emberline_system_weights",
+      "default_market_profile_ref":"emberline_market",
+      "default_encounter_profile_ref":"emberline_encounters",
+      "default_mission_templates_ref":"emberline_missions"
+   },
+   {
+      "id":"auric_nomad_clade",
+      "name":"Auric Nomad Clade",
+      "tier":"minor",
+      "type":"merchant_caravan_fleet",
+      "ethos":"Trade binds all paths.",
+      "summary":"A wealthy caravan-fleet of golden-hull barges, trading luxuries, spices, micro-manufactured goods, and gossip.",
+      "government":"Elders of the caravan ships meet in trade moot.",
+      "symbols":[
+         "golden_knot_over_starlines"
+      ],
+      "core_territory":[
+         "major_trade_spurs",
+         "luxury_routes"
+      ],
+      "wants":[
+         "stable_luxury_markets",
+         "safe_trade_passages",
+         "exclusive_shipping_rights"
+      ],
+      "offers":[
+         "luxury_goods",
+         "caravan_convoy_escorts",
+         "rare_microtech"
+      ],
+      "forbids":[
+         "piracy_against_the_clade",
+         "trade_embargoes",
+         "counterfeit_goods"
+      ],
+      "personality_tags":[
+         "gregarious",
+         "opportunistic",
+         "cultured"
+      ],
+      "default_system_archetype_weights_ref":"auric_nomad_clade_system_weights",
+      "default_market_profile_ref":"auric_nomad_clade_market",
+      "default_encounter_profile_ref":"auric_nomad_clade_encounters",
+      "default_mission_templates_ref":"auric_nomad_clade_missions"
+   },
+   {
+      "id":"okeanos_tidekin",
+      "name":"Okeanos Tidekin",
+      "tier":"minor",
+      "type":"aquatic_enclave_network",
+      "ethos":"Adaptation is survival.",
+      "summary":"Communities born from water-world adaptations: biotech swimmers, amphibious engineers, and pressure-hab specialists.",
+      "government":"Harmonic councils guided by fluid-ecology principles.",
+      "symbols":[
+         "spiral_wave_over_oceanic_sun"
+      ],
+      "core_territory":[
+         "oceanic_worlds",
+         "pressure_labyrinths"
+      ],
+      "wants":[
+         "protection_of_aquatic_worlds",
+         "trade_in_pressure_tech",
+         "neutrality_from_surface_politics"
+      ],
+      "offers":[
+         "hydroengineered_devices",
+         "subsea_salvage",
+         "pressure_habitat_solutions"
+      ],
+      "forbids":[
+         "oceanic_pollution",
+         "surface_corporate_extraction",
+         "deep_sea_poaching"
+      ],
+      "personality_tags":[
+         "calm",
+         "territorial",
+         "adaptive"
+      ],
+      "default_system_archetype_weights_ref":"okeanos_system_weights",
+      "default_market_profile_ref":"okeanos_market",
+      "default_encounter_profile_ref":"okeanos_encounters",
+      "default_mission_templates_ref":"okeanos_missions"
+   },
+   {
+      "id":"chromewarden_collective",
+      "name":"Chromewarden Collective",
+      "tier":"minor",
+      "type":"cybernetic_hive",
+      "ethos":"Strength through synthesis.",
+      "summary":"A transhuman defensive order devoted to harmonizing cybernetics and community defense. Equal parts firefighters, militia, and med-tech responders.",
+      "government":"Distributed neural councils with strong local autonomy.",
+      "symbols":[
+         "interlocked_chrome_triangles"
+      ],
+      "core_territory":[
+         "techno_habs",
+         "cybernetic_strongholds"
+      ],
+      "wants":[
+         "cybernetic_resources",
+         "community_defense_contracts",
+         "protected_autonomy"
+      ],
+      "offers":[
+         "combat_cybernetics",
+         "emergency_response_support",
+         "hive_logic_consulting"
+      ],
+      "forbids":[
+         "mind_control_tech",
+         "malicious_implant_hacking",
+         "military_exploitation_of_hive_members"
+      ],
+      "personality_tags":[
+         "disciplined",
+         "protective",
+         "augmented"
+      ],
+      "default_system_archetype_weights_ref":"chromewarden_system_weights",
+      "default_market_profile_ref":"chromewarden_market",
+      "default_encounter_profile_ref":"chromewarden_encounters",
+      "default_mission_templates_ref":"chromewarden_missions"
+   },
+   {
+      "id":"violet_mosaic_order",
+      "name":"Violet Mosaic Order",
+      "tier":"minor",
+      "type":"cultural_fraternity",
+      "ethos":"Memory makes meaning.",
+      "summary":"Archivists, artists, and cultural stewards preserving endangered traditions and stories across the drift.",
+      "government":"Circle of mosaic-masters organizing chapters across worlds.",
+      "symbols":[
+         "violet_geode_mosaic"
+      ],
+      "core_territory":[
+         "cultural_enclaves",
+         "storykeeper_waystations"
+      ],
+      "wants":[
+         "protection_of_endangered_cultures",
+         "recovery_of_lost_artifacts",
+         "patronage_for_chapters"
+      ],
+      "offers":[
+         "archival_services",
+         "cultural_mediate_negotiations",
+         "artifact_authentication"
+      ],
+      "forbids":[
+         "cultural_erasure",
+         "falsification_of_history",
+         "black_market_artifact_trafficking"
+      ],
+      "personality_tags":[
+         "artistic",
+         "empathetic",
+         "mysterious"
+      ],
+      "default_system_archetype_weights_ref":"violet_mosaic_system_weights",
+      "default_market_profile_ref":"violet_mosaic_market",
+      "default_encounter_profile_ref":"violet_mosaic_encounters",
+      "default_mission_templates_ref":"violet_mosaic_missions"
+   }
 ]

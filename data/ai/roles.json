@@ -1,0 +1,140 @@
+[
+  {
+	"role_id": "trader",
+	"display_name": "Trader",
+	"default_behavior_profile": "trader_standard",
+	"allowed_states": [
+	  "Idle",
+	  "TravelRoute",
+	  "Docking",
+	  "Undocking",
+	  "Flee",
+	  "CallForHelp",
+      "Surrender"
+	],
+	"preferred_ranges": { "min": 400, "max": 800 },
+	"flee_threshold_hull": 0.4,
+	"flee_threshold_morale": 0.3,
+	"call_help_threshold_threat": 0.6,
+	"combat_modifier": 0.7,
+	"cargo_targeting_bias": 0.0,
+	"notes": "Non-combat, high value to pirates. Often escorted in high-danger routes."
+  },
+  {
+	"role_id": "pirate",
+	"display_name": "Pirate",
+	"default_behavior_profile": "pirate_raider",
+	"allowed_states": [
+	  "Idle",
+	  "Hunt",
+	  "Engage",
+	  "Flee",
+      "TravelRoute"
+	],
+	"preferred_ranges": { "min": 150, "max": 400 },
+	"flee_threshold_hull": 0.25,
+	"flee_threshold_morale": 0.2,
+	"call_help_threshold_threat": 0.9,
+	"combat_modifier": 1.2,
+	"cargo_targeting_bias": 0.9,
+	"extort_instead_of_kill_chance": 0.6,
+	"notes": "Hunts weak traders, may extort instead of kill depending on faction and personality."
+  },
+  {
+	"role_id": "police",
+	"display_name": "System Security",
+	"default_behavior_profile": "police_standard",
+	"allowed_states": [
+	  "Idle",
+	  "Patrol",
+	  "Guard",
+	  "Engage",
+	  "Flee",
+      "TravelRoute"
+	],
+	"preferred_ranges": { "min": 300, "max": 600 },
+	"flee_threshold_hull": 0.2,
+	"flee_threshold_morale": 0.15,
+	"call_help_threshold_threat": 0.4,
+	"combat_modifier": 1.1,
+	"scan_suspicious_chance": 0.7,
+	"notes": "Patrols, scans ships, responds to distress calls in higher-law systems."
+  },
+  {
+	"role_id": "courier",
+	"display_name": "Courier",
+	"default_behavior_profile": "courier_fast",
+	"allowed_states": [
+	  "Idle",
+	  "TravelRoute",
+	  "Docking",
+	  "Undocking",
+	  "Flee",
+      "CallForHelp"
+	],
+	"preferred_ranges": { "min": 500, "max": 900 },
+	"flee_threshold_hull": 0.6,
+	"flee_threshold_morale": 0.5,
+	"call_help_threshold_threat": 0.3,
+	"combat_modifier": 0.8,
+	"priority_mission": true,
+	"notes": "Time-sensitive; will avoid fights and run at the first sign of serious danger."
+  },
+  {
+	"role_id": "tourist",
+	"display_name": "Tourist",
+	"default_behavior_profile": "tourist_wanderer",
+	"allowed_states": [
+	  "Idle",
+	  "Wander",
+	  "TravelRoute",
+	  "Docking",
+      "Flee"
+	],
+	"preferred_ranges": { "min": 600, "max": 1200 },
+	"flee_threshold_hull": 0.7,
+	"flee_threshold_morale": 0.6,
+	"call_help_threshold_threat": 0.4,
+	"combat_modifier": 0.5,
+	"notes": "Non-combatant, wanders near points of interest; easy prey, high panic."
+  },
+  {
+	"role_id": "diplomat",
+	"display_name": "Diplomatic Envoy",
+	"default_behavior_profile": "diplomat_high_value",
+	"allowed_states": [
+	  "Idle",
+	  "TravelRoute",
+	  "Docking",
+	  "Escort",
+	  "Flee",
+      "CallForHelp"
+	],
+	"preferred_ranges": { "min": 500, "max": 800 },
+	"flee_threshold_hull": 0.5,
+	"flee_threshold_morale": 0.4,
+	"call_help_threshold_threat": 0.2,
+	"combat_modifier": 0.9,
+	"high_profile": true,
+	"notes": "High-value; usually escorted. Attacks against diplomats can cause large faction shifts."
+  },
+  {
+	"role_id": "researcher",
+	"display_name": "Research Vessel",
+	"default_behavior_profile": "researcher_scientist",
+	"allowed_states": [
+	  "Idle",
+	  "TravelRoute",
+	  "StudyAnomaly",
+	  "Docking",
+	  "Flee",
+      "CallForHelp"
+	],
+	"preferred_ranges": { "min": 400, "max": 700 },
+	"flee_threshold_hull": 0.5,
+	"flee_threshold_morale": 0.4,
+	"call_help_threshold_threat": 0.3,
+	"combat_modifier": 0.8,
+	"notes": "Visits anomalies, can trigger science-related missions and events."
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "time_constants": {
+	"HOURS_PER_DAY": 24,
+	"DAYS_PER_YEAR": 360
+  },
+  "base_speed": {
+	"BASE_HOURS_PER_REAL_SECOND": 0.02
+  },
+  "tick_settings": {
+	"SIM_TICK_INTERVAL_HOURS": 6.0
+  },
+  "mode_scales": {
+	"FLIGHT": 1.0,
+	"AWAY_TEAM": 0.1,
+	"DIALOGUE": 0.0,
+	"COMBAT": 0.05,
+	"TRAVEL": 2.0,
+	"PAUSED": 0.0
+  }
+}

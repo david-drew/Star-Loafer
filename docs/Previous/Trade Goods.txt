@@ -1,0 +1,50 @@
+
+SL - Trade Goods
+
+
+Raw materials
+
+	Exotic Minerals: 
+		Re-latticed Arc Crystal, Polychromatic Zirconium, raw gemstones, or metals in ingot form
+
+	Organic Resources:
+		Alien spices, unique fruits, rare woods, furs, and other biological specimens
+
+	Energy Sources: 
+		Fusion cores, spark canisters, or industrial-grade batteries 
+
+Manufactured and technological goods
+
+	Industrial Components: 
+		Enormous metal cogs, mesh decouplers, or non-stick pistons
+
+	Electronics: 
+		ecommissioned circuits, autonomous positioning units, or ion capacitors
+
+	Vehicular Parts:
+		Quantum accelerators, alloy components, or specialized fuel additives
+
+	General Tech:
+		Tools, weapons, and armor or their raw materials 
+
+Luxury and specialized goods
+
+	Luxury Items: 
+		Star silk textiles, exotic feathers, or rare furs
+
+	Pharmaceuticals: 
+		Medicinal drugs, custom serums, or bio-enhancements
+
+	Data & Information: 
+		Decrypted user data, scientific logs, or legal archives
+
+Food & Drink: 
+	Processed alien foods, specialty liquor, or synthesized food products 
+
+Services and consumables
+
+	Services:
+		Information, transport, or manufacturing services could be traded
+
+	Consumables:
+		Synthesized rations, water purification tablets, or high-end perfumes 

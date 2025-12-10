@@ -16,7 +16,7 @@ var _data_loaded: bool = false
 ## PUBLIC API
 ## ============================================================
 
-func generate(system_id: String, galaxy_seed: int, pop_level: int, tech_level: int, mining_quality: int) -> Dictionary:
+func generate(system_id: String, galaxy_seed: int, pop_level: int, tech_level: int, mining_quality: int, system_archetype: String = "") -> Dictionary:
 	"""
 	Generate a complete star system
 	Returns dictionary with stars, bodies, and stations arrays
@@ -35,8 +35,8 @@ func generate(system_id: String, galaxy_seed: int, pop_level: int, tech_level: i
 	var stars := _generate_stars(rng)
 	_register_stars_in_layout(stars, layout)
 	
-	var bodies := _generate_bodies(rng, stars, pop_level, tech_level, mining_quality, layout)
-	var stations := _generate_stations(rng, bodies, stars, pop_level, tech_level, mining_quality, layout)
+	var bodies := _generate_bodies(rng, stars, pop_level, tech_level, mining_quality, system_archetype, layout)
+	var stations := _generate_stations(rng, bodies, stars, pop_level, tech_level, mining_quality, system_archetype, layout)
 	
 	# Log generation summary
 	_print_generation_summary(system_id, stars, bodies, stations, layout)
@@ -51,7 +51,8 @@ func generate(system_id: String, galaxy_seed: int, pop_level: int, tech_level: i
 		"summary": {
 			"pop_level": pop_level,
 			"tech_level": tech_level,
-			"mining_quality": mining_quality
+			"mining_quality": mining_quality,
+			"archetype": system_archetype
 		}
 	}
 
@@ -76,12 +77,11 @@ func _ensure_data_loaded() -> void:
 		"moon"
 	)
 	
-	# Planet types are optional if ContentDB handles them
-	# Uncomment if you have a planet_types.json:
-	# planet_types_data = DataLoader.load_types_data(
-	#     "res://data/procgen/planet_types.json",
-	#     "planet"
-	# )
+	# Load planet types for economy integration
+	planet_types_data = DataLoader.load_types_data(
+		"res://data/procgen/planet_types.json",
+		"planet"
+	)
 	
 	_data_loaded = true
 	print("SystemGenerator: Data loading complete")
@@ -176,21 +176,22 @@ func _generate_bodies(
 	pop_level: int,
 	tech_level: int,
 	mining_quality: int,
+	system_archetype: String,
 	layout: SystemLayout
 ) -> Array:
 	"""Generate all celestial bodies (planets, moons, belts)"""
 	var bodies := []
 	
 	# Generate planets with moons
-	var planets := _generate_planets(rng, stars, pop_level, mining_quality, layout)
+	var planets := _generate_planets(rng, stars, pop_level, mining_quality, system_archetype, layout)
 	bodies.append_array(planets)
 	
 	# Generate asteroid belts
 	var belts := _generate_asteroid_belts(rng, stars, mining_quality)
 	bodies.append_array(belts)
 	
-	# Add inhabitant data to all bodies
-	_populate_all_inhabitants(bodies, pop_level, rng)
+	# Add inhabitant data to all bodies (this now creates markets too)
+	_populate_all_inhabitants(bodies, pop_level, system_archetype, rng)
 	
 	return bodies
 
@@ -199,6 +200,7 @@ func _generate_planets(
 	stars: Array,
 	pop_level: int,
 	mining_quality: int,
+	system_archetype: String,
 	layout: SystemLayout
 ) -> Array:
 	"""Generate planets and their moons"""
@@ -256,7 +258,7 @@ func _create_planet_data(
 		},
 		"sprite": ContentDB.get_planet_sprite(planet_type, rng),
 		"resources": _generate_resources(rng, planet_type, mining_quality),
-		"population": _calculate_planet_population(planet_type, 0),  # Will be set by _populate_all_inhabitants
+		"population": 0,  # Will be set by _populate_all_inhabitants
 		"inhabitant_data": {}
 	}
 
@@ -284,24 +286,6 @@ func _select_planet_type(rng: RandomNumberGenerator, orbit_radius_au: float) -> 
 	else:
 		var outer_types := ["ice", "gas", "barren"]
 		return outer_types[rng.randi_range(0, outer_types.size() - 1)]
-
-func _calculate_planet_population(planet_type: String, system_pop_level: int) -> int:
-	"""Calculate base planet population (modified later by system pop level)"""
-	var base_pop := system_pop_level
-	
-	match planet_type:
-		"terran":
-			base_pop += 3
-		"ocean":
-			base_pop += 2
-		"thick_atmo", "ice_world":
-			base_pop += 1
-		"volcanic", "barren":
-			base_pop -= 2
-		"gas":
-			base_pop -= 5
-	
-	return clampi(base_pop, 0, 10)
 
 ## ============================================================
 ## MOON GENERATION
@@ -455,6 +439,7 @@ func _generate_stations(
 	pop_level: int,
 	tech_level: int,
 	mining_quality: int,
+	system_archetype: String,
 	layout: SystemLayout
 ) -> Array:
 	"""Generate stations using layout system"""
@@ -478,13 +463,17 @@ func _generate_stations(
 	
 	for _i in range(budget):
 		var station_type: Dictionary = available[rng.randi_range(0, available.size() - 1)]
-		var station_data := _create_station_data(placed_count, station_type, rng)
+		var station_data := _create_station_data(placed_count, station_type, system_archetype, rng)
 		
 		var placement_prefs: Dictionary = station_type.get("placement_prefs", {})
 		var placed_station := layout.place_station(station_data, placement_prefs, bodies, rng)
 		
 		if not placed_station.is_empty():
 			_add_station_inhabitants(placed_station, station_type, rng)
+			
+			# Create market for station
+			_create_market_for_location(placed_station, system_archetype)
+			
 			stations.append(placed_station)
 			placed_count += 1
 		else:
@@ -533,7 +522,7 @@ func _get_available_station_types(types: Array, pop_level: int) -> Array:
 	
 	return available
 
-func _create_station_data(id: int, station_type: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+func _create_station_data(id: int, station_type: Dictionary, system_archetype: String, rng: RandomNumberGenerator) -> Dictionary:
 	"""Create base station data (position added by layout)"""
 	var type_id: String = station_type.get("id", "")
 	var variants := int(station_type.get("variants", 1))
@@ -552,7 +541,7 @@ func _create_station_data(id: int, station_type: Dictionary, rng: RandomNumberGe
 		"id": "station:%d" % id,
 		"type": type_id,
 		"name": _generate_station_name(type_id, rng),
-		"faction_id": "",
+		"faction_id": "",  # Set later by faction assignment
 		"variant": variant,
 		"position": [0, 0],  # Set by layout
 		"services": station_type.get("services", []),
@@ -569,7 +558,8 @@ func _create_station_data(id: int, station_type: Dictionary, rng: RandomNumberGe
 		"shipyard_tier": int(station_type.get("shipyard_tier", 0)),
 		"security_level": int(station_type.get("security_level", 0)),
 		"faction_bias": station_type.get("faction_bias", "neutral"),
-		"inhabitant_data": {}
+		"inhabitant_data": {},
+		"system_archetype": system_archetype
 	}
 
 func _add_station_inhabitants(station_data: Dictionary, station_type: Dictionary, rng: RandomNumberGenerator) -> void:
@@ -577,12 +567,16 @@ func _add_station_inhabitants(station_data: Dictionary, station_type: Dictionary
 	var pop_range: Array = station_type.get("population_range", [10, 500])
 	var population := DataLoader.get_random_int_from_range(pop_range, rng, 100)
 	
+	# Convert population to population_level (0-10 scale) for economy
+	var pop_level := _convert_population_to_level(population)
+	
 	var tech_level_str: String = station_type.get("tech_level", "standard")
 	var tech_level_int := _convert_tech_level_to_int(tech_level_str)
 	
 	station_data["inhabitant_data"] = {
 		"is_inhabited": true,
 		"population": population,
+		"population_level": pop_level,
 		"faction_id": "",
 		"settlement_type": "station",
 		"has_spaceport": station_data.get("can_dock", true),
@@ -600,74 +594,177 @@ func _convert_tech_level_to_int(tech_level: String) -> int:
 		"alien": return 9
 		_: return 3
 
+func _convert_population_to_level(population: int) -> int:
+	"""Convert absolute population to 0-10 scale for economy"""
+	if population >= 100000:
+		return 10
+	elif population >= 50000:
+		return 9
+	elif population >= 10000:
+		return 8
+	elif population >= 5000:
+		return 7
+	elif population >= 1000:
+		return 6
+	elif population >= 500:
+		return 5
+	elif population >= 100:
+		return 4
+	elif population >= 50:
+		return 3
+	elif population >= 10:
+		return 2
+	elif population > 0:
+		return 1
+	else:
+		return 0
+
 ## ============================================================
 ## POPULATION & INHABITANTS
 ## ============================================================
 
-func _populate_all_inhabitants(bodies: Array, pop_level: int, rng: RandomNumberGenerator) -> void:
-	"""Add inhabitant data to all bodies"""
+func _populate_all_inhabitants(bodies: Array, pop_level: int, system_archetype: String, rng: RandomNumberGenerator) -> void:
+	"""Add inhabitant data to all bodies and create markets for populated locations"""
 	for body in bodies:
 		var kind: String = body.get("kind", "")
 		
 		if kind == "planet":
-			_add_planet_inhabitants(body, pop_level, rng)
+			_add_planet_inhabitants(body, pop_level, system_archetype, rng)
 		elif kind == "moon":
-			_add_moon_inhabitants(body, pop_level, rng)
+			_add_moon_inhabitants(body, pop_level, system_archetype, rng)
 
-func _add_planet_inhabitants(planet: Dictionary, pop_level: int, rng: RandomNumberGenerator) -> void:
-	"""Add inhabitant data to planet"""
+func _add_planet_inhabitants(planet: Dictionary, system_pop_level: int, system_archetype: String, rng: RandomNumberGenerator) -> void:
+	"""Add inhabitant data to planet and create market if populated"""
 	var planet_type: String = planet.get("type", "")
-	var population := _calculate_planet_population(planet_type, pop_level)
+	var population_level := _calculate_planet_population(planet_type, system_pop_level, system_archetype, rng)
 	
-	planet["population"] = population
+	planet["population"] = population_level
 	
-	if population > 0:
+	if population_level > 0:
 		planet["inhabitant_data"] = {
 			"is_inhabited": true,
-			"population": population,
+			"population": population_level,
+			"population_level": population_level,
 			"faction_id": "",
 			"settlement_type": "colony",
-			"has_spaceport": population >= 5,
-			"tech_level": _calculate_settlement_tech_level(population, rng)
+			"has_spaceport": population_level >= 5,
+			"tech_level": _calculate_settlement_tech_level(population_level, rng)
 		}
+		
+		# Create market for populated planet
+		_create_market_for_location(planet, system_archetype)
 	else:
 		planet["inhabitant_data"] = {
 			"is_inhabited": false,
 			"population": 0,
+			"population_level": 0,
 			"faction_id": "",
 			"settlement_type": "none",
 			"has_spaceport": false,
 			"tech_level": 0
 		}
 
-func _add_moon_inhabitants(moon: Dictionary, pop_level: int, rng: RandomNumberGenerator) -> void:
-	"""Add inhabitant data to moon"""
+func _add_moon_inhabitants(moon: Dictionary, system_pop_level: int, system_archetype: String, rng: RandomNumberGenerator) -> void:
+	"""Add inhabitant data to moon and create market if populated"""
 	var moon_type: String = moon.get("type", "")
-	var population := _calculate_moon_population(moon_type, pop_level)
+	var population_level := _calculate_moon_population(moon_type, system_pop_level, system_archetype, rng)
 	
-	moon["population"] = population
+	moon["population"] = population_level
 	
-	if population > 0:
+	if population_level > 0:
 		moon["inhabitant_data"] = {
 			"is_inhabited": true,
-			"population": population,
+			"population": population_level,
+			"population_level": population_level,
 			"faction_id": "",
 			"settlement_type": "outpost",
-			"has_spaceport": population >= 3,
-			"tech_level": _calculate_settlement_tech_level(population, rng)
+			"has_spaceport": population_level >= 3,
+			"tech_level": _calculate_settlement_tech_level(population_level, rng)
 		}
+		
+		# Create market for populated moon
+		_create_market_for_location(moon, system_archetype)
 	else:
 		moon["inhabitant_data"] = {
 			"is_inhabited": false,
 			"population": 0,
+			"population_level": 0,
 			"faction_id": "",
 			"settlement_type": "none",
 			"has_spaceport": false,
 			"tech_level": 0
 		}
 
-func _calculate_moon_population(moon_type: String, system_pop_level: int) -> int:
-	"""Calculate moon population"""
+func _calculate_planet_population(
+	planet_type: String,
+	system_pop_level: int,
+	system_archetype: String,
+	rng: RandomNumberGenerator
+) -> int:
+	"""
+	Calculate planet population using:
+	- Planet type habitability (from planet_types.json)
+	- Pop bias (from planet_types.json)
+	- System population level
+	- System archetype
+	- Random factor
+	"""
+	# Get planet type data
+	var planet_types: Array = planet_types_data.get("types", [])
+	var planet_data := DataLoader.get_type_by_id(planet_types, planet_type)
+	
+	if planet_data.is_empty():
+		return 0
+	
+	# 1. Check habitability
+	var habitability: String = planet_data.get("habitability", "none")
+	if habitability == "none":
+		return 0  # Uninhabitable
+	
+	# 2. Base population from habitability
+	var base_pop := 0
+	match habitability:
+		"hostile": base_pop = 1
+		"marginal": base_pop = 2
+		"habitable": base_pop = 4
+		"ideal": base_pop = 6
+	
+	# 3. Adjust by pop_bias from planet type
+	var pop_bias: String = planet_data.get("pop_bias", "any")
+	match pop_bias:
+		"none": return 0
+		"very_high": base_pop += 3
+		"high": base_pop += 2
+		"medium": base_pop += 1
+		"low": base_pop -= 1
+		"any": pass  # No adjustment
+	
+	# 4. Adjust by system population level
+	base_pop += system_pop_level - 5  # System pop is 0-10, average is 5
+	
+	# 5. Adjust by system archetype (if available)
+	if system_archetype != "":
+		match system_archetype:
+			"core_world", "core_hub":
+				base_pop += 2
+			"industrial_hub", "trade_hub":
+				base_pop += 1
+			"frontier_outpost", "dead_system":
+				base_pop -= 2
+	
+	# 6. Random factor (±1)
+	base_pop += rng.randi_range(-1, 1)
+	
+	# Clamp to valid range (0-10)
+	return clampi(base_pop, 0, 10)
+
+func _calculate_moon_population(
+	moon_type: String,
+	system_pop_level: int,
+	system_archetype: String,
+	rng: RandomNumberGenerator
+) -> int:
+	"""Calculate moon population (similar to planets but with -2 penalty)"""
 	var moon_types: Array = moon_types_data.get("types", [])
 	var moon_data := DataLoader.get_type_by_id(moon_types, moon_type)
 	
@@ -678,11 +775,17 @@ func _calculate_moon_population(moon_type: String, system_pop_level: int) -> int
 	var base_pop := system_pop_level
 	
 	match pop_bias:
-		"very_high": base_pop += 3
-		"high": base_pop += 2
-		"any": base_pop += 0
+		"very_high": base_pop += 1  # Moons get less bonus
+		"high": base_pop += 0
+		"any": base_pop -= 1
 		"low": base_pop -= 2
 		"none": base_pop -= 5
+	
+	# Moons always get -2 penalty (harder to inhabit)
+	base_pop -= 2
+	
+	# Random factor
+	base_pop += rng.randi_range(-1, 0)  # Only negative or neutral
 	
 	return clampi(base_pop, 0, 10)
 
@@ -691,6 +794,101 @@ func _calculate_settlement_tech_level(population: int, rng: RandomNumberGenerato
 	var base_tech := clampi(population / 2, 1, 5)
 	var variation := rng.randi_range(-1, 1)
 	return clampi(base_tech + variation, 1, 7)
+
+## ============================================================
+## ECONOMY INTEGRATION
+## ============================================================
+
+func _create_market_for_location(location: Dictionary, system_archetype: String) -> void:
+	"""Create economy market for a populated location (station/planet/moon)"""
+	var location_id := _get_location_id(location)
+	var faction_id: String = location.get("faction_id", "independent")
+	var population_level: int = location.get("inhabitant_data", {}).get("population_level", 0)
+	
+	# Skip if no population
+	if population_level <= 0:
+		return
+	
+	# Determine economic profile
+	var econ_profile := _determine_econ_profile(location, system_archetype)
+	
+	# Create market data
+	var market_data := {
+		"id": location_id,
+		"owner_faction": faction_id,
+		"econ_profile": econ_profile,
+		"population_level": population_level
+	}
+	
+	# Create market through EconomyManager
+	var market = EconomyManager.create_market_location(market_data)
+	
+	if market:
+		print("[Economy] Created market for %s (type: %s, pop: %d, profile: %s)" % [
+			location_id,
+			location.get("kind", "unknown"),
+			population_level,
+			econ_profile
+		])
+
+func _get_location_id(location: Dictionary) -> String:
+	"""Get standardized ID for any location type"""
+	if "station_id" in location:
+		return location.station_id
+	elif "id" in location:
+		return location.id
+	else:
+		return location.get("name", "unknown_location")
+
+func _determine_econ_profile(location: Dictionary, system_archetype: String) -> String:
+	"""Determine economic profile for a location"""
+	var kind: String = location.get("kind", "")
+	
+	# For stations - use station type
+	if kind == "station" or "type" in location:
+		return _map_station_type_to_econ_profile(location.get("type", ""))
+	
+	# For planets/moons - use type and archetype
+	var body_type: String = location.get("type", "")
+	
+	# Terran/Ocean planets = agricultural
+	if body_type in ["terran", "ocean"]:
+		return "agri"
+	
+	# Rocky/Volcanic/Barren = mining
+	if body_type in ["rocky", "volcanic", "barren", "ice"]:
+		return "mining"
+	
+	# Gas giants = no economy (shouldn't have population anyway)
+	if body_type == "gas":
+		return "industrial"  # Fallback
+	
+	# Use system archetype as hint
+	match system_archetype:
+		"core_world", "core_hub", "trade_hub":
+			return "luxury"
+		"industrial_hub":
+			return "industrial"
+		"mining_bonanza":
+			return "mining"
+		"frontier_outpost", "dead_system":
+			return "frontier"
+		_:
+			return "industrial"  # Default
+
+func _map_station_type_to_econ_profile(station_type: String) -> String:
+	"""Map station types to economic profiles"""
+	match station_type:
+		"ore_processor", "mining_outpost", "claim_office":
+			return "mining"
+		"refuel_depot", "small_market", "observation_post":
+			return "frontier"
+		"shipyard", "corporate_hq", "naval_station":
+			return "industrial"
+		"trade_hub", "warp_gate", "research_lab":
+			return "luxury"
+		_:
+			return "industrial"
 
 ## ============================================================
 ## RESOURCE GENERATION
@@ -780,10 +978,19 @@ func _print_generation_summary(
 	var moon_count := bodies.filter(func(b): return b.get("kind") == "moon").size()
 	var belt_count := bodies.filter(func(b): return b.get("kind") == "asteroid_belt").size()
 	
+	# Count populated locations
+	var populated_planets := bodies.filter(func(b): 
+		return b.get("kind") == "planet" and b.get("population", 0) > 0
+	).size()
+	var populated_moons := bodies.filter(func(b): 
+		return b.get("kind") == "moon" and b.get("population", 0) > 0
+	).size()
+	
 	print("SystemGenerator: Generated system '%s'" % system_id)
 	print("  Stars: %d" % stars.size())
-	print("  Planets: %d" % planet_count)
-	print("  Moons: %d" % moon_count)
+	print("  Planets: %d (%d populated)" % [planet_count, populated_planets])
+	print("  Moons: %d (%d populated)" % [moon_count, populated_moons])
 	print("  Belts: %d" % belt_count)
 	print("  Stations: %d" % stations.size())
+	print("  Total Markets: %d" % (populated_planets + populated_moons + stations.size()))
 	layout.print_layout_summary()

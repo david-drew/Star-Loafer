@@ -1,11 +1,48 @@
 extends Control
 
-# system_map.gd
-# Displays the current star system with planets, belts, and stations
+# System map: shows current system bodies/stations/player with pan/zoom.
 
-@onready var system_view = $MapContainer/SystemView
+# Lightweight icon nodes (Controls with custom draw so they get mouse signals)
+class IconDot:
+	extends Control
+	var radius: float = 4.0
+	var color: Color = Color.WHITE
+	func _ready() -> void:
+		custom_minimum_size = Vector2.ONE * radius * 2.0
+	func _draw() -> void:
+		var center := size * 0.5
+		draw_circle(center, radius, color)
+
+class IconSquare:
+	extends Control
+	var size_vec: Vector2 = Vector2.ONE * 8.0
+	var color: Color = Color.WHITE
+	func _ready() -> void:
+		custom_minimum_size = size_vec
+	func _draw() -> void:
+		var half := size_vec * 0.5
+		var rect := Rect2((size * 0.5) - half, size_vec)
+		draw_rect(rect, color)
+
+class IconDiamond:
+	extends Control
+	var size_len: float = 8.0
+	var color: Color = Color.WHITE
+	func _ready() -> void:
+		custom_minimum_size = Vector2.ONE * size_len * 2.0
+	func _draw() -> void:
+		var c := size * 0.5
+		var pts := PackedVector2Array([
+			c + Vector2(0, -size_len),
+			c + Vector2(size_len, 0),
+			c + Vector2(0, size_len),
+			c + Vector2(-size_len, 0)
+		])
+		draw_colored_polygon(pts, color)
+
+@onready var map_container: Control = $MapContainer
+@onready var system_view: Control = $MapContainer/SystemView
 @onready var info_panel = $InfoPanel
-@onready var center_marker = $MapContainer/CenterMarker
 @onready var close_button = $CloseButton
 
 var body_icons: Dictionary = {}
@@ -14,63 +51,105 @@ var hovered_object: Dictionary = {}
 var hover_timer: float = 0.0
 var player_icon: Node2D = null  # Player ship indicator
 
-var map_scale: float = 80.0  # Dynamic: pixels per AU (calculated to fit system)
-const ICON_SIZE = Vector2(24, 24)
+var map_scale: float = 80.0  # pixels per AU (fit-to-view base scale)
 const AU_TO_PIXELS = 4000.0  # Match SystemExploration's scaling
 
+# Pan/zoom
+var current_zoom: float = 1.0
+const ZOOM_MIN = 0.35
+const ZOOM_MAX = 3.0
+const ZOOM_STEP = 0.1
+var view_offset: Vector2 = Vector2.ZERO
+var is_dragging: bool = false
+var drag_start: Vector2 = Vector2.ZERO
+var view_offset_start: Vector2 = Vector2.ZERO
+
 # Performance: throttle player icon updates
-const PLAYER_ICON_UPDATE_INTERVAL = 0.05  # Update every 0.05s (20fps) - smooth enough
+const PLAYER_ICON_UPDATE_INTERVAL = 0.05
 var player_icon_update_timer: float = 0.0
 
 func _ready() -> void:
 	hide()
 	info_panel.hide()
+	map_container.custom_minimum_size = get_viewport_rect().size * 0.5  # at least half screen
+	system_view.position = map_container.size * 0.5
 	
-	# Connect button with null check
 	if close_button:
 		close_button.pressed.connect(_on_close)
 	
-	# Connect to EventBus signals
 	EventBus.map_toggled.connect(_on_map_toggled)
-	
 	print("SystemMap: Ready and listening for toggle events")
 
 func _input(event: InputEvent) -> void:
 	if !visible:
-		return  # Don't handle input when not visible
+		return
 	
 	if event.is_action_pressed("ui_map_system"):
-		# Close the map
 		hide()
 		get_viewport().set_input_as_handled()
-		print("SystemMap: Closed via key press")
+		return
+	
+	# Zoom with mouse wheel
+	if event is InputEventMouseButton and map_container.get_rect().has_point(event.position):
+		var emb := event as InputEventMouseButton
+		if emb.button_index == MOUSE_BUTTON_WHEEL_UP and emb.pressed:
+			_set_zoom(current_zoom + ZOOM_STEP)
+			get_viewport().set_input_as_handled()
+		elif emb.button_index == MOUSE_BUTTON_WHEEL_DOWN and emb.pressed:
+			_set_zoom(current_zoom - ZOOM_STEP)
+			get_viewport().set_input_as_handled()
+		elif emb.button_index == MOUSE_BUTTON_LEFT:
+			if emb.pressed:
+				is_dragging = true
+				drag_start = emb.position
+				view_offset_start = view_offset
+				get_viewport().set_input_as_handled()
+			else:
+				is_dragging = false
+	
+	# Drag pan with mouse motion
+	if is_dragging and event is InputEventMouseMotion:
+		var emm := event as InputEventMouseMotion
+		view_offset = view_offset_start + (emm.position - drag_start)
+		_apply_view_transform()
+		get_viewport().set_input_as_handled()
 
 func _on_map_toggled(map_type: String, should_open: bool) -> void:
-	if map_type == "system":
-		if should_open:
-			show()
-			_populate_map()
-			print("SystemMap: Opened")
-		else:
-			hide()
-			print("SystemMap: Closed")
+	if map_type != "system":
+		return
+	if should_open:
+		show()
+		_reset_view()
+		_populate_map()
+	else:
+		hide()
 
 func toggle() -> void:
 	visible = !visible
 	if visible:
+		_reset_view()
 		_populate_map()
-		print("SystemMap: Toggled ON")
-	else:
-		print("SystemMap: Toggled OFF")
+
+func _reset_view() -> void:
+	current_zoom = 1.0
+	view_offset = Vector2.ZERO
+	_apply_view_transform()
+
+func _apply_view_transform() -> void:
+	system_view.scale = Vector2.ONE * current_zoom
+	system_view.position = map_container.size * 0.5 + view_offset
+
+func _set_zoom(value: float) -> void:
+	current_zoom = clamp(value, ZOOM_MIN, ZOOM_MAX)
+	_apply_view_transform()
 
 func _populate_map() -> void:
-	# Clear existing icons
 	for child in system_view.get_children():
 		child.queue_free()
 	body_icons.clear()
 	station_icons.clear()
+	player_icon = null
 	
-	# Get system data from SystemExploration
 	var system_exploration = get_node_or_null("/root/GameRoot/WorldRoot/SystemExploration")
 	if system_exploration == null:
 		push_warning("SystemMap: SystemExploration not found")
@@ -81,189 +160,177 @@ func _populate_map() -> void:
 		push_warning("SystemMap: No system data available")
 		return
 	
-	# Calculate dynamic scale to fit entire system on screen
-	var max_orbit = 0.0
+	# Calculate fit-to-view scale
+	var max_orbit := 0.0
 	for body in system_data.get("bodies", []):
-		var orbit = body.get("orbit", {})
-		var radius = orbit.get("a_AU", 0.0)
+		var orbit: Dictionary = body.get("orbit", {})
+		var radius := float(orbit.get("a_AU", 0.0))
 		if radius > max_orbit:
 			max_orbit = radius
 	
-	# Add 20% padding around system
-	var available_size = $MapContainer.size.x * 0.4  # Use 40% of container (leave room for UI)
-	map_scale = available_size / (max_orbit * 1.2) if max_orbit > 0 else 80.0
+	var min_dim:float = min(map_container.size.x, map_container.size.y)
+	var available_radius:float = min_dim * 0.45  # leave margin
+	if max_orbit > 0.0:
+		map_scale = available_radius / (max_orbit * 1.2)
+	else:
+		map_scale = 80.0
 	
-	var map_center = $MapContainer.size / 2.0
+	system_view.position = map_container.size * 0.5 + view_offset
 	
-	print("SystemMap: Populating system '%s' (max orbit: %.1f AU, scale: %.1f px/AU)" % [system_data.get("system_id", "Unknown"), max_orbit, map_scale])
-	
-	# Draw star(s) at center
+	# Stars at center
 	for star in system_data.get("stars", []):
-		_create_star_icon(star, map_center)
+		_create_star_icon(star)
 	
-	# Draw planets and belts
+	# Bodies
 	for body in system_data.get("bodies", []):
-		_create_body_icon(body, map_center)
+		_create_body_icon(body)
 	
-	# Draw stations
+	# Stations
 	for station in system_data.get("stations", []):
-		_create_station_icon(station, map_center)
+		_create_station_icon(station)
 	
-	# Add player ship icon
-	_create_player_ship_icon(map_center)
-	
-	print("SystemMap: Added %d bodies and %d stations" % [body_icons.size(), station_icons.size()])
+	# Player ship
+	_create_player_ship_icon()
 
-func _create_player_ship_icon(map_center: Vector2) -> void:
-	# Remove old player icon if it exists
+func _create_player_ship_icon() -> void:
 	if player_icon:
 		player_icon.queue_free()
 		player_icon = null
 	
-	# Get player ship position from SystemExploration
 	var system_exploration = get_node_or_null("/root/GameRoot/WorldRoot/SystemExploration")
 	if system_exploration == null:
 		return
-	
 	var player_ship = system_exploration.get_player_ship()
 	if player_ship == null:
 		return
 	
-	# Create player ship icon container
 	player_icon = Node2D.new()
 	player_icon.name = "PlayerShipIcon"
-	
-	# Create sprite
 	var sprite = Sprite2D.new()
-	
-	# Try to load ship icon asset, fallback to distinctive arrow
 	var ship_icon_path = "res://assets/images/ui/ship_icon.png"
 	if ResourceLoader.exists(ship_icon_path):
 		sprite.texture = load(ship_icon_path)
-		sprite.modulate = Color.YELLOW  # Tint asset yellow!
-		sprite.scale = Vector2(0.8, 0.8)  # Make it slightly smaller
+		sprite.modulate = Color(1.0, 0.9, 0.2)
+		sprite.scale = Vector2(0.25, 0.25)
 	else:
-		# Fallback: Smaller yellow arrow (more distinctive)
 		sprite.texture = PlaceholderTexture2D.new()
-		sprite.texture.size = Vector2(20, 20)  # Smaller than planets (20 vs 24)
-		sprite.modulate = Color(1.0, 0.9, 0.0, 1.0)  # Bright yellow/gold
-	
-	sprite.rotation = -PI / 2  # Point right by default
-	player_icon.add_child(sprite)
-	
-	# Position will be updated in _process
-	system_view.add_child(player_icon)
-	player_icon.z_index = 100  # On top of everything
+		sprite.texture.size = Vector2(18, 18)
+		sprite.modulate = Color(1.0, 0.9, 0.0, 1.0)
+		#sprite.scale = Vector2(0.25,0.25)
 
-func _create_star_icon(star: Dictionary, map_center: Vector2) -> void:
-	var icon = TextureRect.new()
-	icon.texture = PlaceholderTexture2D.new()
-	icon.texture.size = ICON_SIZE * 2.5  # Stars MUCH larger than planets
-	icon.custom_minimum_size = ICON_SIZE * 2.5
-	icon.position = map_center - (ICON_SIZE * 2.5) / 2.0
-	
-	# Color based on star class (brighter than before)
+	#sprite.rotation = -PI / 2
+	player_icon.add_child(sprite)
+	system_view.add_child(player_icon)
+	player_icon.z_index = 100
+	_update_player_ship_position()
+
+func _create_star_icon(star: Dictionary) -> void:
+	var icon := IconDot.new()
+	icon.radius = 4.0
 	var star_class = star.get("class", "G")
-	if star_class == "Special":
-		icon.modulate = Color(1.0, 0.5, 1.0, 1.0)  # Bright purple
-	elif star_class in ["O", "B"]:
-		icon.modulate = Color(0.6, 0.8, 1.0, 1.0)  # Bright blue
-	elif star_class == "A":
-		icon.modulate = Color.WHITE
-	elif star_class == "F":
-		icon.modulate = Color(1.0, 1.0, 0.9, 1.0)  # Light yellow
-	elif star_class == "G":
-		icon.modulate = Color.YELLOW
-	elif star_class == "K":
-		icon.modulate = Color.ORANGE
-	elif star_class == "M":
-		icon.modulate = Color(1.0, 0.4, 0.3, 1.0)  # Bright red
+	match star_class:
+		"Special":
+			icon.color = Color(1.0, 0.6, 1.0)
+		"O", "B":
+			icon.color = Color(0.7, 0.85, 1.0)
+		"A":
+			icon.color = Color.WHITE
+		"F":
+			icon.color = Color(1.0, 1.0, 0.9)
+		"G":
+			icon.color = Color(1.0, 0.95, 0.5)
+		"K":
+			icon.color = Color(1.0, 0.7, 0.35)
+		"M":
+			icon.color = Color(1.0, 0.45, 0.35)
+		_:
+			icon.color = Color(1, 1, 1)
 	
+	icon.position = Vector2.ZERO
+	icon.mouse_filter = Control.MOUSE_FILTER_STOP
 	icon.mouse_entered.connect(_on_object_hover.bind(star))
 	icon.mouse_exited.connect(_on_object_unhover)
-	
 	system_view.add_child(icon)
 
-func _create_body_icon(body: Dictionary, map_center: Vector2) -> void:
+func _create_body_icon(body: Dictionary) -> void:
 	var body_kind = body.get("kind", "planet")
 	var body_id = body.get("id", "")
+	var icon: Node
+	var color := Color.LIGHT_GRAY
+	var radius: float = 6.0
+	var orbit: Dictionary = body.get("orbit", {})
+	var orbit_radius := float(orbit.get("a_AU", 0.5))
+	var angle := float(orbit.get("angle_rad", 0.0))
 	
-	# Phase 0: Show all bodies in current system (no fog of war within system)
+	match body_kind:
+		"planet", _:
+			icon = IconDot.new()
+			var body_type = body.get("type", "rocky")
+			if "terran" in body_type or "primordial" in body_type:
+				color = Color(0.5, 0.9, 0.5)
+			elif "ocean" in body_type:
+				color = Color(0.4, 0.7, 1.0)
+			elif "ice" in body_type:
+				color = Color(0.7, 0.9, 1.0)
+			elif "gas" in body_type:
+				color = Color(0.9, 0.7, 0.4)
+				radius = 9.0
+			elif "volcanic" in body_type:
+				color = Color(1.0, 0.5, 0.25)
+			else:
+				color = Color(0.8, 0.8, 0.8)
+			var dot := icon as IconDot
+			dot.radius = radius
+			dot.color = color
+		"asteroid_belt":
+			icon = IconDiamond.new()
+			var dia := icon as IconDiamond
+			dia.size_len = 6.0
+			dia.color = Color(0.7, 0.7, 0.7)
+		"phenomena", "anomaly":
+			icon = IconDiamond.new()
+			var dia2 := icon as IconDiamond
+			dia2.size_len = 7.0
+			dia2.color = Color(0.7, 0.5, 1.0)
 	
-	var icon = TextureRect.new()
-	icon.texture = PlaceholderTexture2D.new()
-	
-	# Size based on body type
-	var icon_size = ICON_SIZE
-	if body_kind == "asteroid_belt":
-		icon_size = ICON_SIZE * 0.7  # Smaller for belts
-	else:
-		var body_type = body.get("type", "rocky")
-		if "gas" in body_type:
-			icon_size = ICON_SIZE * 1.5  # Larger for gas giants
-		elif "dwarf" in body_type:
-			icon_size = ICON_SIZE * 0.7  # Smaller for dwarfs
-	
-	icon.texture.size = icon_size
-	icon.custom_minimum_size = icon_size
-	
-	# Position based on orbit - use stored angle from generation
-	var orbit = body.get("orbit", {})
-	var orbit_radius = orbit.get("a_AU", 1.0)
-	var angle = orbit.get("angle_rad", 0.0)  # Use stored angle - matches world exactly!
-	
-	var offset = Vector2(
-		cos(angle) * orbit_radius * map_scale,
-		sin(angle) * orbit_radius * map_scale
-	)
-	icon.position = map_center + offset - icon_size / 2.0
-	
-	# Color based on body type
-	if body_kind == "asteroid_belt":
-		icon.modulate = Color.GRAY
-	else:
-		var body_type = body.get("type", "rocky")
-		if "terran" in body_type or "primordial" in body_type:
-			icon.modulate = Color.GREEN
-		elif "ocean" in body_type:
-			icon.modulate = Color.DEEP_SKY_BLUE
-		elif "ice" in body_type:
-			icon.modulate = Color.LIGHT_CYAN
-		elif "gas" in body_type:
-			icon.modulate = Color.SANDY_BROWN
-		elif "volcanic" in body_type:
-			icon.modulate = Color.ORANGE_RED
-		else:
-			icon.modulate = Color.LIGHT_GRAY
-	
+	var offset := Vector2(cos(angle), sin(angle)) * orbit_radius * map_scale
+	icon.position = offset
+	icon.mouse_filter = Control.MOUSE_FILTER_STOP
 	icon.mouse_entered.connect(_on_object_hover.bind(body))
 	icon.mouse_exited.connect(_on_object_unhover)
-	
 	system_view.add_child(icon)
 	body_icons[body_id] = icon
 
-func _create_station_icon(station: Dictionary, map_center: Vector2) -> void:
+func _create_station_icon(station: Dictionary) -> void:
 	var station_id = station.get("id", "")
+	var icon := IconSquare.new()
+	icon.size_vec = Vector2.ONE * 10.0
+	var has_market:bool = station.get("has_market", false) or station.get("market", false)
+	if has_market:
+		icon.color = Color(0.3, 0.85, 0.9)
+	else:
+		icon.color = Color(0.8, 0.8, 0.9)
 	
-	# Phase 0: Show all stations in current system (no fog of war within system)
+	var pos := Vector2.ZERO
+	if station.has("position"):
+		var p = station.get("position")
+		if p is Vector2:
+			pos = _world_to_map(p)
+		elif p is Array and p.size() >= 2:
+			pos = _world_to_map(Vector2(p[0], p[1]))
+	elif station.has("orbit"):
+		var orbit: Dictionary = station.get("orbit", {})
+		var r := float(orbit.get("a_AU", 0.0))
+		var a := float(orbit.get("angle_rad", 0.0))
+		pos = Vector2(cos(a), sin(a)) * r * map_scale
+	else:
+		var angle := deg_to_rad(float(hash(station_id) % 360))
+		pos = Vector2(cos(angle), sin(angle)) * 3.0 * map_scale
 	
-	var icon = TextureRect.new()
-	icon.texture = PlaceholderTexture2D.new()
-	icon.texture.size = ICON_SIZE * 0.8
-	icon.custom_minimum_size = ICON_SIZE * 0.8
-	
-	# Position stations in a ring around center (simplified)
-	var angle = hash(station_id) % 360
-	var offset = Vector2(
-		cos(deg_to_rad(angle)) * 3.0 * map_scale,
-		sin(deg_to_rad(angle)) * 3.0 * map_scale
-	)
-	icon.position = map_center + offset - (ICON_SIZE * 0.8) / 2.0
-	icon.modulate = Color.CYAN
-	
+	icon.position = pos
+	icon.mouse_filter = Control.MOUSE_FILTER_STOP
 	icon.mouse_entered.connect(_on_object_hover.bind(station))
 	icon.mouse_exited.connect(_on_object_unhover)
-	
 	system_view.add_child(icon)
 	station_icons[station_id] = icon
 
@@ -271,13 +338,11 @@ func _process(delta: float) -> void:
 	if !visible:
 		return
 	
-	# Throttle player ship icon updates
 	player_icon_update_timer += delta
 	if player_icon_update_timer >= PLAYER_ICON_UPDATE_INTERVAL:
 		player_icon_update_timer = 0.0
 		_update_player_ship_position()
 	
-	# Handle hover info panel
 	if hovered_object.is_empty():
 		hover_timer = 0.0
 		info_panel.hide()
@@ -289,29 +354,23 @@ func _process(delta: float) -> void:
 func _update_player_ship_position() -> void:
 	if player_icon == null:
 		return
-	
 	var system_exploration = get_node_or_null("/root/GameRoot/WorldRoot/SystemExploration")
 	if system_exploration == null:
 		return
-	
 	var player_ship = system_exploration.get_player_ship()
 	if player_ship == null:
 		return
-	
-	# Convert player world position to map position
-	var map_center = $MapContainer.size / 2.0
-	var player_world_pos = player_ship.global_position
-	
-	# Scale conversion: world pixels → AU → map pixels
-	var world_to_map_scale = map_scale / AU_TO_PIXELS
-	var map_offset = player_world_pos * world_to_map_scale
-	
-	player_icon.position = map_center + map_offset
-	
-	# Update rotation to match ship facing
+	var map_pos = _world_to_map(player_ship.global_position)
+	player_icon.position = map_pos
+	player_icon.rotation = player_ship.rotation
 	var sprite = player_icon.get_node_or_null("Sprite2D")
-	if sprite and player_ship:
-		sprite.rotation = player_ship.rotation
+	if sprite:
+		# Keep sprite pointing right relative to node rotation
+		sprite.rotation = -PI / 2
+
+func _world_to_map(world_pos: Vector2) -> Vector2:
+	var world_to_map_scale := map_scale / AU_TO_PIXELS
+	return world_pos * world_to_map_scale
 
 func _on_object_hover(obj: Dictionary) -> void:
 	hovered_object = obj
@@ -322,28 +381,26 @@ func _on_object_unhover() -> void:
 
 func _show_info_panel(obj: Dictionary) -> void:
 	info_panel.show()
-	
-	# Display different info based on object type
-	if obj.has("class"):  # Star
+	if obj.has("class"):
 		$InfoPanel/VBoxContainer/NameLabel.text = obj.get("id", "Unknown Star")
 		$InfoPanel/VBoxContainer/TypeLabel.text = "Class: %s" % obj.get("class", "Unknown")
 		$InfoPanel/VBoxContainer/DetailLabel.text = ""
-	elif obj.has("kind"):  # Body or Station
+	elif obj.has("kind"):
 		var kind = obj.get("kind", "unknown")
 		$InfoPanel/VBoxContainer/NameLabel.text = obj.get("id", "Unknown")
-		
 		if kind == "planet":
 			$InfoPanel/VBoxContainer/TypeLabel.text = "Planet: %s" % obj.get("type", "Unknown")
 			var orbit = obj.get("orbit", {})
 			$InfoPanel/VBoxContainer/DetailLabel.text = "Orbit: %.1f AU" % orbit.get("a_AU", 0.0)
 		elif kind == "asteroid_belt":
 			$InfoPanel/VBoxContainer/TypeLabel.text = "Asteroid Belt"
-			var orbit = obj.get("orbit", {})
-			$InfoPanel/VBoxContainer/DetailLabel.text = "Orbit: %.1f AU" % orbit.get("a_AU", 0.0)
-		else:  # Station
-			$InfoPanel/VBoxContainer/TypeLabel.text = "Station: %s" % obj.get("kind", "Unknown")
+			var orbit_belt = obj.get("orbit", {})
+			$InfoPanel/VBoxContainer/DetailLabel.text = "Orbit: %.1f AU" % orbit_belt.get("a_AU", 0.0)
+		else:
+			$InfoPanel/VBoxContainer/TypeLabel.text = "Station"
 			$InfoPanel/VBoxContainer/DetailLabel.text = ""
 
 func _on_close() -> void:
 	hide()
+	is_dragging = false
 	print("SystemMap: Closed via button")
