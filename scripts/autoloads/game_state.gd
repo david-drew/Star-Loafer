@@ -41,6 +41,8 @@ var transit_duration: float = 0.0
 var autopilot_enabled: bool = false
 var time_compression: int = 1  # 1, 2, or 4
 
+var AU_TO_PIXELS = 3
+
 func _ready() -> void:
 	pass
 

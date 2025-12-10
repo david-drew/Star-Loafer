@@ -41,6 +41,7 @@ var is_locked_down: bool = false
 @onready var interaction_area: Area2D = $InteractionArea
 
 func _ready() -> void:
+	add_to_group("station")
 	# Set collision layers (Layer 4 = Stations example)
 	collision_layer = 1 << 3
 	collision_mask = 1 << 0

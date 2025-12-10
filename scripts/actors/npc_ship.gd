@@ -58,6 +58,7 @@ var avoidance_radius: float = 200.0
 var nearby_obstacles: Array = []
 
 func _ready() -> void:
+	add_to_group("npc_ship")
 	# Set collision layers
 	# Layer 8 = NPC ships
 	# Collides with: Layer 1 (player), Layer 2 (asteroids), Layer 8 (other NPCs)

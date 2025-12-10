@@ -528,11 +528,11 @@ func _input(event: InputEvent) -> void:
 
 func _toggle_galaxy_map() -> void:
 	EventBus.map_toggled.emit("galaxy", true)
-	print("SystemExploration: Galaxy map toggle requested")
+	#print("SystemExploration: Galaxy map toggle requested")
 
 func _toggle_system_map() -> void:
 	EventBus.map_toggled.emit("system", true)
-	print("SystemExploration: System map toggle requested")
+	#print("SystemExploration: System map toggle requested")
 
 func _exit_tree() -> void:
 	if streamer:

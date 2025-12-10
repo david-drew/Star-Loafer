@@ -78,6 +78,11 @@ signal hail_received(sender:Node, recipient:Node, context:Dictionary)
 signal comm_message_received(message_data: Dictionary)
 signal comm_response_chosen(conversation_id, response_index: int, response: Dictionary)
 signal comm_conversation_closed(conversation_id)
+signal comm_hail_accepted(conversation_id, context: Dictionary)
+signal comm_hail_ignored(conversation_id, context: Dictionary, reason: String)
+signal comm_session_started(conversation_id, context: Dictionary)
+signal comm_session_ended(conversation_id, reason: String)
+signal comm_hail_timed_out(conversation_id, context: Dictionary)
 
 ## Emitted when a station approves docking for a ship
 ## station: The station granting permission
@@ -118,3 +123,6 @@ signal ship_component_remove_requested(ship: Node, component_id: String)
 ## reason: snake_case reason code ("not_docked", "insufficient_component_space", etc.)
 ## data: optional context, e.g. { "component_id": "weapon__dual_pulse_mk2" }
 signal ship_component_action_failed(ship: Node, action: String, reason: String, data: Dictionary)
+
+# Trade / orbit (lightweight trade mode without full docking)
+signal trade_mode_changed(ship: Node, anchor: Node, active: bool)

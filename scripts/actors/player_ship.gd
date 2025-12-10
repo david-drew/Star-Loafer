@@ -30,6 +30,8 @@ var last_emitted_position: Vector2 = Vector2.ZERO
 @onready var camera = $Camera2D
 
 func _ready() -> void:
+	# DEBUG: ensure comms can find player by group membership (remove after verifying) # DEBUG
+	add_to_group("player")
 	# Initialize component system if present
 	if component_system != null:
 		component_system.init_from_ship_type(ship_type_id)

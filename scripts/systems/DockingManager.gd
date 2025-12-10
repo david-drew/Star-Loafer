@@ -7,10 +7,15 @@ class_name DockingManager
 # Active docking operations
 var active_dockings: Dictionary = {}  # ship_id: docking_data
 
+# Active trade orbits (lightweight trade mode)
+var trade_orbits: Dictionary = {}  # ship_id: {ship, anchor, radius, angle}
+
 # Configuration
 const APPROACH_SPEED = 200.0  # Pixels per second during autodock
 const DOCKING_DISTANCE = 150.0  # Distance at which docking completes (pixels)
 const ROTATION_ALIGN_SPEED = 2.0  # Radians per second for alignment
+const TRADE_ORBIT_RADIUS = 320.0
+const TRADE_ORBIT_SPEED = 0.4
 
 # Signals
 signal docking_requested(ship: Node, station: Node)
@@ -31,6 +36,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_update_active_dockings(delta)
+	_update_trade_orbits(delta)
 
 
 ## Request docking at a station
@@ -61,7 +67,7 @@ func _auto_evaluate_npc_docking(ship: Node, station: Node) -> void:
 	var denial_reason = ""
 	
 	# Check faction relations
-	if ship.has("faction_id") and station.has("faction_id"):
+	if "faction_id" in ship and "faction_id" in station:
 		var faction_relations = get_node_or_null("/root/GameRoot/Systems/FactionRelations")
 		if faction_relations:
 			var rep_tier = faction_relations.get_reputation_tier(ship.faction_id)
@@ -70,7 +76,7 @@ func _auto_evaluate_npc_docking(ship: Node, station: Node) -> void:
 				denial_reason = "hostile_faction"
 	
 	# Check station lockdown state
-	if station.has("is_locked_down") and station.is_locked_down:
+	if "is_locked_down" in station and station.is_locked_down:
 		should_approve = false
 		denial_reason = "lockdown"
 	
@@ -150,7 +156,7 @@ func complete_docking(ship: Node, station: Node) -> void:
 	active_dockings.erase(ship_id)
 	
 	# Set ship state
-	if ship.has("is_docked"):
+	if "is_docked" in ship:
 		ship.is_docked = true
 		ship.docked_at = station
 	
@@ -165,7 +171,7 @@ func complete_docking(ship: Node, station: Node) -> void:
 
 ## Begin undocking sequence
 func undock(ship: Node) -> void:
-	if not ship.has("is_docked") or not ship.is_docked:
+	if not ("is_docked" in ship) or not ship.is_docked:
 		push_warning("DockingManager: undock called but ship not docked")
 		return
 	
@@ -192,6 +198,48 @@ func undock(ship: Node) -> void:
 	
 	if ship.is_in_group("player"):
 		EventBus.emit_signal("player_undocked")
+
+
+# --- Trade orbit (lightweight trade mode) ---
+
+func enter_trade_orbit(ship: Node, anchor: Node) -> bool:
+	if not is_instance_valid(ship) or not is_instance_valid(anchor):
+		return false
+	var ship_id = _get_ship_id(ship)
+	if trade_orbits.has(ship_id):
+		return true
+	var orbit_data = {
+		"ship": ship,
+		"anchor": anchor,
+		"radius": TRADE_ORBIT_RADIUS,
+		"angle": 0.0
+	}
+	trade_orbits[ship_id] = orbit_data
+
+	if "velocity" in ship:
+		ship.velocity = Vector2.ZERO
+	_set_autopilot(ship, true)
+
+	EventBus.trade_mode_changed.emit(ship, anchor, true)
+	return true
+
+
+func exit_trade_orbit(ship: Node) -> void:
+	if not is_instance_valid(ship):
+		return
+	var ship_id = _get_ship_id(ship)
+	if not trade_orbits.has(ship_id):
+		return
+	var anchor: Node = trade_orbits[ship_id].get("anchor", null)
+	trade_orbits.erase(ship_id)
+	_set_autopilot(ship, false)
+	if "velocity" in ship:
+		ship.velocity = Vector2.ZERO
+	EventBus.trade_mode_changed.emit(ship, anchor, false)
+
+
+func is_in_trade_orbit(ship: Node) -> bool:
+	return trade_orbits.has(_get_ship_id(ship))
 
 
 ## Update all active docking sequences
@@ -222,6 +270,36 @@ func _update_active_dockings(delta: float) -> void:
 		if active_dockings.has(ship_id):
 			var docking_data = active_dockings[ship_id]
 			complete_docking(docking_data.ship, docking_data.station)
+
+
+func _update_trade_orbits(delta: float) -> void:
+	var stale := []
+	for ship_id in trade_orbits.keys():
+		var data: Dictionary = trade_orbits[ship_id]
+		var ship: Node = data.get("ship", null)
+		var anchor: Node = data.get("anchor", null)
+		if not is_instance_valid(ship) or not is_instance_valid(anchor):
+			if is_instance_valid(ship):
+				EventBus.trade_mode_changed.emit(ship, anchor, false)
+			stale.append(ship_id)
+			continue
+
+		var angle: float = data.get("angle", 0.0) + TRADE_ORBIT_SPEED * delta
+		var radius: float = data.get("radius", TRADE_ORBIT_RADIUS)
+		var target_pos = anchor.global_position + Vector2(radius, 0).rotated(angle)
+		ship.global_position = target_pos
+
+		if "velocity" in ship:
+			ship.velocity = Vector2.ZERO
+		# Face anchor lightly to reinforce orbit feel
+		if ship.has_method("look_at"):
+			ship.look_at(anchor.global_position)
+
+		data["angle"] = angle
+		trade_orbits[ship_id] = data
+
+	for ship_id in stale:
+		trade_orbits.erase(ship_id)
 
 
 ## Update approach phase - move ship toward dock point
@@ -268,15 +346,24 @@ func _update_alignment_phase(ship: Node, docking_data: Dictionary, delta: float)
 
 ## Override or restore player control
 func _override_player_control(player: Node, override: bool) -> void:
-	if not player.has("docking_autopilot"):
-		player.set_meta("docking_autopilot", override)
-	else:
+	if "docking_autopilot" in player:
 		player.docking_autopilot = override
+	else:
+		player.set_meta("docking_autopilot", override)
 	
 	if override:
 		print("DockingManager: Player control overridden for docking")
 	else:
 		print("DockingManager: Player control restored")
+
+
+func _set_autopilot(ship: Node, enabled: bool) -> void:
+	if "docking_autopilot" in ship:
+		ship.docking_autopilot = enabled
+	else:
+		ship.set_meta("docking_autopilot", enabled)
+	if ship.is_in_group("player"):
+		_override_player_control(ship, enabled)
 
 
 ## Assign a docking bay (for now, just return 0)
@@ -292,14 +379,14 @@ func _on_docking_approved(station: Node, ship: Node, bay_id: int) -> void:
 
 ## Utility: Get ship ID
 func _get_ship_id(ship: Node) -> String:
-	if ship.has("entity_id"):
+	if "entity_id" in ship:
 		return ship.entity_id
 	return ship.name
 
 
 ## Utility: Get station name
 func _get_station_name(station: Node) -> String:
-	if station.has("station_name"):
+	if "station_name" in station:
 		return station.station_name
 	return station.name
 

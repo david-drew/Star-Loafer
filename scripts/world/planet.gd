@@ -12,6 +12,10 @@ func initialize(data: Dictionary, seed: int) -> void:
 	planet_data = data
 	planet_id = data.get("id", "unknown")
 	name = planet_id
+	# Mark comm group if inhabited (planets and moons share this script) # DEBUG
+	var pop_level := int(planet_data.get("population", planet_data.get("inhabitant_data", {}).get("population_level", 0)))
+	if pop_level > 0:
+		add_to_group("inhabited_body")
 	
 	# Set position based on orbit data
 	var orbit = data.get("orbit", {})
